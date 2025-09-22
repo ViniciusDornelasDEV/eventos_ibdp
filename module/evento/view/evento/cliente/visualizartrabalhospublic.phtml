@@ -1,0 +1,46 @@
+<div class="container theme-showcase" role="main">
+  <a href="<?= $this->url('listarTrabalhosPublic', array('sigla' => $trabalho['sigla_evento'])); ?>">
+  	<button type="button" name="voltr" class="btn btn-danger" style="float: left;margin-bottom: 10px">
+        <img src="<?php echo $this->basePath('img/voltar.png') ?>" alt="Voltar">
+        Voltar</button>
+  </a>
+  <img id="profile-img" class="img-responsive center-block" style="width: 100%" src="<?php echo $this->basePath(strtolower($trabalho['banner_evento'])); ?>" />
+  <p id="profile-name" class="profile-name-card"></p>
+  
+</div>
+
+  <div class="container theme-showcase" role="main">
+        <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Visualizar trabalho</h3>
+          </div>
+          <div class="panel-body">
+              <h3><?= $trabalho['titulo'] ?></h3>
+              <b>Categoria: </b><?= $trabalho['nome_categoria'] ?><br>
+              <b>Autores: </b><?= $trabalho['autores'] ?><br>
+              <b>Resumo: </b><br>
+              <?= html_entity_decode($trabalho['resumo']) ?><br>
+          </div>
+    </div>
+  </div>
+
+
+ <div class="container theme-showcase" role="main">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Arquivos vinculados</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                  <tr>
+                    <th style="text-align: center">Arquivo</th>
+                </tr>
+                <?php foreach ($arquivos as $arquivo): ?>
+                  <tr>
+                    <td style="text-align: center"><a href="<?= $this->url('downloadArquivoTrabalho', array('idArquivo' => $arquivo->id)); ?>"><?= $arquivo->nome ?></a></td>
+                  </tr>
+                <?php endforeach; ?>
+              </table>
+            </div>
+          </div>
+      </div>

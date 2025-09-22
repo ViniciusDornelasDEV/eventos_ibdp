@@ -1,0 +1,80 @@
+  <div class="container theme-showcase" role="main" style="margin-bottom:40px;padding:0px;">
+    <div class="breadcrumb2 flat">
+      <a href="<?= $evento->site_evento; ?>">Web site do evento</a>
+      <a href="#" class="active">Inscrição</a>
+      <a href="#">Atividades</a>
+      <a href="#">Pagamento</a>
+    </div>
+  </div>
+
+    <div class="container theme-showcase" role="main" style="margin-top:100px;">
+        <?= $this->flashMessenger()->render('error', array('alert', 'alert-danger')) ?>   
+
+        <?= $this->flashMessenger()->render('warning', array('alert',  'alert-warning')) ?>
+        
+        <?= $this->flashMessenger()->render('success', array('alert',  'alert-success')) ?>
+    </div>
+
+  <?php if($tipoPessoa == 'F'): ?>
+  <!-- GERAR RADIO PARA ESCOLHER TIPO DE PESSOA -->
+  <div class="container theme-showcase" role="main">
+    <div class="row">
+      
+      <div class='col-sm-12'>
+      <label style="width:270px;">Tipo de pessoa: </label>
+        <button type="button" class="btn btn-default active">
+          <img src="<?php echo $this->basePath('img/fisica.png') ?>" alt="Novo">
+           Física</button>
+        
+          <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('realizarInscricao', array('tipoPessoa' => 'J', 'siglaEvento' => $evento->sigla)); ?>'" >
+          <img src="<?php echo $this->basePath('img/juridica.png') ?>" alt="Novo">
+          Jurídica</button>
+        </div>
+        
+      </div>
+    </div>
+<?php else: ?>
+  <div class="container theme-showcase" role="main">
+    <div class="row">
+      <label style="width:270px;">Tipo de pessoa: </label>
+        <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('realizarInscricao', array('tipoPessoa' => 'F', 'siglaEvento' => $evento->sigla)); ?>'">
+          <img src="<?php echo $this->basePath('img/fisica.png') ?>" alt="Novo">
+           Física</button>
+        
+          <button type="button" class="btn btn-default active" >
+          <img src="<?php echo $this->basePath('img/juridica.png') ?>" alt="Novo">
+          Jurídica</button>
+      </div>
+    </div>
+<?php endif; ?>
+<div class="container theme-showcase" role="main">
+<div class="row">
+  <hr>
+</div>
+</div>
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+         
+            <div class="panel-body">
+                <div class="form-group">
+
+                  
+                  
+                    <?php echo $this->partial('form/inscricao2', array('form'=> $formPessoa, 
+                                                                      'tipoPessoa' => $tipoPessoa, 
+                                                                      'valores' => $valores,
+                                                                      'evento' => $evento));
+                    ?>
+                  
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        formInscricao();
+      });
+    </script>
+

@@ -1,0 +1,18 @@
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">Cadastro de alternativa</h3>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                 <?php echo $this->partial('form/generic', array(
+                  'form'=> $formAlternativa, 
+                  'route'=> 'questaoAlternativaAssociado',
+                  'params' => array('idQuestionario' => $idQuestionario, 'idQuestao' => $idQuestao, 'idAlternativa' => $idAlternativa)
+                  )); ?>  
+              </div>
+          </div>
+      </div>
+    </div>
+    </div>

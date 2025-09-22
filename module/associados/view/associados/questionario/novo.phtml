@@ -1,0 +1,35 @@
+ <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+      <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('novoQuestionarioAssociado'); ?>'" style="float: right;width:100px;">
+      <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+      Novo</button>
+
+    <ol class="breadcrumb" style="margin-bottom: 0px;">
+      <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+      <li><a href="<?= $this->url('listaQuestionarioAssociado'); ?>">Questionários</a></li>
+      <li class="active">Novo</li>
+    </ol>
+  </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">Cadastro de questionário</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <?php echo $this->partial('form/questionario', array('form'=> $formQuestionario, 'route'=> '')) ?>
+
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#data_inicio").mask("99/99/9999");
+        $("#data_fim").mask("99/99/9999");
+        CKEDITOR.replace('descricao');
+      });
+    </script>

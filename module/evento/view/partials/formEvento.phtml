@@ -1,0 +1,72 @@
+<?php if(!$this->params)$this->params = array();?>
+<?php $form->prepare(); ?>
+
+<?php if($this->route || $this->route):?>
+    <?php $form->setAttribute('action', $this->url($this->route, $this->params)); ?>
+<?php else: ?>
+	<?php $form->setAttribute('action', "#"); ?>
+<?php endif;?>
+
+<?= $this->form()->openTag($form); ?>
+<?php $row = 0; ?>
+<div class="row" style="margin-top:20px;">
+<?php foreach ($form->getElements() as $element): ?>
+		<?php if(in_array($element->getName(), array('observacoes', 'mensagem_cadastro_novo', 'mensagem_cadastro_antigo', 'mensagem_pagamento', 'mensagem_transferencia'))): ?>
+			</row>
+
+			<div class="row" style="margin-top:70px;">
+				<div class='col-sm-12'>
+						<label for="<?=$element->getName()?>" ><?=$element->getLabel()?></label>
+					<div class="text-center" id="group-<?= $element->getName(); ?>" style="padding: 10px;">
+						<?= $this->formElement($element); ?>
+			        	<?= $this->formElementErrors($element, array('class' => 'alert alert-danger')); ?>
+			        </div>
+				</div>
+			</div>
+		<?php else: ?>
+			<?php 
+				$attributes = $element->getAttributes();
+				if(isset($attributes['type']) && $attributes['type'] == 'hidden'){
+					echo $this->formElement($element);
+					continue;
+				}
+				$row++; 
+				if($row == 4): 
+					$row = 1;
+			?>
+			</div>
+			<div class="row" style="margin-top:20px;">
+			<?php endif; ?>
+
+		        <div class='col-sm-4'>
+	                <div class="form-group" id="group-<?= $element->getName(); ?>">
+		        <?php if($element->getLabel()) :?>
+		        
+		        <label for="<?=$element->getName()?>" style="width:139px;"><?=$element->getLabel()?></label>
+		        
+		        <?php endif;?>
+		        	
+		        	<?= $this->formElement($element); ?>
+		        	<?= $this->formElementErrors($element, array('class' => 'alert alert-danger')); ?>
+		     		</div>
+	            </div>
+
+		<?php endif; ?>
+
+<?php endforeach; ?>
+</div>
+<div class="row" style="margin-top:20px;">
+	<?php 
+		if(isset($this->botao)): 
+			echo $this->botao;
+		else:
+	?>
+	<button type="submit" class="btn btn-success" style="float: right;margin-right: 10px;">
+		<img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+		Salvar
+	</button>
+<?php endif; ?>
+</div>
+
+
+<?= $this->form()->closeTag($form); ?>

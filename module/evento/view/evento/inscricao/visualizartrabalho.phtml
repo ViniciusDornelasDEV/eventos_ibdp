@@ -1,0 +1,132 @@
+<div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+  <form name="aprovarTrabalho" action="#" method="POST">
+    <?php if($trabalho['trabalho_aprovado'] == 'N'): ?>
+      <button type="submit" name="aprovar" class="btn btn-success" style="float: right;margin-right: 10px;">
+        <img src="<?php echo $this->basePath('img/trabalho.png') ?>" alt="Aprovar trabalho">
+        Aprovar trabalho</button>
+    <?php else: ?>
+      <button type="submit" name="aprovar" class="btn btn-warning" style="float: right;margin-right: 10px;">
+        <img src="<?php echo $this->basePath('img/trabalho.png') ?>" alt="Cancelar aprovação">
+        Cancelar aprovação</button>
+    <?php endif; ?>
+    <button type="button" name="deletar" onclick="alerta('<?= $this->url('deletarTrabalho', array('idInscricao' => $idInscricao)); ?>', 'deletar');" class="btn btn-danger" style="float: right;margin-right: 10px;">
+      <img src="<?php echo $this->basePath('img/deletar.png') ?>" alt="Deletar trabalho">
+      Deletar trabalho
+    </button>
+
+  </form>
+
+  <ol class="breadcrumb" style="margin-bottom: 0px;">
+    <li><a href="<?= $this->url('listarTrabalhos'); ?>">Trabalhos</a></li>
+    <li class="active">Visualizar trabalho</li>
+  </ol>
+</div>
+
+  <div class="container theme-showcase" role="main">
+    <div class="row">
+        <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">Visualizar trabalho</h3>
+          </div>
+          <div class="panel-body">
+              <div class="form-group">
+                  <div class="row">
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formTrabalho->get('nome_evento')->getLabel()?></label>
+                         <?= $this->formElement($formTrabalho->get('nome_evento')); ?>
+                         <?= $this->formElementErrors($formTrabalho->get('nome_evento'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formTrabalho->get('nome_completo')->getLabel()?></label>
+                         <?= $this->formElement($formTrabalho->get('nome_completo')); ?>
+                         <?= $this->formElementErrors($formTrabalho->get('nome_completo'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formTrabalho->get('cpf')->getLabel()?></label>
+                         <?= $this->formElement($formTrabalho->get('cpf')); ?>
+                         <?= $this->formElementErrors($formTrabalho->get('cpf'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formTrabalho->get('nome_categoria')->getLabel()?></label>
+                         <?= $this->formElement($formTrabalho->get('nome_categoria')); ?>
+                         <?= $this->formElementErrors($formTrabalho->get('nome_categoria'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formTrabalho->get('titulo_trabalho')->getLabel()?></label>
+                         <?= $this->formElement($formTrabalho->get('titulo_trabalho')); ?>
+                         <?= $this->formElementErrors($formTrabalho->get('titulo_trabalho'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formTrabalho->get('autores_trabalho')->getLabel()?></label><br>
+                         <?= $this->formElement($formTrabalho->get('autores_trabalho')); ?>
+                         <?= $this->formElementErrors($formTrabalho->get('autores_trabalho'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-12'>
+                      <label for="disabledTextInput"><?=$formTrabalho->get('resumo_trabalho')->getLabel()?></label><br>
+                      <?= $this->formElement($formTrabalho->get('resumo_trabalho')); ?>
+                      <?= $this->formElementErrors($formTrabalho->get('resumo_trabalho'), array('class' => 'alert alert-danger')); ?>
+                    </div>
+                  </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Arquivos vinculados</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                  <tr>
+                    <th style="text-align: center">Arquivo</th>
+                </tr>
+                <?php foreach ($arquivos as $arquivo): ?>
+                  <tr>
+                    <td style="text-align: center"><a href="<?= $this->url('downloadArquivoTrabalho', array('idArquivo' => $arquivo->id)); ?>"><?= $arquivo->nome ?></a></td>
+                  </tr>
+                <?php endforeach; ?>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <script type="text/javascript">
+
+      $(document).ready(function() {
+        $('#nome_evento').attr('disabled', 'disabled');
+        $('#nome_completo').attr('disabled', 'disabled');
+        $('#cpf').attr('disabled', 'disabled');
+        $('#nome_categoria').attr('disabled', 'disabled');
+        $('#titulo_trabalho').attr('disabled', 'disabled');
+        $('#autores_trabalho').attr('disabled', 'disabled');
+        $('#resumo_trabalho').attr('disabled', 'disabled');
+        CKEDITOR.replace('resumo_trabalho');
+      });
+    </script>

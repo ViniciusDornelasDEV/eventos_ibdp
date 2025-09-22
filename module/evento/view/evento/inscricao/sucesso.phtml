@@ -1,0 +1,58 @@
+<div class="container theme-showcase" role="main">
+  <div class="col-md-8" style="border:1px dashed #999;border-radius:0.2em; min-height: 834px;min-width: 100%;">
+      <hr>
+      <div class="alert alert-success">
+          <h1><img src="<?php echo $this->basePath('img/sucesso.png'); ?>" title="Pedido Coonfirmado" alt="confirmado" style="margin-right: 120px;">Inscrição realizada com sucesso!</h1>
+      </div>
+      <?php if($inscricao->forma_pagamento == 8): ?>
+        <div class="alert alert-danger">
+          <b>Atenção: </b>aguardamos o envio do comprovante de pagamento!
+      </div>
+      <?php endif; ?>
+      <hr>
+      <!-- Itens totais -->
+  	<ul class="list-group">
+    		<li class="list-group-item list-group-item-success">
+      		Detalhes da inscrição
+    		</li>
+    		<li class="list-group-item">
+      		<span class="badge"><?= $inscricao->quantidade_membros + 1; ?></span>
+      		Inscrição no evento <?= $evento->sigla ?> -  <?= $evento->nome; ?>
+    		</li>
+    		<li class="list-group-item">
+      		<b>Valor total: </b><span class="badge"><?= $this->exibirMonetario($inscricao->valor_total); ?></span>
+    		</li>
+        <li class="list-group-item">
+          <b>Pago com: </b>
+          <!--se boleto -->
+          <?php if(!empty($inscricao['token_paypal'])): ?>
+            PayPal
+          <?php else: ?>
+            <?php if($inscricao->forma_pagamento == 2): ?>
+              Boleto. <a target="_blank" href="<?= $this->url('boletoBradesco', array('codigoBoleto' => $inscricao->numero_pagamento_boleto)); ?>">Clique aqui</a> para imprimir seu boleto!
+            <?php elseif($inscricao->forma_pagamento == 1): ?>
+              Cielo
+            <?php endif; ?>
+          <?php endif; ?>
+
+          <?php if(empty($inscricao->valor_total) && !empty($inscricao->codigo_desconto)): ?>
+            Voucher 100%
+          <?php endif; ?>
+
+          <?php if($inscricao->forma_pagamento == 8): ?>
+            Transferência bancária
+            </li> 
+            <li class="list-group-item">
+              Você receberá um email com as instruções para efetuar o depósito, se tiver alguma dúvida entre em contato pelo email <b>eventos@timecomunicacao.com.br</b>
+            </li>
+            
+          <?php endif; ?>
+        </li>
+  	</ul>
+  	<hr>
+      <div class="alert alert-info">
+          <p> Você poderá acompanhar todas as suas inscrições através do menu <a href="<?= $this->url('visualizaInscricoes'); ?>">Gerenciar inscrições</a></p>
+      </div>
+
+  </div>
+</div>

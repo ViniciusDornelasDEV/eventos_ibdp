@@ -1,0 +1,491 @@
+
+
+<div class="container theme-showcase" role="main" style="margin-bottom:10px;">
+  
+  <div class="jumbotron">
+    <h1><?= $partida['nome_sala'] ?> - <?= $partida['nome_competicao'] ?></h1>
+    <form class="" role="form" method="POST" action="#">   
+    <!-- INSTRUÇÕES -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div class="row">
+          <div class="col-sm-8">
+            <h5 class="m-0 font-weight-bold text-primary">Instruções</h5>
+          </div>
+
+          <div class="col-sm-4">
+            <h5 class="m-0 font-weight-bold text-primary">Nível de desempenho</h5>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class='col-sm-8'>
+            <p>
+              1) Avalie separadamente cada orador(a);<br>
+              2) Para cada critério de avaliação, considere os níveis de desempenho ao lado;<br><br>
+              <b>IMPORTANTE:</b> Verifique a precisão da sua pontuação total, pois ela será registrada como resultado oficial para todos os efeitos. A Comissão Organizadora não corrigirá quaisquer erros, ainda que meramente aritméticos
+
+            </p>
+          </div>
+
+          <div class='col-sm-4'>
+            <p>
+              Excelente: 23 – 25<br>
+              Bom: 21 – 22<br>
+              Médio: 19 – 20<br>
+              Regular: 16 – 18<br>
+              Ruim: 12 – 15
+            </p>
+          </div>
+              
+          </div>
+          
+
+
+        </div>
+    </div>
+    <!-- RECORRENTE -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div class="row">
+          <div class="col-sm-12">
+            <h5 class="m-0 font-weight-bold text-primary">Recorrente: <?= $partida['nome_recorrente'] ?></h5>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+              <div class='col-sm-6'>
+                <p>Critérios de avaliação(Mínimo de 12 pontos e máximo de 25)</p>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <label for="disabledTextInput"><?= $formAvaliar->get('orador_recorrente_1')->getLabel(); ?></label>
+                  <?= $this->formElement($formAvaliar->get('orador_recorrente_1')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('orador_recorrente_1'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <label for="disabledTextInput"><?= $formAvaliar->get('orador_recorrente_2')->getLabel(); ?></label>
+                  <?= $this->formElement($formAvaliar->get('orador_recorrente_2')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('orador_recorrente_2'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+          </div>
+          <hr>
+          <div class="row">
+              <div class='col-sm-6'>
+                <p>
+                  <span style="font-weight: bold; font-size: 18px;">Conhecimento da lei e da doutrina</span><br>
+                  <span style="font-size: 15px;">
+                    - Aplicação adequada da lei e da doutrina aos fatos;<br>
+                    - Uso adequado das fontes do Direito;<br>
+                    - Argumentação jurídica sólida.
+                  </span>
+                </p>
+              </div>
+
+              <div class='col-sm-3'>
+                  <?= $this->formElement($formAvaliar->get('nota_lei_recorrente_1')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_lei_recorrente_1'), array('class' => 'alert alert-danger')); ?>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_lei_recorrente_2')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_lei_recorrente_2'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+          </div>
+          <hr>
+          <div class="row">
+              <div class='col-sm-6'>
+                <p>
+                  <span style="font-weight: bold; font-size: 18px;">Conhecimento dos fatos</span><br>
+                  <span style="font-size: 15px;">
+                    Familiaridade com os fatos do caso;<br>
+                    - Interpretação adequada e coerente dos fatos.
+                  </span>
+                </p>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_fatos_recorrente_1')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_fatos_recorrente_1'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_fatos_recorrente_2')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_fatos_recorrente_2'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+          </div>
+          <hr>
+          <div class="row">
+              <div class='col-sm-6'>
+                <p>
+                  <span style="font-weight: bold; font-size: 18px;">Postura, organização e tempo</span><br>
+                  <span style="font-size: 15px;">
+                    - Formalidade, respeito e profissionalismo;<br>
+                    - Boa postura, articulação e contato visual;<br>
+                    - Aparência engajada e diligente;<br>
+                    - Apresentação com estrutura clara e lógica;<br>
+                    - Distribuição eficaz de tempo.
+                  </span>
+                </p>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_postura_recorrente_1')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_postura_recorrente_1'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_postura_recorrente_2')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_postura_recorrente_2'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+          </div>
+          <hr>
+          <div class="row">
+              <div class='col-sm-6'>
+                <p>
+                  <span style="font-weight: bold; font-size: 18px;">Perguntas e respostas</span><br>
+                  <span style="font-size: 15px;">
+                    - Postura e desenvoltura nas respostas;<br>
+                    - Coerência das respostas às teses defendidas pela equipe;
+                  </span>
+                </p>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_resposta_recorrente_1')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_resposta_recorrente_1'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_resposta_recorrente_2')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_resposta_recorrente_2'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+          </div>
+          <hr>
+          <div class="row">
+              <div class='col-sm-6'>
+                <p>
+                  <span style="font-weight: bold; font-size: 18px;">PONTUAÇÃO TOTAL</span><br>
+                  <span style="font-size: 15px;">
+                    (Mínimo de 48 pontos e máximo de 100).
+                  </span>
+                </p>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_total_recorrente_1')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_total_recorrente_1'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_total_recorrente_2')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_total_recorrente_2'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+          </div>
+          <hr>
+
+
+        </div>
+    </div>
+
+
+    <!-- RECORRIDO -->
+    <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <div class="row">
+          <div class="col-sm-12">
+            <h5 class="m-0 font-weight-bold text-primary">Recorrido: <?= $partida['nome_recorrido'] ?></h5>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+              <div class='col-sm-6'>
+                <p>Critérios de avaliação(Mínimo de 12 pontos e máximo de 25)</p>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <label for="disabledTextInput"><?= $formAvaliar->get('orador_recorrido_1')->getLabel(); ?></label>
+                  <?= $this->formElement($formAvaliar->get('orador_recorrido_1')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('orador_recorrido_1'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <label for="disabledTextInput"><?= $formAvaliar->get('orador_recorrido_2')->getLabel(); ?></label>
+                  <?= $this->formElement($formAvaliar->get('orador_recorrido_2')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('orador_recorrido_2'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+          </div>
+          <hr>
+          <div class="row">
+              <div class='col-sm-6'>
+                <p>
+                  <span style="font-weight: bold; font-size: 18px;">Conhecimento da lei e da doutrina</span><br>
+                  <span style="font-size: 15px;">
+                    - Aplicação adequada da lei e da doutrina aos fatos;<br>
+                    - Uso adequado das fontes do Direito;<br>
+                    - Argumentação jurídica sólida.
+                  </span>
+                </p>
+              </div>
+
+              <div class='col-sm-3'>
+                  
+                  <?= $this->formElement($formAvaliar->get('nota_lei_recorrido_1')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_lei_recorrido_1'), array('class' => 'alert alert-danger')); ?>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_lei_recorrido_2')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_lei_recorrido_2'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+          </div>
+          <hr>
+          <div class="row">
+              <div class='col-sm-6'>
+                <p>
+                  <span style="font-weight: bold; font-size: 18px;">Conhecimento dos fatos</span><br>
+                  <span style="font-size: 15px;">
+                    Familiaridade com os fatos do caso;<br>
+                    - Interpretação adequada e coerente dos fatos.
+                  </span>
+                </p>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_fatos_recorrido_1')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_fatos_recorrido_1'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_fatos_recorrido_2')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_fatos_recorrido_2'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+          </div>
+          <hr>
+          <div class="row">
+              <div class='col-sm-6'>
+                <p>
+                  <span style="font-weight: bold; font-size: 18px;">Postura, organização e tempo</span><br>
+                  <span style="font-size: 15px;">
+                    - Formalidade, respeito e profissionalismo;<br>
+                    - Boa postura, articulação e contato visual;<br>
+                    - Aparência engajada e diligente;<br>
+                    - Apresentação com estrutura clara e lógica;<br>
+                    - Distribuição eficaz de tempo.
+                  </span>
+                </p>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_postura_recorrido_1')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_postura_recorrido_1'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_postura_recorrido_2')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_postura_recorrido_2'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class='col-sm-6'>
+              <p>
+                <span style="font-weight: bold; font-size: 18px;">Perguntas e respostas</span><br>
+                <span style="font-size: 15px;">
+                  - Postura e desenvoltura nas respostas;<br>
+                  - Coerência das respostas às teses defendidas pela equipe;
+                </span>
+              </p>
+            </div>
+
+            <div class='col-sm-3'>
+              <div class="form-group">
+                <?= $this->formElement($formAvaliar->get('nota_resposta_recorrido_1')); ?>
+                <?= $this->formElementErrors($formAvaliar->get('nota_resposta_recorrido_1'), array('class' => 'alert alert-danger')); ?>
+              </div>
+            </div>
+
+            <div class='col-sm-3'>
+              <div class="form-group">
+                <?= $this->formElement($formAvaliar->get('nota_resposta_recorrido_2')); ?>
+                <?= $this->formElementErrors($formAvaliar->get('nota_resposta_recorrido_2'), array('class' => 'alert alert-danger')); ?>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+              <div class='col-sm-6'>
+                <p>
+                  <span style="font-weight: bold; font-size: 18px;">PONTUAÇÃO TOTAL</span><br>
+                  <span style="font-size: 15px;">
+                    (Mínimo de 48 pontos e máximo de 100).
+                  </span>
+                </p>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_total_recorrido_1')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_total_recorrido_1'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+
+              <div class='col-sm-3'>
+                <div class="form-group">
+                  <?= $this->formElement($formAvaliar->get('nota_total_recorrido_2')); ?>
+                  <?= $this->formElementErrors($formAvaliar->get('nota_total_recorrido_2'), array('class' => 'alert alert-danger')); ?>
+                </div>
+              </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class='col-sm-12'>
+
+              <button type="submit" onclick="alert('Tem certeza que deseja salvar? esta operação não poderá ser revertida!');" class="btn btn-primary" style="float: right;width: auto;">
+                Salvar
+              </button>
+
+              <button type="button" onclick="location.href='<?= $this->url('competicaoVisualizarChaveamento', array('idCompeticao' => $partida->competicao)); ?>'" class="btn btn-secondary" style="float: right;width: auto;margin-right: 5px;">
+                Cancelar
+              </button>
+            </div>
+          </div>
+
+        </div>
+    </div>
+
+  </form>
+  </div>
+  </div>
+
+  <script type="text/javascript">
+    $(".form-control").change(function() {
+      //NOTA 1
+      var nota = 0;
+      if($("#nota_lei_recorrente_1").val() != ''){
+        nota = nota+parseInt($("#nota_lei_recorrente_1").val());
+      }
+
+      if($("#nota_fatos_recorrente_1").val() != ''){
+        nota = nota+parseInt($("#nota_fatos_recorrente_1").val());
+      }
+
+      if($("#nota_postura_recorrente_1").val() != ''){
+        nota = nota+parseInt($("#nota_postura_recorrente_1").val());
+      }
+
+      if($("#nota_resposta_recorrente_1").val() != ''){
+        nota = nota+parseInt($("#nota_resposta_recorrente_1").val());
+      }
+      
+
+      $("#nota_total_recorrente_1").val(nota);
+    
+      //NOTA 2
+      var nota = 0;
+      if($("#nota_lei_recorrente_2").val() != ''){
+        nota = nota+parseInt($("#nota_lei_recorrente_2").val());
+      }
+
+      if($("#nota_fatos_recorrente_2").val() != ''){
+        nota = nota+parseInt($("#nota_fatos_recorrente_2").val());
+      }
+
+      if($("#nota_postura_recorrente_2").val() != ''){
+        nota = nota+parseInt($("#nota_postura_recorrente_2").val());
+      }
+
+      if($("#nota_resposta_recorrente_2").val() != ''){
+        nota = nota+parseInt($("#nota_resposta_recorrente_2").val());
+      }
+
+      $("#nota_total_recorrente_2").val(nota);
+
+      //NOTA 3
+      var nota = 0;
+      if($("#nota_lei_recorrido_1").val() != ''){
+        nota = nota+parseInt($("#nota_lei_recorrido_1").val());
+      }
+
+      if($("#nota_fatos_recorrido_1").val() != ''){
+        nota = nota+parseInt($("#nota_fatos_recorrido_1").val());
+      }
+
+      if($("#nota_postura_recorrido_1").val() != ''){
+        nota = nota+parseInt($("#nota_postura_recorrido_1").val());
+      }
+
+      if($("#nota_resposta_recorrido_1").val() != ''){
+        nota = nota+parseInt($("#nota_resposta_recorrido_1").val());
+      }
+
+      $("#nota_total_recorrido_1").val(nota);
+
+      //NOTA 4
+      var nota = 0;
+      if($("#nota_lei_recorrido_2").val() != ''){
+        nota = nota+parseInt($("#nota_lei_recorrido_2").val());
+      }
+
+      if($("#nota_fatos_recorrido_2").val() != ''){
+        nota = nota+parseInt($("#nota_fatos_recorrido_2").val());
+      }
+
+      if($("#nota_postura_recorrido_2").val() != ''){
+        nota = nota+parseInt($("#nota_postura_recorrido_2").val());
+      }
+
+      if($("#nota_resposta_recorrido_2").val() != ''){
+        nota = nota+parseInt($("#nota_resposta_recorrido_2").val());
+      }
+
+      $("#nota_total_recorrido_2").val(nota);
+
+    });
+
+    <?php if($formValido == false): ?>
+      $(document).ready(function() {
+        alert('Erro na validação, favor verificar os dados informados e reenviar o formulário!');
+      });
+  <?php endif; ?>
+  </script>

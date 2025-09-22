@@ -1,0 +1,86 @@
+    <div class="container theme-showcase" role="main" style="">
+      <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                  <form class="form-inline" role="form" method="POST" action="#">
+                      <div class="row">
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('empresa')->getLabel(); ?></label>
+                            <?= $this->formElement($formPesquisa->get('empresa')); ?>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row" style="margin-top:20px;">
+                        <button type="submit" name="pesquisar" class="btn btn-success" style="float: right;margin-right: 10px;">
+                        <img src="<?= $this->basePath('img/pesquisar.png'); ?>" alt="Pesquisar"> Pesquisar</button>
+                        <button type="submit" name="limpar" class="btn btn-default" style="float: right;margin-right: 10px;">
+                        <img src="<?= $this->basePath('img/limpar.png'); ?>"> Limpar</button>
+                      </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+       <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('novoQuestionarioAssociado'); ?>'" style="float: right;width:100px;">
+      <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+      Novo</button>
+
+      <ol class="breadcrumb" style="margin-bottom: 0px;">
+        <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+        <li class="active">Questionários</li>
+      </ol>
+    </div>
+
+
+
+    <!-- LISTAGEM DOS EQUIPAMENTOS -->
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Listagem de questionários</h3>
+            </div>
+            <div class="panel-body">
+              <?php if($questionarios->count() > 0): ?>
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Empresa</th>
+                  <th style="text-align: center">Nome</th>
+                  <th style="text-align: center">Período</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach($questionarios as $questionario): ?>
+              <tr>
+                <td style="text-align: center"><?= $questionario['nome_fantasia']; ?></td>
+                <td style="text-align: center"><?= $questionario['nome']; ?></td>
+                <td style="text-align: center"><?= $this->converterData($questionario['data_inicio']); ?> a <?= $this->converterData($questionario['data_fim']); ?></td>
+                <td style="text-align: center;">
+                  <img src="<?= $this->basePath('img/editar.png'); ?>" title="Editar" 
+                  onclick="location.href='<?= $this->url('alterarQuestionarioAssociado', array('idQuestionario' => $questionario['id'])); ?>'" style="cursor: pointer;">
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </table>
+          <?php else: ?>
+            <div class="alert alert-info">Nenhum questionário encontrado!</div>
+        <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container theme-showcase" style="margin-top:0px;" role="main">
+        <div style="float:right;">
+          <?php echo $this->paginationControl($questionarios,
+                                        'Sliding',
+                                        'view/paginator', array('route' => 'empresa')); 
+          ?>
+        </div>
+      </div>

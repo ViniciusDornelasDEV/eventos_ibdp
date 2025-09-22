@@ -1,0 +1,32 @@
+<div class="container theme-showcase" role="main" style="">
+  <img id="profile-img" class="img-responsive center-block" src="<?php echo $this->basePath(strtolower($evento['banner_evento'])); ?>" />
+  <p id="profile-name" class="profile-name-card"></p>
+</div>
+<div class="container theme-showcase" role="main" style="">
+  <div class="card card-container">
+    <form action="" method="POST" class="form-signin" role="form">    
+
+      <div class="row">
+        <label style="text-align: center">
+        <h2 class="form-signin-heading">Informe seu CPF</h2></label>
+        <?= $this->formElement($formCertificado->get('cpf')); ?>
+      </div>
+      <br>
+      <div class="row">
+            <input value="Gerar certificado" class="btn btn-lg btn-warning btn-block" name="submit" type="submit">
+        </div>
+    </form>
+  </div>
+</div>
+
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $.mask.definitions['~'] = "[+-]";
+      $("#cpf").mask("999.999.999-99");
+    });
+  </script>
+
+
+
+    

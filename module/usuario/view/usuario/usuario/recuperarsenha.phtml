@@ -1,0 +1,11 @@
+<?php echo $this->partial('form/recuperaSenha', array('form'=> $form, 'route'=> '', 'reCaptchaValid' => $reCaptchaValid, 'credenciais' => $credenciais)) ?>
+
+
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+	$.mask.definitions['~'] = "[+-]";
+    $("#cpf").mask("999.999.999-99");
+  });
+</script>

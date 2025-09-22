@@ -1,0 +1,10 @@
+<div class="container theme-showcase" role="main" style="">
+
+</div>
+<div class="container theme-showcase" role="main" style="">
+  <div class="card card-container">
+            <img id="profile-img" class="img-responsive center-block" src="<?php echo $this->basePath('img/logoCompeticao.jpeg'); ?>" />
+            <p id="profile-name" class="profile-name-card"></p>
+    <?php echo $this->partial('form/login', array('form'=> $form, 'route'=> '', 'recuperarSenha' => false, 'reCaptchaValid' => $reCaptchaValid, 'credenciais' => $credenciais)) ?>
+  </div>
+</div>

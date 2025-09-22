@@ -1,0 +1,55 @@
+ <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+
+    <?php if(!empty($associado['id_pagamento'])): ?>
+      <button type="button" class="btn btn-danger" onclick="alerta('<?= $this->url('cancelarPagamentoAnuidade', array('idAssociado' => $idAssociado, 'idAnuidade' => $idAnuidade)) ?>', 'Tem certeza que deseja cancelar o pagamento?');" style="float: right;">
+      <img src="<?php echo $this->basePath('img/deletar.png') ?>" alt="Cancelar pagamento">
+      Cancelar pagamento</button>
+    <?php endif; ?>
+    
+    <?php if($comprovante): ?>
+      <a href="<?= $this->basePath($comprovante['arquivo']); ?>" download>
+        <button type="button" class="btn btn-success" style="float: right;margin-right: 5px;">
+        <img src="<?php echo $this->basePath('img/download.png') ?>" alt="Download">
+        Download do comprovante</button>
+      </a>
+    <?php endif; ?>
+
+    <ol class="breadcrumb" style="margin-bottom: 0px;">
+      <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+      <li><a href="<?= $this->url('listaPagamentosAssociados'); ?>">Pagamentos</a></li>
+      <li class="active">Pagar anuidade</li>
+    </ol>
+  </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">Pagar anuidade - <?= $associado['nome_fantasia'] ?> - <?= $associado['descricao_anuidade'] ?>, cliente: <?= $associado['nome_completo'] ?></h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <?php echo $this->partial('form/generic', array('form'=> $formPagar, 'route'=> '')) ?>
+
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#nome_fantasia').attr('disabled', 'disabled');
+        $('#nome_completo').attr('disabled', 'disabled');
+        $('#cpf').attr('disabled', 'disabled');
+        $('#nome_categoria').attr('disabled', 'disabled');
+        $('#descricao_anuidade').attr('disabled', 'disabled');
+        $('#periodo').attr('disabled', 'disabled');
+        $('#nome_usuario').attr('disabled', 'disabled');
+        $("#data_pagamento").mask("99/99/9999");
+        $("#data_baixa").mask("99/99/9999 99:99:99");
+        $('#valor').attr('disabled', 'disabled');
+      });
+    </script>
+   

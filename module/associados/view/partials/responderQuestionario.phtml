@@ -1,0 +1,46 @@
+    <form name="frmQuestionario" method="POST" action="<?= $this->url('responderQuestionarioAssociado', array('idQuestionario' => $idQuestionario)) ?>">
+    <?php if(count($questionario) > 0): ?>
+      <?php foreach ($questionario as $questao): ?>
+          <?php 
+            if($idQuestao != $questao['id']){
+              $idQuestao = $questao['id'];
+              echo '<hr>';
+            } 
+          ?>
+                <label><?= $questao['ordem'] ?>ª - <?= $questao['enunciado'] ?></label>
+                <?php if(count($questao['alternativas']) > 0): ?>
+                  <?php foreach ($questao['alternativas'] as $alternativa) : ?>
+                    <div class="row">
+                      <div class='col-sm-12'>
+                        <?php if($alternativa['tipo_alternativa'] == 'F'): ?>
+                          <div class="radio">
+                              <label>
+                                <input type="radio" required name="radio_<?= $questao['id'] ?>" value="<?= $alternativa['id'] ?>"> 
+                                <?= $alternativa['ordem_alternativa'] ?> - 
+                                <?= $alternativa['titulo_alternativa'] ?></input>
+                              </label>
+                          </div>
+                        <?php else: ?>
+                          <?= $alternativa['ordem_alternativa'] ?> - 
+                        <?= $alternativa['titulo_alternativa'] ?>
+                        <textarea name="text_<?= $alternativa['id'] ?>" class="form-control"></textarea>
+                        <?php endif; ?>
+                      </div>
+                    </div>
+                  <?php endforeach; ?>
+                  <?= $this->formElementErrors($form->get('radio_'.$questao['id']), array('class' => 'alert alert-danger')); ?>
+                <?php else: ?>
+                    <div class="alert alert-info">Nenhuma alternativa encontrada!</div>
+                <?php endif; ?>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <div class="alert alert-info">Nenhuma questão encontrada!</div>
+    <?php endif; ?>
+
+  <div class="row text-center" style="margin-top:20px;">
+    <button type="submit" class="btn btn-danger btn-lg" style="width: 98%">
+      <img src="<?php echo $this->basePath('img/enviar32.png') ?>" alt="Salvar">
+      Salvar
+    </button>
+  </div>
+</form>

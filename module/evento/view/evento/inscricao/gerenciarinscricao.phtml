@@ -1,0 +1,326 @@
+<div style="margin-bottom:10px;padding:0px;" role="main" class="container theme-showcase">
+	<?php if(($tipoUsuario == 1 || $tipoUsuario == 3)): ?>
+		<button type="button" class="btn btn-danger" onclick="location.href='<?= $this->url('mudarCategoria', array('inscricao' => $inscricao->id)); ?>'" style="float: right;">
+	      <img src="<?php echo $this->basePath('img/alterarStatus.png') ?>" alt="Alterar status da inscrição">
+	      Mudar categoria</button>
+		
+		<?php if($inscricao->status_pagamento != 2 && $inscricao->status_pagamento != 8 && $inscricao->status_pagamento != 9): ?>
+			<button type="button" class="btn btn-success" onclick="location.href='<?= $this->url('pagarInscricao', array('inscricao' => $inscricao->id)); ?>'" style="float: right;margin-right: 5px;">
+		      <img src="<?php echo $this->basePath('img/money.png') ?>" alt="Alterar status da inscrição">
+		      Pagar inscrição</button>
+
+		      <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('inserirCodigoPromocional', array('inscricao' => $inscricao->id)); ?>'" style="float: right;margin-right: 5px;">
+		      <img src="<?php echo $this->basePath('img/ticket16.png') ?>" alt="Inserir código promocional">
+		      Código promocional</button>
+		<?php endif; ?>
+
+
+		<?php if(!empty($inscricao['comprovante'])): ?>
+	      <a href="<?= $this->url('downloadComprovante', array('idInscricao' => $inscricao['id'])); ?>">
+	        <button type="button" class="btn btn-success" style="float: right;margin-right: 5px;">
+	        <img src="<?php echo $this->basePath('img/download.png') ?>" alt="Novo">
+	        Download do comprovante</button>
+	      </a>
+	    <?php endif; ?>
+	<?php endif; ?>
+	
+	<ol style="margin-bottom: 0px;" class="breadcrumb">
+	  <?php if($tipoUsuario == 2): ?>
+	  <li><a href="<?= $this->url('inscricoesCliente'); ?>">Inscriçõoes realizadas</a></li>
+	  <?php else: ?>
+	    <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+	  	<li><a href="<?= $this->url('visualizaInscricoes'); ?>">Inscriçõoes realizadas</a></li>
+	  <?php endif; ?>
+	  <li class="active">Detalhes da inscrição</li>
+	</ol>
+
+</div>
+
+<!-- DADOS DO CLIENTE -->
+<div role="main" class="container theme-showcase">
+    <div class="row">
+		<div class="panel panel-info">
+        	<div class="panel-heading">
+              <h3 class="panel-title">Dados do cliente - <a href="">Clique aqui para visualizar detalhes</a></h3>
+            </div>
+            <div class="panel-body">
+            	<div class="form-group">
+			    	<div class="row">
+			    		<div class="col-sm-4">
+			            	<div id="group-nome" class="form-group">
+				        		<label style="width:139px;" for="nome">Nome do cliente:</label>
+				    			<input type="text" disabled="true" value="<?= $inscricao->nome_completo; ?>" class="form-control">	        		     		
+				        	</div>
+		            	</div>
+
+		            	<div class="col-sm-4">
+			            	<div id="group-nome" class="form-group">
+				        		<label style="width:139px;" for="nome">CPF:</label>
+				    			<input type="text" disabled="true" value="<?= $inscricao->cpf; ?>" class="form-control">	        		     		
+				        	</div>
+		            	</div>
+
+		            	<div class="col-sm-4">
+			            	<div id="group-nome" class="form-group">
+				        		<label style="width:139px;" for="nome">CNPJ:</label>
+				    			<input type="text" disabled="true" value="<?= $inscricao->cnpj_cliente; ?>" class="form-control">	        		     		
+				        	</div>
+		            	</div>
+			    	</div>
+
+			    	<?php if($tipoUsuario == 1 || $tipoUsuario == 3): ?>
+				    	<div class="row">
+				    		<div class="col-sm-12">
+				    			<button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('clienteAlterar', array('inscricao' => $inscricao->id)); ?>'" style="float: right;margin-top:5px;">
+									     	<img src="<?php echo $this->basePath('img/editar.png') ?>" alt="Boleto">
+									      	Editar cliente
+									 </button>
+				    		</div>
+				    	</div>
+			    	<?php endif; ?>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- DADOS DO EVENTO -->
+<div role="main" class="container theme-showcase">
+    <div class="row">
+		<div class="panel panel-warning">
+        	<div class="panel-heading">
+              <h3 class="panel-title">Dados do evento - <a href="">Clique aqui para visualizar detalhes</a></h3>
+            </div>
+            <div class="panel-body">
+            	<div class="form-group">
+			    	<div class="row">
+			    		<div class="col-sm-4">
+			            	<div id="group-nome" class="form-group">
+				        		<label style="width:139px;" for="nome">Nome do evento:</label>
+				    			<input type="text" disabled="true" value="<?= $inscricao->nome_evento; ?>" class="form-control">	        		     		
+				        	</div>
+		            	</div>
+
+		            	<div class="col-sm-4">
+			            	<div id="group-nome" class="form-group">
+				        		<label style="width:139px;" for="nome">Período:</label>
+				        		<?php
+				        			$periodo = $this->converterData($evento->data_inicio).' a '.
+				        						$this->converterData($evento->data_fim);
+				        		?>
+				    			<input type="text" disabled="true" value="<?= $periodo; ?>" class="form-control">        		     		
+				        	</div>
+		            	</div>
+
+		            	<div class="col-sm-4">
+			            	<div id="group-nome" class="form-group">
+				        		<label style="width:139px;" for="nome">Local:</label>
+				        		<?php
+				        			$local = $evento->local.'<br>';
+				        			$local .= $evento->nome_cidade.' - '.$evento->uf;
+				        		?>
+				    			<div><?= $local; ?></div>       		     		
+				        	</div>
+		            	</div>
+			    	</div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- DADOS DA INSCRIÇÃO -->
+<div role="main" class="container theme-showcase">
+    <div class="row">
+		<div class="panel panel-danger">
+        	<div class="panel-heading">
+              <h3 class="panel-title">Dados da inscrição</h3>
+            </div>
+            <div class="panel-body">
+            	<div class="form-group">
+			    	<div class="row">
+			    		<div class="col-sm-4">
+			            	<div id="group-nome" class="form-group">
+				        		<label style="width:139px;" for="nome">Status:</label>
+				    			<input type="text" disabled="true" value="<?= $inscricao->nome_status_inscricao; ?>" class="form-control">	        		     		
+				        	</div>
+		            	</div>
+
+		            	<div class="col-sm-4">
+			            	<div id="group-nome" class="form-group">
+				        		<label style="width:139px;" for="nome">Data de inscrição:</label>
+				    			<input type="text" disabled="true" value="<?= $this->converterData($inscricao->data_hora_inscricao); ?>" class="form-control">	        		     		
+				        	</div>
+		            	</div>
+
+		            	<div class="col-sm-4">
+			            	<div id="group-nome" class="form-group">
+				        		<label style="width:139px;" for="nome">Como ficou sabendo:</label>
+				    			<input type="text" disabled="true" value="<?= $inscricao->nome_como_ficou_sabendo; ?>" class="form-control">       		     		
+				        	</div>
+		            	</div>
+			    	</div>
+
+			    	<div class="row">
+			    		<div class="col-sm-4">
+			            	<div id="group-nome" class="form-group">
+						        <label style="width:139px;" for="nome">Status do pagamento:</label>
+				        		<div class="row">
+			    					<div class="col-sm-6">
+						    			<input type="text" disabled="true" value="<?= $inscricao->nome_status; ?>" class="form-control">
+			    					</div>
+			    					<div class="col-sm-6">
+			    						<?php if($tipoUsuario == 1 || $tipoUsuario == 3): ?>
+						    			<button class="btn btn-default" onclick="alerta('<?= $this->url("statusPagamento", array('id' => $inscricao->id)); ?>', 'Tem certeza que deseja marcar alterar o status de pagamento da inscrição?');">
+						    				<img src="<?= $this->basePath('img/redirecionar.png'); ?>"> Mudar status
+						    			</button>
+						    		<?php endif; ?>
+						        	</div>
+			    				</div>
+				        	</div>
+		            	</div>
+
+		            	<div class="col-sm-4">
+			            	<div id="group-nome" class="form-group">
+				        		<label style="width:139px;" for="nome">Forma de pagamento:</label>
+				    			<input type="text" disabled="true" value="<?= $inscricao->nome_forma_pagamento; ?>" class="form-control">       		     		
+				        	</div>
+		            	</div>
+			    	</div>
+
+			    	<?php if(($inscricao->checkout_cielo_order_number == 'N' || $inscricao->status_pagamento == 3 || $inscricao->status_pagamento == 5) && empty($inscricao->token_paypal)): ?>
+			    		<?php if($inscricao->status_pagamento != 2): ?>
+			    		<div class="row">
+				    		<div class="col-sm-12">
+					    		<button type="button" class="btn-lg btn-danger" onclick="window.open('<?= $this->url('atividades'); ?>', '_blank');" style="float: left;margin-top:5px;">
+									     	<img src="<?php echo $this->basePath('img/money.png') ?>" alt="Boleto">
+									      	Para finalizar sua inscrição realize o pagamento
+									 </button>
+								
+				    		</div>
+				    	</div>
+				    <?php endif; ?>
+			    	<?php endif; ?>
+
+				    	<div class="row">
+				    		<div class="col-sm-4">
+				            	<div id="group-nome" class="form-group">
+					        		<label style="width:139px;" for="nome">Desconto:</label>
+					        		<?php 
+					        			$porcentagem = '0%';
+					        			if($desconto){
+					        				$porcentagem = $desconto->desconto.'%';
+					        			}
+					        		?>
+					    			<input type="text" disabled="true" value="<?= $porcentagem; ?>" class="form-control">	        		     		
+					        	</div>
+			            	</div>
+
+			            	<div class="col-sm-4">
+				            	<div id="group-nome" class="form-group">
+					        		<label style="width:139px;" for="nome">Código do desconto:</label>
+					    			<input type="text" disabled="true" value="<?= $inscricao->codigo_desconto; ?>" class="form-control">	        		     		
+					        	</div>
+			            	</div>
+
+			            	<div class="col-sm-4">
+				            	<div id="group-nome" class="form-group">
+					        		<label style="width:139px;" for="nome">Categoria de inscrição:</label>
+					    			<input type="text" disabled="true" value="<?= $inscricao->nome_categoria; ?>" class="form-control">	        		     		
+					        	</div>
+			            	</div>
+				    	</div>
+
+
+				    	<div class="row">
+				    		<div class="col-sm-4">
+				            	<div id="group-nome" class="form-group">
+					        		<label style="width:139px;" for="nome">Forma de pagamento:</label>
+					        		<?php 
+					        			$formaPagamento = $inscricao->nome_forma_pagamento;
+					        			if($inscricao->id_forma == 5){
+					        				$formaPagamento .= ' - TOKEN: '.$inscricao->token_paypal;
+					        			}
+					        		?>
+					    			<input type="text" disabled="true" value="<?= $formaPagamento; ?>" class="form-control">	        		     		
+					        	</div>
+			            	</div>
+
+			            	<div class="col-sm-4">
+				            	<div id="group-nome" class="form-group">
+					        		<label style="width:139px;" for="nome">Número do documento:</label>
+					        		<?php 
+					        			$numeroCielo = $inscricao->checkout_cielo_order_number;
+					        			if($numeroCielo == 'Confirmado por planílha'){
+					        				$numeroCielo = $inscricao->id;
+					        			}
+					        		?>
+					    			<input type="text" disabled="true" value="<?= $numeroCielo; ?>" class="form-control">
+
+					        	</div>
+			            	</div>
+
+			            	<div class="col-sm-4">
+				            	<div id="group-nome" class="form-group">
+					        		<label style="width:139px;" for="nome">Data de pagamento:</label>
+					    			<input type="text" disabled="true" value="<?= $this->converterData($inscricao->data_hora_pagamento); ?>" class="form-control">     		     		
+					        	</div>
+			            	</div>
+				    	</div>
+
+				    	<div class="row">
+				    		<div class="col-sm-4">
+				            	<div id="group-nome" class="form-group">
+					        		<label style="width:139px;" for="nome">Código líder:</label>
+					    			<input type="text" disabled="true" value="<?= $inscricao->codigo_lider; ?>" class="form-control">	        		     		
+					        	</div>
+			            	</div>
+
+			            	<div class="col-sm-4">
+				            	<div id="group-nome" class="form-group">
+					        		<label style="width:139px;" for="nome">Membros do time:</label>
+					    			<input type="text" disabled="true" value="<?= $inscricao->quantidade_membros; ?>" class="form-control">	        		     		
+					        	</div>
+			            	</div>
+
+			            	<div class="col-sm-4">
+				            	<div id="group-nome" class="form-group">
+					        		<label style="width:139px;" for="nome">Quantidade de membros cadastrados:</label>
+					    			<input type="text" disabled="true" value="<?= $inscricao->quantidade_utilizada; ?>" class="form-control">       		     		
+					        	</div>
+			            	</div>
+				    	</div>
+
+				   		<div class="row">
+				    		<div class="col-sm-4">
+				            	<div id="group-nome" class="form-group">
+					        		<label style="width:139px;" for="nome">Valor bruto:</label>
+					    			<input type="text" disabled="true" value="<?= $this->exibirMonetario($inscricao->valor_bruto); ?>" class="form-control">	        		     		
+					        	</div>
+			            	</div>
+			            	<div class="col-sm-4">
+				            	<div id="group-nome" class="form-group">
+					        		<label style="width:139px;" for="nome">Valor líquido:</label>
+					    			<input type="text" disabled="true" value="<?= $this->exibirMonetario($inscricao->valor_total); ?>" class="form-control">	        		     		
+					        	</div>
+			            	</div>
+			            </div>
+				</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php if($tipoUsuario == 1 || $tipoUsuario == 3): ?>
+	<?php if($inscricao['status_pagamento'] != 2 && $inscricao['status_pagamento'] != 8): ?>
+	<div role="main" class="container theme-showcase">
+		<button type="button" class="btn btn-danger" onclick="location.href='<?= $this->url('deletarInscricao', array('id' => $inscricao->id)); ?>'" style="float: right;margin-top:5px;">
+		                        <img src="<?php echo $this->basePath('img/deletar.png') ?>" alt="Boleto">
+		                          Excluir Inscrição
+		   </button>
+	</div>
+	<?php endif; ?>
+<?php endif; ?>

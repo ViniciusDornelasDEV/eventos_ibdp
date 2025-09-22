@@ -1,0 +1,48 @@
+<?php if($inscricoes->count() > 0): ?>
+              <table class="table">
+                <tr>
+                  <th style="text-align: center"><a onclick="ordenarInscricoes('emp.nome_fantasia', '<?= $this->ordenarInscricao('emp.nome_fantasia', $params['ordenarPor'], $ordem); ?>');">Empresa</a></th>
+                  <th style="text-align: center"><a onclick="ordenarInscricoes('e.nome_evento', '<?= $this->ordenarInscricao('e.nome_evento', $params['ordenarPor'], $ordem); ?>');">Evento</a></th>
+                  <th style="text-align: center"><a onclick="ordenarInscricoes('si.nome', '<?= $this->ordenarInscricao('si.nome', $params['ordenarPor'], $ordem); ?>');">Status</a></th>
+                  <th style="text-align: center"><a onclick="ordenarInscricoes('c.nome_completo', '<?= $this->ordenarInscricao('c.nome_completo', $params['ordenarPor'], $ordem); ?>');">Cliente</a></th>
+                  <th style="text-align: center"><a onclick="ordenarInscricoes('c.CPF', '<?= $this->ordenarInscricao('c.CPF', $params['ordenarPor'], $ordem); ?>');">CPF</a></th>
+                  <th style="text-align: center"><a onclick="ordenarInscricoes('valor_total', '<?= $this->ordenarInscricao('valor_total', $params['ordenarPor'], $ordem); ?>');">Valor</a></th>
+                  <th style="text-align: center"><a onclick="ordenarInscricoes('data_hora_inscricao', '<?= $this->ordenarInscricao('data_hora_inscricao', $params['ordenarPor'], $ordem); ?>');">Data/inscrição</a></th>
+                  <th style="text-align: center"><a onclick="ordenarInscricoes('data_hora_pagamento', '<?= $this->ordenarInscricao('data_hora_pagamento', $params['ordenarPor'], $ordem); ?>');">data/pagamento</a></th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach($inscricoes as $inscricao): ?>
+              <tr>
+                <td style="text-align: center"><?= $inscricao['nome_fantasia']; ?></td>
+                <td style="text-align: center"><?= $inscricao['sigla']; ?> - <?= $inscricao['nome_evento'] ?></td>
+                <td style="text-align: center"><?= $inscricao['status_inscricao']; ?></td>
+                <td style="text-align: center"><?= $inscricao['nome_completo']; ?></td>
+                <td style="text-align: center"><?= $inscricao['cpf']; ?> 
+                  <?php if(!empty($inscricao['cnpj'])){
+                          echo ' / '.$inscricao['cnpj'];
+                        } 
+                  ?>
+                </td>
+                <td style="text-align: center"><?= $this->exibirMonetario($inscricao['valor_total']); ?></td>
+                <?php 
+                  $dataInscricao = explode(' ', $inscricao['data_hora_inscricao']);
+                  $dataPagamento = explode(' ', $inscricao['data_hora_pagamento']);
+                  if(isset($dataPagamento[0])){
+                    $dataPagamento = $this->converterData($dataPagamento[0]);
+                  }
+                ?>
+                <td style="text-align: center"><?= $this->converterData($dataInscricao[0]); ?></td>
+                <td style="text-align: center"><?= $this->caracterVazio($dataPagamento); ?></td>
+                <td style="text-align: center;">
+                  <img src="<?= $this->basePath('img/editar.png'); ?>" onclick="location.href='<?= $this->url('gerenciarInscricao', array('id' => $inscricao['id'])); ?>'" title="Editar"  style="cursor: pointer;">
+
+                  <span style="margin-right:4px;"></span>  
+
+                  <img src="<?= $this->basePath('img/inscricao.png'); ?>" title="Nova inscrição" onclick="location.href='<?= $this->url('realizarInscricao', array('tipoPessoa' => 'F', 'siglaEvento' => $inscricao['sigla'])); ?>'" style="cursor: pointer;">
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </table>
+          <?php else: ?>
+             <div class="alert alert-info">Nenhuma inscrição encontrada!</div>
+        <?php endif; ?>

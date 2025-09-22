@@ -1,0 +1,82 @@
+[24-May-2016 18:49:53 America/Chicago] PHP Parse error:  syntax error, unexpected ',' in /home/timeeventos/public_html/config/autoload/local.php on line 15
+[24-May-2016 18:50:16 America/Chicago] PHP Parse error:  syntax error, unexpected ',' in /home/timeeventos/public_html/config/autoload/local.php on line 16
+[24-May-2016 18:50:24 America/Chicago] PHP Parse error:  syntax error, unexpected ',' in /home/timeeventos/public_html/config/autoload/local.php on line 16
+[28-Nov-2016 13:14:49 America/Sao_Paulo] PHP Fatal error:  Uncaught exception 'Zend\Permissions\Acl\Exception\InvalidArgumentException' with message 'Resource 'ordenarInscricoes' not found' in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php:291
+Stack trace:
+#0 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php(731): Zend\Permissions\Acl\Acl->getResource('ordenarInscrico...')
+#1 /home/timeeventos/public_html/module/application/Module.php(184): Zend\Permissions\Acl\Acl->isAllowed(Object(Zend\Permissions\Acl\Role\GenericRole), 'ordenarInscrico...', 'ordenarInscrico...')
+#2 /home/timeeventos/public_html/module/application/Module.php(59): Application\Module->verificaAcesso(Object(Zend\Authentication\Storage\Session), Object(Usuario\Model\Usuario), 'ordenarInscrico...')
+#3 [internal function]: Application\Module->onBootstrap(Object(Zend\Mvc\MvcEvent))
+#4 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(468): cal in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php on line 291
+[30-Nov-2016 14:29:44 America/Sao_Paulo] PHP Fatal error:  Uncaught exception 'Zend\Permissions\Acl\Exception\InvalidArgumentException' with message 'Resource 'uploadSocios' not found' in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php:291
+Stack trace:
+#0 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php(731): Zend\Permissions\Acl\Acl->getResource('uploadSocios')
+#1 /home/timeeventos/public_html/module/application/Module.php(184): Zend\Permissions\Acl\Acl->isAllowed(Object(Zend\Permissions\Acl\Role\GenericRole), 'uploadSocios', 'uploadSocios')
+#2 /home/timeeventos/public_html/module/application/Module.php(59): Application\Module->verificaAcesso(Object(Zend\Authentication\Storage\Session), Object(Usuario\Model\Usuario), 'uploadSocios')
+#3 [internal function]: Application\Module->onBootstrap(Object(Zend\Mvc\MvcEvent))
+#4 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(468): call_user_func(Array, Object(Zen in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php on line 291
+[06-Dec-2016 18:04:25 America/Sao_Paulo] PHP Fatal error:  Class 'Evento\Model\InscricaoCamposEvento' not found in /home/timeeventos/public_html/module/evento/Module.php on line 79
+[07-Dec-2016 18:14:20 America/Sao_Paulo] PHP Warning:  session_start(): open(/tmp/sess_deleted, O_RDWR) failed: Permission denied (13) in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Session/SessionManager.php on line 101
+[07-Dec-2016 18:14:20 America/Sao_Paulo] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Session/SessionManager.php:101) in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Session/SessionManager.php on line 101
+[26-Dec-2016 12:43:34 America/Chicago] PHP Fatal error:  Uncaught exception 'Zend\ModuleManager\Listener\Exception\InvalidArgumentException' with message 'Config being merged must be an array, implement the Traversable interface, or be an instance of Zend\Config\Config. integer given.' in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/ModuleManager/Listener/ConfigListener.php:342
+Stack trace:
+#0 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/ModuleManager/Listener/ConfigListener.php(127): Zend\ModuleManager\Listener\ConfigListener->addConfig('evento', 1)
+#1 [internal function]: Zend\ModuleManager\Listener\ConfigListener->onLoadModule(Object(Zend\ModuleManager\ModuleEvent))
+#2 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(468): call_user_func(Array, Object(Zend\ModuleManager\ModuleEvent))
+#3 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(207): Zend\EventManager\EventManager->triggerLi in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/ModuleManager/Listener/ConfigListener.php on line 342
+[04-Jan-2017 09:48:04 America/Sao_Paulo] PHP Fatal error:  Uncaught exception 'Zend\Permissions\Acl\Exception\InvalidArgumentException' with message 'Resource 'planilhaCielo' not found' in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php:291
+Stack trace:
+#0 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php(731): Zend\Permissions\Acl\Acl->getResource('planilhaCielo')
+#1 /home/timeeventos/public_html/module/application/Module.php(185): Zend\Permissions\Acl\Acl->isAllowed(Object(Zend\Permissions\Acl\Role\GenericRole), 'planilhaCielo', 'planilhaCielo')
+#2 /home/timeeventos/public_html/module/application/Module.php(59): Application\Module->verificaAcesso(Object(Zend\Authentication\Storage\Session), Object(Usuario\Model\Usuario), 'planilhaCielo')
+#3 [internal function]: Application\Module->onBootstrap(Object(Zend\Mvc\MvcEvent))
+#4 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(468): call_user_func(Array, Objec in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php on line 291
+[04-Jan-2017 09:55:18 America/Sao_Paulo] PHP Fatal error:  Uncaught exception 'Zend\Permissions\Acl\Exception\InvalidArgumentException' with message 'Resource 'planilhaCielo' not found' in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php:291
+Stack trace:
+#0 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php(731): Zend\Permissions\Acl\Acl->getResource('planilhaCielo')
+#1 /home/timeeventos/public_html/module/application/Module.php(185): Zend\Permissions\Acl\Acl->isAllowed(Object(Zend\Permissions\Acl\Role\GenericRole), 'planilhaCielo', 'planilhaCielo')
+#2 /home/timeeventos/public_html/module/application/Module.php(59): Application\Module->verificaAcesso(Object(Zend\Authentication\Storage\Session), Object(Usuario\Model\Usuario), 'planilhaCielo')
+#3 [internal function]: Application\Module->onBootstrap(Object(Zend\Mvc\MvcEvent))
+#4 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(468): call_user_func(Array, Objec in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php on line 291
+[04-Jan-2017 09:55:42 America/Sao_Paulo] PHP Fatal error:  Uncaught exception 'Zend\Permissions\Acl\Exception\InvalidArgumentException' with message 'Resource 'planilhaCielo' not found' in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php:291
+Stack trace:
+#0 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php(731): Zend\Permissions\Acl\Acl->getResource('planilhaCielo')
+#1 /home/timeeventos/public_html/module/application/Module.php(185): Zend\Permissions\Acl\Acl->isAllowed(Object(Zend\Permissions\Acl\Role\GenericRole), 'planilhaCielo', 'planilhaCielo')
+#2 /home/timeeventos/public_html/module/application/Module.php(59): Application\Module->verificaAcesso(Object(Zend\Authentication\Storage\Session), Object(Usuario\Model\Usuario), 'planilhaCielo')
+#3 [internal function]: Application\Module->onBootstrap(Object(Zend\Mvc\MvcEvent))
+#4 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(468): call_user_func(Array, Objec in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php on line 291
+[04-Jan-2017 09:56:25 America/Sao_Paulo] PHP Fatal error:  Uncaught exception 'Zend\Permissions\Acl\Exception\InvalidArgumentException' with message 'Resource 'planilhaCielo' not found' in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php:291
+Stack trace:
+#0 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php(731): Zend\Permissions\Acl\Acl->getResource('planilhaCielo')
+#1 /home/timeeventos/public_html/module/application/Module.php(185): Zend\Permissions\Acl\Acl->isAllowed(Object(Zend\Permissions\Acl\Role\GenericRole), 'planilhaCielo', 'planilhaCielo')
+#2 /home/timeeventos/public_html/module/application/Module.php(59): Application\Module->verificaAcesso(Object(Zend\Authentication\Storage\Session), Object(Usuario\Model\Usuario), 'planilhaCielo')
+#3 [internal function]: Application\Module->onBootstrap(Object(Zend\Mvc\MvcEvent))
+#4 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(468): call_user_func(Array, Objec in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php on line 291
+[04-Jan-2017 10:01:59 America/Sao_Paulo] PHP Fatal error:  Uncaught exception 'Zend\Permissions\Acl\Exception\InvalidArgumentException' with message 'Resource 'planilhaCielo' not found' in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php:291
+Stack trace:
+#0 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php(731): Zend\Permissions\Acl\Acl->getResource('planilhaCielo')
+#1 /home/timeeventos/public_html/module/application/Module.php(185): Zend\Permissions\Acl\Acl->isAllowed(Object(Zend\Permissions\Acl\Role\GenericRole), 'planilhaCielo', 'planilhaCielo')
+#2 /home/timeeventos/public_html/module/application/Module.php(59): Application\Module->verificaAcesso(Object(Zend\Authentication\Storage\Session), Object(Usuario\Model\Usuario), 'planilhaCielo')
+#3 [internal function]: Application\Module->onBootstrap(Object(Zend\Mvc\MvcEvent))
+#4 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(468): call_user_func(Array, Objec in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php on line 291
+[04-Jan-2017 12:37:48 America/Sao_Paulo] PHP Fatal error:  Uncaught exception 'Zend\Permissions\Acl\Exception\InvalidArgumentException' with message 'Resource 'planilhaCielo' not found' in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php:291
+Stack trace:
+#0 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php(731): Zend\Permissions\Acl\Acl->getResource('planilhaCielo')
+#1 /home/timeeventos/public_html/module/application/Module.php(185): Zend\Permissions\Acl\Acl->isAllowed(Object(Zend\Permissions\Acl\Role\GenericRole), 'planilhaCielo', 'planilhaCielo')
+#2 /home/timeeventos/public_html/module/application/Module.php(59): Application\Module->verificaAcesso(Object(Zend\Authentication\Storage\Session), Object(Usuario\Model\Usuario), 'planilhaCielo')
+#3 [internal function]: Application\Module->onBootstrap(Object(Zend\Mvc\MvcEvent))
+#4 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(468): call_user_func(Array, Objec in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php on line 291
+[04-Jan-2017 12:38:49 America/Sao_Paulo] PHP Fatal error:  Uncaught exception 'Zend\Permissions\Acl\Exception\InvalidArgumentException' with message 'Resource 'planilhaCielo' not found' in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php:291
+Stack trace:
+#0 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php(731): Zend\Permissions\Acl\Acl->getResource('planilhaCielo')
+#1 /home/timeeventos/public_html/module/application/Module.php(185): Zend\Permissions\Acl\Acl->isAllowed(Object(Zend\Permissions\Acl\Role\GenericRole), 'planilhaCielo', 'planilhaCielo')
+#2 /home/timeeventos/public_html/module/application/Module.php(59): Application\Module->verificaAcesso(Object(Zend\Authentication\Storage\Session), Object(Usuario\Model\Usuario), 'planilhaCielo')
+#3 [internal function]: Application\Module->onBootstrap(Object(Zend\Mvc\MvcEvent))
+#4 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(468): call_user_func(Array, Objec in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php on line 291
+[04-Jan-2017 17:20:57 America/Sao_Paulo] PHP Fatal error:  Uncaught exception 'Zend\Permissions\Acl\Exception\InvalidArgumentException' with message 'Resource 'planilhaCielo' not found' in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php:291
+Stack trace:
+#0 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php(731): Zend\Permissions\Acl\Acl->getResource('planilhaCielo')
+#1 /home/timeeventos/public_html/module/application/Module.php(185): Zend\Permissions\Acl\Acl->isAllowed(Object(Zend\Permissions\Acl\Role\GenericRole), 'planilhaCielo', 'planilhaCielo')
+#2 /home/timeeventos/public_html/module/application/Module.php(59): Application\Module->verificaAcesso(Object(Zend\Authentication\Storage\Session), Object(Usuario\Model\Usuario), 'planilhaCielo')
+#3 [internal function]: Application\Module->onBootstrap(Object(Zend\Mvc\MvcEvent))
+#4 /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/EventManager/EventManager.php(468): call_user_func(Array, Objec in /home/timeeventos/public_html/vendor/zendframework/zendframework/library/Zend/Permissions/Acl/Acl.php on line 291

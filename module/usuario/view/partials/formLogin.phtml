@@ -1,0 +1,45 @@
+<?php if(!$this->params)$this->params = array();?>
+
+<?php $form->prepare(); ?>
+
+<?php if($this->route || $this->route):?>
+    <?php $form->setAttribute('action', $this->url($this->route, $this->params)); ?>
+<?php endif; ?>
+
+<?= $this->form()->openTag($form); ?>
+<?php $formElements = $form->getElements(); ?>
+		<div class="row">
+        	<h2 class="form-signin-heading">Favor logar-se</h2>
+    	</div>
+
+    	<div class="row">
+        	<?= $this->formElement($formElements['login']); ?>
+        </div>
+
+        <div class="row">
+        	<?= $this->formElement($formElements['password']); ?>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="g-recaptcha" data-sitekey="<?= $credenciais['public'] ?>"></div>
+                <?php if($reCaptchaValid == false): ?>
+                    <div class="alert alert-danger" role="alert">
+                      Informe que não é um robô!
+                    </div>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <?php if(!isset($this->recuperarSenha) || $this->recuperarSenha != false): ?>
+        <div class="row">
+	        <label class="checkbox">
+	            <a href="<?= $this->url('recuperarSenha') ?>"> Recuperar senha</a>
+	        </label>
+	       </div>
+        <?php endif; ?>
+
+	    <div class="row" style="margin-top: 10px;">
+            <input type="submit" value="Entrar" class="btn btn-lg btn-warning btn-block" name="submit">
+        </div>
+<?= $this->form()->closeTag($form); ?>

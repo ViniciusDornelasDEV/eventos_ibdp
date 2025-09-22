@@ -1,0 +1,133 @@
+<div class="container theme-showcase" role="main">
+  <img id="profile-img" class="img-responsive center-block" src="<?php echo $this->basePath(strtolower($evento['banner_evento'])); ?>" />
+  <p id="profile-name" class="profile-name-card"></p>
+</div>
+
+<!-- FILTRO DE TRABALHOS -->
+    <div class="container theme-showcase" role="main">
+          <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                  <form class="form-inline" role="form" method="POST" action="#">
+                      <div class="row">
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                             <label for="disabledTextInput"><?=$formPesquisa->get('categoria')->getLabel()?></label>
+                             <?= $this->formElement($formPesquisa->get('categoria')); ?>
+                          </div>
+                        </div>
+
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('titulo')->getLabel(); ?></label>
+                            <?= $this->formElement($formPesquisa->get('titulo')); ?>
+                          </div>
+                        </div>
+
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('autores')->getLabel(); ?></label>
+                            <?= $this->formElement($formPesquisa->get('autores')); ?>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row" style="margin-top:20px;">
+                        <button type="submit" name="limpar" class="btn btn-default" style="float: right;margin-right: 20px;">
+                        <img src="<?= $this->basePath('img/limpar.png'); ?>"> Limpar</button>
+                        <button type="submit" name="pesquisar" class="btn btn-success" style="float: right;margin-right: 10px;">
+                        <img src="<?= $this->basePath('img/pesquisar.png'); ?>" alt="Pesquisar"> Pesquisar</button>
+                      </div>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+
+<!-- LISTA DE TRABALHOS -->
+<div class="container theme-showcase" role="main">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Trabalhos encontrados</h3>
+            </div>
+            <div class="panel-body">
+              <?php if($trabalhos->count() > 0): ?>
+              <?php foreach($trabalhos as $trabalho): ?>
+              	 <div class="panel panel-default" onclick="location.href='<?= $this->url('visualizarTrabalhosPublic', array('idTrabalho' => $trabalho['id_trabalho'])); ?>';" style="cursor: pointer;">
+              	 	<div class="panel-body">
+              	 		<h3><?= $trabalho['titulo_trabalho'] ?></h3>
+              	 		<b>Categoria: </b><?= $trabalho['nome_categoria'] ?><br>
+              	 		<b>Autores: </b><?= $trabalho['autores_trabalho'] ?> <br>
+                    <b>Resumo: </b><?= html_entity_decode($trabalho['resumo_trabalho']) ?>
+              	 	</div>
+              	 </div>
+              <?php endforeach; ?>
+          <?php else: ?>
+             <div class="alert alert-info">Nenhum trabalho encontrado!</div>
+        <?php endif; ?>
+            </div>
+          </div>
+      </div>
+
+      <div class="container theme-showcase" style="margin-top:0px;" role="main">
+        <div style="float:right;">
+          <?php echo $this->paginationControl($trabalhos,
+                                        'Sliding',
+                                        'view/paginator', array('route' => 'listarTrabalhosPublic', 'params' => array('sigla' => $evento['sigla']))); 
+          ?>
+        </div>
+      </div>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var titulos = {
+          <?php foreach ($trabAutocomplete as $trab) : ?>
+            "<?= $trab['id_trabalho'] ?>": "<?= $trab['titulo_trabalho'] ?>",
+          <?php endforeach; ?>
+        }
+        var titulosArray = $.map(titulos, function (value, key) { return { value: value, data: key }; });
+
+        $('#titulo').autocomplete({
+          lookup: titulosArray,
+          lookupFilter: function(suggestion, originalQuery, queryLowerCase) {
+              var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+              return re.test(suggestion.value);
+          },
+          onSelect: function(suggestion) {
+              //$('#titulo').val(suggestion.data);
+          },
+          onHint: function (hint) {
+              //$('#autocomplete-ajax-x').val(hint);
+          },
+          onInvalidateSelection: function() {
+              //$('#selction-ajax').html('You selected: none');
+          }
+        });
+
+        var autores = {
+          <?php foreach ($trabAutocomplete as $trab) : ?>
+            "<?= $trab['id_trabalho'] ?>": "<?= $trab['autores_trabalho'] ?>",
+          <?php endforeach; ?>
+        }
+        var autoresArray = $.map(autores, function (value, key) { return { value: value, data: key }; });
+
+        $('#autores').autocomplete({
+          lookup: autoresArray,
+          lookupFilter: function(suggestion, originalQuery, queryLowerCase) {
+              var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+              return re.test(suggestion.value);
+          },
+          onSelect: function(suggestion) {
+              //$('#autores').val(suggestion.data);
+          },
+          onHint: function (hint) {
+              //$('#autocomplete-ajax-x').val(hint);
+          },
+          onInvalidateSelection: function() {
+              //$('#selction-ajax').html('You selected: none');
+          }
+        });
+      });
+    </script>
+
+    

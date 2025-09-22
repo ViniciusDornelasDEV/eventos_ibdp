@@ -1,0 +1,27 @@
+<?php if(!$this->params)$this->params = array();?>
+
+<?php $form->prepare(); ?>
+
+<?php if($this->route || $this->route):?>
+    <?php $form->setAttribute('action', $this->url($this->route, $this->params)); ?>
+<?php endif; ?>
+
+<?= $this->form()->openTag($form); ?>
+<?php $formElements = $form->getElements(); ?>
+        <h2 class="form-signin-heading">CPF cadastrado</h2>
+
+        <?= $this->formElement($formElements['cpf']); ?>
+        <?= $this->formElementErrors($formElements['cpf'], array('class' => 'alert alert-danger')); ?>
+        <label class="checkbox">
+            <a href="<?= $this->url('login') ?>"> Logar-se</a>
+        </label>
+
+                <div class="g-recaptcha" data-sitekey="<?= $credenciais['public'] ?>"></div>
+                <?php if($reCaptchaValid == false): ?>
+                    <div class="alert alert-danger" role="alert">
+                      Informe que não é um robô!
+                    </div>
+                <?php endif; ?>
+            	
+            	<input name="submit" type="submit" class="btn btn-lg btn-success btn-block" style="margin-top: 20px;" value="Recuperar">
+<?= $this->form()->closeTag($form); ?>

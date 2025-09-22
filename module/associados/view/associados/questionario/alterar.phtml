@@ -1,0 +1,103 @@
+ <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+      <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('novoQuestionarioAssociado'); ?>'" style="float: right;width:100px;">
+      <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+      Novo</button>
+
+    <ol class="breadcrumb" style="margin-bottom: 0px;">
+      <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+      <li><a href="<?= $this->url('listaQuestionarioAssociado'); ?>">Questionários</a></li>
+      <li class="active">Alterar</li>
+    </ol>
+  </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">Alterar questionário</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <?php echo $this->partial('form/questionario', array('form'=> $formQuestionario, 'route'=> '')) ?>
+
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+        <button type="button" class="btn btn-danger" onclick="$.colorbox({href:'<?= $this->url('questionarioQuestaoAssociado', array('idQuestionario' => $questionario->id)); ?>'});" style="float: left;">
+        <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+        Nova questão</button>
+    </div>
+
+    <div class="container theme-showcase" role="main">
+    <?php if(count($questoes) > 0): ?>
+      <?php foreach ($questoes as $questao): ?>
+        <div class="row">
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+                <button type="button" class="btn btn-default" onclick="$.colorbox({href:'<?= $this->url('questaoAlternativaAssociado', array('idQuestionario' => $questionario->id, 'idQuestao' => $questao['id'])); ?>'});" style="float: right;">
+                  <img src="<?php echo $this->basePath('img/add.png') ?>" alt="Novo"></button>
+              <h4>
+                <span style="cursor: pointer;" onclick="$.colorbox({href:'<?= $this->url('questionarioQuestaoAssociado', array('idQuestionario' => $questionario->id, 'idQuestao' => $questao['id'])); ?>'});">
+                  <?= $questao['ordem'] ?>ª - <?= $questao['enunciado'] ?>
+                </span>
+              </h4>
+
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                <?php if(count($questao['alternativas']) > 0): ?>
+                  <?php foreach ($questao['alternativas'] as $alternativa) : ?>
+                    <div class="row">
+                      <div class='col-sm-12' style="cursor: pointer;" onclick="$.colorbox({href:'<?= $this->url('questaoAlternativaAssociado', array(
+                          'idQuestionario' => $questionario->id, 
+                          'idQuestao' => $questao['id'], 
+                          'idAlternativa' => $alternativa['id']
+                        )); ?>'});">
+                        
+                        <?php if($alternativa['tipo_alternativa'] == 'F'): ?>
+                          <div class="radio">
+                            <label>
+                              <input type="radio" name="radio<?= $questao['id'] ?>"><b>
+                              <?= $alternativa['ordem_alternativa'] ?> - 
+                              <?= $alternativa['titulo_alternativa'] ?>
+                            </label></b>
+                          </div>
+                        <?php else: ?>
+                          <label><?= $alternativa['ordem_alternativa'] ?> - 
+                        <?= $alternativa['titulo_alternativa'] ?></label>
+                        <textarea class="form-control"></textarea>
+                        <?php endif; ?>
+                      </div>
+                    </div>
+                  <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="alert alert-info">Nenhuma alternativa encontrada!</div>
+                <?php endif; ?>
+              </div>
+            </div>
+          </div>
+        </div>
+      <?php endforeach; ?>
+    <?php else: ?>
+      <div class="alert alert-info">Nenhuma questão encontrada!</div>
+    <?php endif; ?>
+    </div>
+    
+    <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+        <button type="button" class="btn btn-danger" onclick="$.colorbox({href:'<?= $this->url('questionarioQuestaoAssociado', array('idQuestionario' => $questionario->id)); ?>'});" style="float: left;">
+        <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+        Nova questão</button>
+    </div>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#data_inicio").mask("99/99/9999");
+        $("#data_fim").mask("99/99/9999");
+        CKEDITOR.replace('descricao');
+        window.location.href='#rodape';
+      });
+    </script>

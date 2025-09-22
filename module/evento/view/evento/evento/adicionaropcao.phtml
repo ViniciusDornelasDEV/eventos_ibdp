@@ -1,0 +1,71 @@
+ <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+    <ol class="breadcrumb" style="margin-bottom: 0px;">
+      <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+      <li><a href="<?= $this->url('eventoAlterar', array('id' => $idEvento)); ?>">Alterar evento</a></li>
+      <li class="active">Nova opção de atividade</li>
+    </ol>
+  </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">Cadastro de opção de atividade</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <?php echo $this->partial('form/generic', array('form'=> $formOpcao, 'route'=> '')) ?>
+
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+
+    <!-- LISTAGEM DE OPCOES -->
+    <?php if(!$opcoes || $opcoes->count() == 0): ?>
+    <div class="container theme-showcase" role="main">
+      <div class="alert alert-info">Nenhuma opção cadastrada para este evento!</div>
+    </div>
+    <?php else: ?>
+
+     <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Opções vinculadas</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Opção</th>
+                  <th style="text-align: center">Data</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach ($opcoes as $opcao): ?>
+              <tr>
+                <td style="text-align: center"><?= $opcao->titulo; ?></td>
+                <td style="text-align: center"><?= $this->converterData($opcao->data); ?></td>
+                <td style="text-align: center">
+                  <img src="<?= $this->basePath('img/editar.png'); ?>" title="Editar" 
+                  onclick="location.href='<?= $this->url('opcaoAtividadeNovo', array('evento' => $idEvento, 'opcao' => $opcao->id)); ?>'" style="cursor: pointer;">
+                  <span style="margin-right:4px;"></span>  
+                  <img src="<?php echo $this->basePath('img/deletar.png') ?>"onclick="location.href='<?= $this->url('opcaoAtividadeDeletar', array('id' => $opcao->id, 'evento' => $idEvento)); ?>'" title="Deletar">
+                </td>
+
+              
+              </tr>
+            <?php endforeach; ?>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    <?php endif; ?>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#data").mask("99/99/9999 99:99");
+      });
+      CKEDITOR.replace('descricao_categoria');
+    </script>

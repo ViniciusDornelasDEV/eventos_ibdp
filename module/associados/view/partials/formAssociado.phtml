@@ -1,0 +1,143 @@
+<?php if(!$this->params)$this->params = array();?>
+<?php $form->prepare(); ?>
+
+<?php if($this->route || $this->route):?>
+    <?php $form->setAttribute('action', $this->url($this->route, $this->params)); ?>
+<?php else: ?>
+	<?php $form->setAttribute('action', "#"); ?>
+<?php endif;?>
+
+<?= $this->form()->openTag($form); ?>
+<?php $row = 0; ?>
+<div class="row" style="margin-top:20px;">
+<?php foreach ($form->getElements() as $element): ?>
+		<?php 
+      if($element->getName() == 'estado' || $element->getName() == 'cidade'){
+        continue;
+      }
+			if($element->getName() == 'endereco_1'){
+				break;
+			}
+
+			$row++; 
+			if($row == 4): 
+				$row = 1;
+		?>
+		</div>
+		<div class="row" style="margin-top:20px;">
+		<?php endif; ?>
+
+	        <div class='col-sm-4'>
+            <div class="form-group" id="group-<?= $element->getName(); ?>">
+	        <?php if($element->getLabel()) :?>
+	        
+	        <label for="<?=$element->getName()?>" style="width:139px;"><?=$element->getLabel()?></label>
+	        
+	        <?php endif;?>
+	        	<?php 
+              echo $this->formElement($element);
+              echo $this->formElementErrors($element, array('class' => 'alert alert-danger'));
+              if($element->getName() == 'uf_internacional'){
+                echo $this->formElement($form->get('estado'));
+                echo $this->formElementErrors($form->get('estado'), array('class' => 'alert alert-danger'));
+              }
+
+              if($element->getName() == 'cidade_internacional'){
+                echo $this->formElement($form->get('cidade'));
+                echo $this->formElementErrors($form->get('cidade'), array('class' => 'alert alert-danger'));
+              } 
+            ?>
+	     		</div>
+            </div>
+
+<?php endforeach; ?>
+</div>
+
+<!-- ENDEREÇOS -->
+<?php for ($i=1; $i < 4; $i++): ?>
+<div class="row" style="margin-top:20px;">
+	<hr>
+		<h4 class="text-center">Endereço comercial <?= $i ?></h4>
+	<hr>
+</div>
+
+<div class="row" style="margin-top:20px;">
+	<div class='col-sm-4'>
+		<div class="form-group" id="group-<?= $form->get('endereco_'.$i)->getName(); ?>">
+            <label for="<?=$form->get('endereco_'.$i)->getName()?>"><?=$form->get('endereco_'.$i)->getLabel()?></label>  
+            <?= $this->formElement($form->get('endereco_'.$i)); ?>
+            <?= $this->formElementErrors($form->get('endereco_'.$i), array('class' => 'alert alert-danger')); ?>
+        </div>
+	</div>
+	<div class='col-sm-4'>
+		<div class="form-group" id="group-<?= $form->get('estado_'.$i)->getName(); ?>">
+            <label for="<?=$form->get('estado_'.$i)->getName()?>"><?=$form->get('estado_'.$i)->getLabel()?></label>  
+            <?= $this->formElement($form->get('estado_'.$i)); ?>
+            <?= $this->formElementErrors($form->get('estado_'.$i), array('class' => 'alert alert-danger')); ?>
+        </div>
+	</div>
+	<div class='col-sm-4'>
+		<div class="form-group" id="group-<?= $form->get('cidade_'.$i)->getName(); ?>">
+            <label for="<?=$form->get('cidade_'.$i)->getName()?>"><?=$form->get('cidade_'.$i)->getLabel()?></label>  
+            <?= $this->formElement($form->get('cidade_'.$i)); ?>
+            <?= $this->formElementErrors($form->get('cidade_'.$i), array('class' => 'alert alert-danger')); ?>
+        </div>
+	</div>
+</div>
+
+<div class="row" style="margin-top:20px;">
+	<div class='col-sm-4'>
+		<div class="form-group" id="group-<?= $form->get('telefone_'.$i)->getName(); ?>">
+            <label for="<?=$form->get('telefone_'.$i)->getName()?>"><?=$form->get('telefone_'.$i)->getLabel()?></label>  
+            <?= $this->formElement($form->get('telefone_'.$i)); ?>
+            <?= $this->formElementErrors($form->get('telefone_'.$i), array('class' => 'alert alert-danger')); ?>
+        </div>
+	</div>
+
+  <div class='col-sm-4'>
+    <div class="form-group" id="group-<?= $form->get('telefone_'.$i.'_2')->getName(); ?>">
+            <label for="<?=$form->get('telefone_'.$i.'_2')->getName()?>"><?=$form->get('telefone_'.$i.'_2')->getLabel()?></label>  
+            <?= $this->formElement($form->get('telefone_'.$i.'_2')); ?>
+            <?= $this->formElementErrors($form->get('telefone_'.$i.'_2'), array('class' => 'alert alert-danger')); ?>
+        </div>
+  </div>
+
+	<div class='col-sm-4'>
+		<div class="form-group" id="group-<?= $form->get('site_'.$i)->getName(); ?>">
+            <label for="<?=$form->get('site_'.$i)->getName()?>"><?=$form->get('site_'.$i)->getLabel()?></label>  
+            <?= $this->formElement($form->get('site_'.$i)); ?>
+            <?= $this->formElementErrors($form->get('site_'.$i), array('class' => 'alert alert-danger')); ?>
+        </div>
+	</div>
+</div>
+
+<div class="row" style="margin-top:20px;">
+	<div class='col-sm-4'>
+		<div class="form-group" id="group-<?= $form->get('email_'.$i)->getName(); ?>">
+            <label for="<?=$form->get('email_'.$i)->getName()?>"><?=$form->get('email_'.$i)->getLabel()?></label>  
+            <?= $this->formElement($form->get('email_'.$i)); ?>
+            <?= $this->formElementErrors($form->get('email_'.$i), array('class' => 'alert alert-danger')); ?>
+        </div>
+	</div>
+</div>
+<?php endfor; ?>
+
+
+
+
+
+<div class="row" style="margin-top:20px;">
+	<?php 
+		if(isset($this->botao)): 
+			echo $this->botao;
+		else:
+	?>
+	<button type="submit" class="btn btn-success" style="float: right;margin-right: 10px;">
+		<img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+		Salvar
+	</button>
+<?php endif; ?>
+</div>
+
+
+<?= $this->form()->closeTag($form); ?>

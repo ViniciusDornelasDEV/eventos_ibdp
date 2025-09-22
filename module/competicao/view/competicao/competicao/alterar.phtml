@@ -1,0 +1,110 @@
+ <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+      <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('competicaoNovo'); ?>'" style="float: right;">
+      <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+      Nova competição</button>
+
+    <ol class="breadcrumb" style="margin-bottom: 0px;">
+      <li><a href="<?= $this->url('competicoes'); ?>">Lista de competições</a></li>
+      <li class="active">Alterar</li>
+    </ol>
+  </div>
+
+
+<!-- ABAS DE NAVEGAÇÃO -->
+<div class="container theme-showcase" role="main">
+  <div class="row">
+
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a style="background-color:#428bca;margin-right: 0px;color: #FFFFFF;">
+          <img src="<?= $this->basePath('img/competicao.png') ?>"> Competição
+        </a>
+      </li>
+      <li>
+        <a style="background-color:#dff0d8;margin-right: 0px;" href="<?= $this->url('competicaoSalas', array('idCompeticao' => $competicao->id)); ?>">
+          <img src="<?= $this->basePath('img/sala.png') ?>"> Salas
+        </a>
+      </li>
+
+      <li>
+        <a style="background-color:#fcf8e3;margin-right: 0px;" href="<?= $this->url('competicaoChaveamento', array('idCompeticao' => $competicao->id)); ?>">
+          <img src="<?= $this->basePath('img/chaveamento.png') ?>"> Chaveamento
+        </a>
+      </li>
+    </ul>
+    
+
+  </div>
+</div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-primary">
+          <div class="panel-heading">
+              <h3 class="panel-title">Alterar competição</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <form class="form-inline" role="form" method="POST" action="#">
+                    <div class="row">
+                      <div class='col-sm-4'>
+                        <div class="form-group">
+                           <label for="disabledTextInput"><?=$formCompeticao->get('nome')->getLabel()?></label>
+                           <?= $this->formElement($formCompeticao->get('nome')); ?>
+                           <?= $this->formElementErrors($formCompeticao->get('nome'), array('class' => 'alert alert-danger')); ?>
+                        </div>
+                      </div>
+
+                      <div class='col-sm-3'>
+                        <div class="form-group">
+                           <label for="disabledTextInput"><?=$formCompeticao->get('inicio')->getLabel()?></label>
+                           <?= $this->formElement($formCompeticao->get('inicio')); ?>
+                           <?= $this->formElementErrors($formCompeticao->get('inicio'), array('class' => 'alert alert-danger')); ?>
+                        </div>
+                      </div>
+
+                      <div class='col-sm-3'>
+                        <div class="form-group">
+                           <label for="disabledTextInput"><?=$formCompeticao->get('fim')->getLabel()?></label>
+                           <?= $this->formElement($formCompeticao->get('fim')); ?>
+                           <?= $this->formElementErrors($formCompeticao->get('fim'), array('class' => 'alert alert-danger')); ?>
+                        </div>
+                      </div>
+
+                      <div class='col-sm-2'>
+                        <div class="form-group">
+                           <label for="disabledTextInput"><?=$formCompeticao->get('ativo')->getLabel()?></label>
+                           <?= $this->formElement($formCompeticao->get('ativo')); ?>
+                           <?= $this->formElementErrors($formCompeticao->get('ativo'), array('class' => 'alert alert-danger')); ?>
+                        </div>
+                      </div>
+                    
+                    </div>
+
+                    <div class="row" style="margin-top:20px;">
+                      <div class='col-sm-12'>
+                         <label for="disabledTextInput"><?=$formCompeticao->get('descricao')->getLabel()?></label>
+                         <?= $this->formElement($formCompeticao->get('descricao')); ?>
+                      </div>
+                    </div>
+
+                    <div class="row" style="margin-top:20px;">
+                      <button type="submit" class="btn btn-primary" style="float: right;margin-right: 10px;">
+                        <img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+                        Salvar
+                      </button>
+                    </div>
+                  </form>
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#inicio").mask("99/99/9999");
+        $("#fim").mask("99/99/9999");
+      });
+      CKEDITOR.replace('descricao');
+    </script>

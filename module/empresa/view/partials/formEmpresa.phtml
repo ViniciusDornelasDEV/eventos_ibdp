@@ -1,0 +1,129 @@
+<?php if(!$this->params)$this->params = array();?>
+<?php $form->prepare(); ?>
+
+<?php if($this->route || $this->route):?>
+    <?php $form->setAttribute('action', $this->url($this->route, $this->params)); ?>
+<?php else: ?>
+	<?php $form->setAttribute('action', "#"); ?>
+<?php endif;?>
+
+<?= $this->form()->openTag($form); ?>
+
+<div class="row" style="margin-top:20px;">
+    <div class='col-sm-4'>
+        <div class="form-group" id="group-<?= $form->get('nome_fantasia')->getName(); ?>">
+            <label for="<?=$form->get('nome_fantasia')->getName()?>" style="width:139px;"><?=$form->get('nome_fantasia')->getLabel()?></label>  
+            <?= $this->formElement($form->get('nome_fantasia')); ?>
+            <?= $this->formElementErrors($form->get('nome_fantasia'), array('class' => 'alert alert-danger')); ?>
+        </div>
+    </div>
+
+    <div class='col-sm-4'>
+        <div class="form-group" id="group-<?= $form->get('cnpj')->getName(); ?>">
+    		<label for="<?=$form->get('cnpj')->getName()?>" style="width:139px;"><?=$form->get('cnpj')->getLabel()?></label>  
+  	    	<?= $this->formElement($form->get('cnpj')); ?>
+	    	<?= $this->formElementErrors($form->get('cnpj'), array('class' => 'alert alert-danger')); ?>
+ 		</div>
+    </div>
+
+    <div class='col-sm-4'>
+        <div class="form-group" id="group-<?= $form->get('responsavel')->getName(); ?>">
+    		<label for="<?=$form->get('responsavel')->getName()?>" style="width:139px;"><?=$form->get('responsavel')->getLabel()?></label>  
+  	    	<?= $this->formElement($form->get('responsavel')); ?>
+	    	<?= $this->formElementErrors($form->get('responsavel'), array('class' => 'alert alert-danger')); ?>
+ 		</div>
+    </div>
+</div>
+
+
+<div class="row" style="margin-top:20px;">
+    <div class='col-sm-4'>
+        <div class="form-group" id="group-<?= $form->get('agencia')->getName(); ?>">
+            <label for="<?=$form->get('agencia')->getName()?>" style="width:139px;"><?=$form->get('agencia')->getLabel()?></label>  
+            <?= $this->formElement($form->get('agencia')); ?>
+            <?= $this->formElementErrors($form->get('agencia'), array('class' => 'alert alert-danger')); ?>
+        </div>
+    </div>
+
+    <div class='col-sm-4'>
+        <div class="form-group" id="group-<?= $form->get('conta')->getName(); ?>">
+    		<label for="<?=$form->get('conta')->getName()?>" style="width:139px;"><?=$form->get('conta')->getLabel()?></label>  
+  	    	<?= $this->formElement($form->get('conta')); ?>
+	    	<?= $this->formElementErrors($form->get('conta'), array('class' => 'alert alert-danger')); ?>
+ 		</div>
+    </div>
+
+    <div class='col-sm-4'>
+        <div class="form-group" id="group-<?= $form->get('conta_dv')->getName(); ?>">
+            <label for="<?=$form->get('conta_dv')->getName()?>" style="width:139px;"><?=$form->get('conta_dv')->getLabel()?></label>  
+            <?= $this->formElement($form->get('conta_dv')); ?>
+            <?= $this->formElementErrors($form->get('conta_dv'), array('class' => 'alert alert-danger')); ?>
+        </div>
+    </div> 
+</div>
+
+
+<div class="row" style="margin-top:20px;">
+    <div class='col-sm-4'>
+        <div class="form-group" id="group-<?= $form->get('endereco')->getName(); ?>">
+            <label for="<?=$form->get('endereco')->getName()?>" style="width:139px;"><?=$form->get('endereco')->getLabel()?></label>  
+            <?= $this->formElement($form->get('endereco')); ?>
+            <?= $this->formElementErrors($form->get('endereco'), array('class' => 'alert alert-danger')); ?>
+        </div>
+    </div>
+
+    <div class='col-sm-4'>
+        <div class="form-group" id="group-<?= $form->get('cidade_uf')->getName(); ?>">
+            <label for="<?=$form->get('cidade_uf')->getName()?>" style="width:139px;"><?=$form->get('cidade_uf')->getLabel()?></label>  
+            <?= $this->formElement($form->get('cidade_uf')); ?>
+            <?= $this->formElementErrors($form->get('cidade_uf'), array('class' => 'alert alert-danger')); ?>
+        </div>
+    </div>
+
+    <div class='col-sm-4'>
+        <div class="form-group" id="group-<?= $form->get('ativo')->getName(); ?>">
+            <label for="<?=$form->get('ativo')->getName()?>" style="width:139px;"><?=$form->get('ativo')->getLabel()?></label>  
+            <?= $this->formElement($form->get('ativo')); ?>
+            <?= $this->formElementErrors($form->get('ativo'), array('class' => 'alert alert-danger')); ?>
+        </div>
+    </div>
+
+</div>
+
+<div class="row" style="margin-top:20px;">
+    <div class='col-sm-4'>
+        <div class="form-group" id="group-aparecer">
+            <label for="aparecer">Pagamento da anuidade:</label><br>
+            <label for="aparecer" style="width:139px;"><?=$form->get('anuidade_paypal')->getLabel()?></label>
+            <?= $this->formElement($form->get('anuidade_paypal')); ?>
+            <?= $this->formElementErrors($form->get('anuidade_paypal'), array('class' => 'alert alert-danger')); ?>
+            <br>
+            <label for="aparecer" style="width:139px;"><?=$form->get('anuidade_cielo')->getLabel()?></label>
+            <?= $this->formElement($form->get('anuidade_cielo')); ?>
+            <?= $this->formElementErrors($form->get('anuidade_cielo'), array('class' => 'alert alert-danger')); ?>
+            <br>
+            <label for="aparecer" style="width:139px;"><?=$form->get('anuidade_deposito')->getLabel()?></label>
+            <?= $this->formElement($form->get('anuidade_deposito')); ?>
+            <?= $this->formElementErrors($form->get('anuidade_deposito'), array('class' => 'alert alert-danger')); ?>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top:20px;">
+
+    <div class='col-sm-12'>
+    	<label for="<?=$form->get('dados_deposito')->getName()?>" style="width:139px;"><?=$form->get('dados_deposito')->getLabel()?></label>  
+	    	<?= $this->formElement($form->get('dados_deposito')); ?>
+    	<?= $this->formElementErrors($form->get('dados_deposito'), array('class' => 'alert alert-danger')); ?>
+    </div>
+</div>
+
+<div class="row" style="margin-top:20px;">
+	<button type="submit" class="btn btn-success" style="float: right;margin-right: 10px;">
+		<img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+		Salvar
+	</button>
+</div>
+
+
+<?= $this->form()->closeTag($form); ?>

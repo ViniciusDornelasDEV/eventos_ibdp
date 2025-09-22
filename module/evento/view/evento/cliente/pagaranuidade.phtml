@@ -1,0 +1,61 @@
+<div class="container theme-showcase" id="divBotoes" role="main">
+  <div class="row text-center">
+    <?php if(empty($pagamento->id_pagamento)): ?>
+        <?php if($pagamento['anuidade_paypal'] == 'N' && $pagamento['anuidade_cielo'] == 'N' && $pagamento['anuidade_deposito'] == 'N'): ?>
+            <div class="alert alert-warning text-center" role="alert">
+              <h1>Nenhuma forma de pagamento ativa, favor contatar o administrador!</h1>
+            </div>
+        <?php endif; ?>
+        <?php if($pagamento['anuidade_paypal'] == 'S'): ?>
+          <div class="col-sm-4" style="margin-top: 10px;">
+            <a href="<?= $this->url('anuidadePaypal', array('idAssociado' => $idAssociado, 'idAnuidade' => $idAnuidade)) ?>">
+              <button type="button" class="btn btn-success" name="paypal" style="width: 90%;height: 100px;">
+                  <img src="<?= $this->basePath('img/paypal.png') ?>" alt="Paypal">
+                  Pagar com paypal
+              </button>
+            </a>
+          </div>
+        <?php endif; ?>
+        <?php if($pagamento['anuidade_cielo'] == 'S'): ?>
+          <div class="col-sm-4" style="margin-top: 10px;">
+              <button type="submit" name="cielo" class="btn btn-success" style="width: 90%;height: 100px;">
+                  <img src="<?= $this->basePath('img/cielo.png') ?>" alt="Cielo">
+                  Pagar com cielo
+              </button>
+          </div>
+        <?php endif; ?>
+        <?php if($pagamento['anuidade_deposito'] == 'S'): ?>
+        <div class="col-sm-4" style="margin-top: 10px;">
+              <button type="button" onclick="transferencia();" name="transferencia" class="btn btn-success" style="width: 90%;height: 100px;">
+                  <img src="<?= $this->basePath('img/banco.png') ?>" alt="Transferência">
+                  Transferência
+              </button>
+          </div>
+        <?php endif; ?>
+    <?php else: ?>
+      <div class="alert alert-success text-center" role="alert">
+        <h1>Anuidade quitada!</h1>
+      </div>
+    <?php endif; ?>
+  </div>
+</div>
+
+
+<div class="container theme-showcase" id="divTransferencia" style="display: none;" role="main">
+  <div class="row text-center">
+      
+    <?= html_entity_decode($pagamento->dados_deposito) ?>
+    
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  function transferencia(){
+    $('#divBotoes').hide();
+    $('#divTransferencia').show();
+    $.colorbox.resize({height:"80%"});
+    //CKEDITOR.replace('mensagem_transferencia');
+  }
+
+</script>

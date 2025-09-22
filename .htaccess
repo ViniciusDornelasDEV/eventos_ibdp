@@ -1,0 +1,11 @@
+##### LOCAWEB - NAO REMOVER #####
+AddHandler php56-script .php
+suPHP_ConfigPath /home/eventosibdp/
+##### LOCAWEB - NAO REMOVER #####
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteRule !\.(js|gif|jpg|png|css|txt|jpeg)$ public/index.php [L]
+RewriteCond %{REQUEST_URI} !^/public/
+RewriteRule ^(.*)$ public/$1 [NC,L]

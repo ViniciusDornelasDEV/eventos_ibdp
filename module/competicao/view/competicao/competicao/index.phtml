@@ -1,0 +1,106 @@
+ <div class="container theme-showcase" role="main" style="margin-bottom:10px;">
+      <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                  <form class="form-inline" role="form" method="POST" action="#">
+                      <div class="row">
+                      
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                             <label for="disabledTextInput"><?=$formPesquisa->get('nome')->getLabel()?></label>
+                             <?= $this->formElement($formPesquisa->get('nome')); ?>
+                          </div>
+                        </div>
+
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('ativo')->getLabel(); ?></label>
+                            <?= $this->formElement($formPesquisa->get('ativo')); ?>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row" style="margin-top:20px;">
+                        <button type="submit" name="limpar" class="btn btn-default" style="float: right;margin-right: 20px;">
+                        <img src="<?= $this->basePath('img/limpar.png'); ?>"> Limpar</button>
+                        <button type="submit" name="pesquisar" class="btn btn-primary" style="float: right;margin-right: 10px;">
+                        <img src="<?= $this->basePath('img/pesquisar.png'); ?>" alt="Pesquisar"> Pesquisar</button>
+                      </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding: 0px;">
+       <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('competicaoNovo'); ?>'" style="float: right;min-width:100px;">
+      <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+      Nova competição</button>
+
+      <ol class="breadcrumb" style="margin-bottom: 0px;">
+        <li><a href="">Home</a></li>
+        <li class="active">Competições</li>
+      </ol>
+    </div>
+    <!-- LISTAGEM DE CATEGORIAS -->
+    <div class="container theme-showcase" role="main" style="margin-bottom:10px;">
+      <div class="row">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Lista de competições</h3>
+            </div>
+            <div class="panel-body">
+              <?php if($competicoes->count() > 0): ?>
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Competição</th>
+                  <th style="text-align: center">Início</th>
+                  <th style="text-align: center">Fim</th>
+                  <th style="text-align: center">Status</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach($competicoes as $competicao): ?>
+              <tr>
+                <td style="text-align: center"><?= $competicao['nome']; ?></td>
+                <td style="text-align: center"><?= $this->converterData($competicao['inicio']); ?></td>
+                <td style="text-align: center"><?= $this->converterData($competicao['fim']); ?></td>
+                <td style="text-align: center"><?= $this->status($competicao['ativo']); ?></td>
+                <td style="text-align: center;">
+                  <img src="<?= $this->basePath('img/editar.png'); ?>" title="Editar" 
+                  onclick="location.href='<?= $this->url('competicaoAlterar', array('idCompeticao' => $competicao['id'])); ?>'" style="cursor: pointer;">
+                  <span style="margin-right:4px;"></span>
+                  <a href="<?= $this->url('competicaoClassificacao', array('idCompeticao' => $competicao['id'])); ?>" target="_blank">
+                    <img src="<?= $this->basePath('img/rank.png'); ?>" title="Classificação" style="cursor: pointer;">
+                  </a>
+                  <span style="margin-right:4px;"></span>
+                  <a href="<?= $this->url('competicaoVisualizarChaveamento', array('idCompeticao' => $competicao['id'])); ?>" target="_blank">
+                    <img src="<?= $this->basePath('img/chaveamento.png'); ?>" title="Chaveamento" style="cursor: pointer;">
+                  </a>
+                  <span style="margin-right:4px;"></span>
+                  <img src="<?= $this->basePath('img/excel.png'); ?>" title="Exportar competição" 
+                  onclick="location.href='<?= $this->url('exportarCompeticao', array('idCompeticao' => $competicao['id'])); ?>'" style="cursor: pointer;">
+                  <span style="margin-right:4px;"></span>
+                  <img src="<?= $this->basePath('img/exportar_excel.png'); ?>" title="Exportar competidores" 
+                  onclick="location.href='<?= $this->url('exportarCompetidores', array('idCompeticao' => $competicao['id'])); ?>'" style="cursor: pointer;">
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </table>
+          <?php else: ?>
+            <div class="alert alert-info">Nenhuma competição encontrada!</div>
+        <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container theme-showcase" style="margin-top:0px;padding: 0px;" role="main">
+        <div style="float:right;">
+          <?php echo $this->paginationControl($competicoes,
+                                        'Sliding',
+                                        'view/paginator', array('route' => 'competicoes', 'color' => '#007bff')); 
+          ?>
+        </div>
+      </div>

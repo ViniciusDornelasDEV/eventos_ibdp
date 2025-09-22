@@ -1,0 +1,134 @@
+<style type="text/css">
+
+.recorrente{
+  background-color: #f8d7da;
+  margin-bottom: 20px;
+  min-height: 204px;
+}
+
+.recorrido{
+ background-color: #dff0d8; 
+ margin-bottom: 20px;
+ min-height: 204px;
+}
+
+.alert-success{
+  font-size: 2rem;
+}
+
+</style>
+
+
+<div class="container theme-showcase" role="main" style="margin-bottom:10px;">
+  <div class="jumbotron">
+    <?= $this->flashMessenger()->render('error', array('alert', 'alert-danger')); ?>   
+    <?= $this->flashMessenger()->render('warning', array('alert',  'alert-warning')); ?>
+    <?= $this->flashMessenger()->render('success', array('alert',  'alert-success')); ?>
+
+    <h1><?= $competicao->nome ?></h1>
+    <p><?= html_entity_decode($competicao->descricao) ?></p>
+    <?php 
+      $form = false;
+    ?>
+    <?php foreach ($rodadas as $rodada): ?>
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <div class="row">
+            <div class="col-sm-12">
+              <h5 class="m-0 font-weight-bold text-primary"><?= substr($this->converterData($rodada['data']), 0, -5) ?> às <?= substr($rodada['hora'], 0, -3) ?></h5>
+            </div>
+          </div>
+          <?php 
+            if($form == false): 
+              $form = true;
+          ?>
+          <div class="row">
+             <form class="form-inline" role="form" method="POST" action="#" style="width: 90%;margin-left: 12px;">
+                        <div class="row">
+                        
+                          <div class='col-sm-4'>
+                            <div class="form-group">
+                               <label for="disabledTextInput"><?=$formPesquisa->get('sala')->getLabel()?></label>
+                               <?= $this->formElement($formPesquisa->get('sala')); ?>
+                            </div>
+                          </div>
+
+                          <div class='col-sm-4'>
+                            <div class="form-group">
+                              <label for="disabledTextInput"><?= $formPesquisa->get('data')->getLabel(); ?></label>
+                              <?= $this->formElement($formPesquisa->get('data')); ?>
+                            </div>
+                          </div>
+
+                          <div class='col-sm-4'>
+                            <div class="form-group">
+                              <label for="disabledTextInput"><?= $formPesquisa->get('hora')->getLabel(); ?></label>
+                              <?= $this->formElement($formPesquisa->get('hora')); ?>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="row" style="margin-top:23px;">
+                          <button type="submit" name="limpar" class="btn btn-secondary" style="float: right;margin-right: 20px;">
+                          <img src="<?= $this->basePath('img/limpar.png'); ?>"> Limpar</button>
+                          <button type="submit" name="pesquisar" class="btn btn-primary" style="float: right;margin-right: 10px;">
+                          <img src="<?= $this->basePath('img/pesquisar.png'); ?>" alt="Pesquisar"> Pesquisar</button>
+                        </div>
+                  </form>
+          </div>
+        <?php endif; ?>
+        </div>
+        <div class="card-body">
+          <?php foreach ($rodada['partidas'] as $partida): ?>
+            
+
+            <?php if(isset($usuario['id_usuario_tipo']) && $usuario['id_usuario_tipo'] == 4): ?>
+              <div class="row">
+                <div class='col-sm-12'>
+                  <a href="<?= $this->url('avaliarCompeticao', array('idPartida' => $partida['id_partida'])); ?>">
+                    <button type="button" name="Avaliar" class="btn btn-primary" style="float: right;margin-bottom: 5px;">
+                      <img src="<?= $this->basePath('img/avaliador.png'); ?>"> Avaliar partida
+                    </button>
+                  </a>
+                </div>
+              </div>
+            <?php endif; ?>
+
+            <div class="row">
+              <div class='col-sm-6'>
+                <div class="list-group">
+                  <span class="list-group-item recorrente">
+                    <h4 class="list-group-item-heading"><?= $partida['nome_recorrente'] ?> <span style="font-size: 12px; font-weight: 600;font-style: italic;">RECORRENTE</span></h4>
+                    <p class="list-group-item-text">
+                       <?= $partida['nome_sala'] ?>
+                    </p>
+                    <div class="col-auto">
+                      
+                    </div>
+                  </span>
+                </div>
+              </div>
+
+
+              <div class='col-sm-6'>
+                <div class="list-group">
+                  <span class="list-group-item recorrido">
+                    <h4 class="list-group-item-heading"><?= $partida['nome_recorrido'] ?> <span style="font-size: 12px; font-weight: 600;font-style: italic;">RECORRIDO</span></h4>
+                    <p class="list-group-item-text">
+                       <?= $partida['nome_sala'] ?>
+                    </p>
+                  </span>
+                </div>
+              </div>
+            </div>
+
+          <?php endforeach; ?>
+
+    
+        </div>
+      </div>
+    <?php endforeach; ?>
+
+
+  </div>
+</div>

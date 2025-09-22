@@ -1,0 +1,176 @@
+<div class="container theme-showcase" role="main">
+  <div class="row">
+    <div class="stepwizard col-md-offset-3">
+        <div class="stepwizard-row setup-panel">
+          <div class="stepwizard-step">
+            <a href="#step-1" type="button" class="btn btn-default btn-circle" disabled="disabled">1</a>
+            <p>Modalidade</p>
+          </div>
+          <div class="stepwizard-step">
+            <a href="#step-2" type="button" class="btn btn-default btn-circle" disabled="disabled">2</a>
+            <p>Cadastro</p>
+          </div>
+          <div class="stepwizard-step">
+            <a href="#step-3" type="button" class="btn btn-primary btn-circle">3</a>
+            <p>Pagamento</p>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6">
+          <!-- GERAR OPÇÕES -->
+        <?php if(!$opcoes || $opcoes->count() == 0): ?>
+            <div class="container theme-showcase" role="main">
+              <div class="alert alert-info">Nenhuma opção de programação!</div>
+            </div>
+            <?php else: ?>
+          <?php 
+            $idOpcao = 0;
+          ?>
+          <form class="form-inline" method="POST" action="#" name="formAtividade">
+          <?php $contadorOpcoes = 0; ?>
+          <?php foreach ($opcoes as $opcao): ?>
+              <?php if($opcao->evento_opcao != $idOpcao){
+                //ESCREVER CABECALHO
+                  $contadorOpcoes++;
+                  if($idOpcao != 0){
+                    $htmlOpcao .= '</div>
+                                </table>
+                                </div>
+                              </div>
+                            </div>';
+                    echo $htmlOpcao;
+                  }
+
+                  $htmlOpcao = '
+                      <div class="row">
+                          <div class="panel panel-warning">
+                            <div class="panel-heading">
+                              <h3 class="panel-title">'.$opcao->titulo.' - '.$this->converterData($opcao->data).'</h3>
+                            </div>
+                            <div class="panel-body">
+                              <table class="table">
+                                <tr>
+                                  <th style="text-align: center">Selecionar</th>
+                                  <th style="text-align: center">Atividade</th>
+                                  <th style="text-align: center">Local</th>
+                                  <th style="text-align: center">Descrição</th>
+                              </tr>
+
+                              <div class="form-group">
+                     ';
+                  $idOpcao = $opcao->evento_opcao; 
+                }
+                ?>
+              <?php 
+                //CORPO
+                $htmlOpcao .= '
+                            <tr>
+                              <td style="text-align: center"><input type="radio" required="required" name="atividade'.$contadorOpcoes.'" value="'.$opcao->id.'"></td>
+                              <td style="text-align: left; font-size:15px;">'.$opcao->atividade.'</td>
+                              <td style="text-align: left; font-size:15px;">'.$opcao->local.'</td>
+                              <td style="text-align: left; font-size:15px;">'.$this->caracterVazio(html_entity_decode($opcao->descricao)).'</td>
+                            </tr>';
+              ?>         
+            <?php endforeach; ?>
+            <?php 
+                $htmlOpcao .= '</div>
+                                </table>
+                                </div>
+                              </div>
+                            </div>';
+                    echo $htmlOpcao;
+            ?>
+    </div>
+
+    <div class="col-sm-6">
+
+      <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Dados da inscrição</h3>
+                </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <div class="row">
+                    <table class="table" style="text-align: center;">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;">Evento</th>
+                                <th style="text-align: center;">Quantidade</th>
+                                <th style="text-align: center;">Valor total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><?= $evento->sigla ?> - <?= $evento->nome ?></td>
+                                <td>
+                                <?php 
+                                  echo $inscricao->quantidade_membros + 1;
+                                ?>
+                                </td>
+                                <td><?= $this->exibirMonetario($inscricao->valor_total) ?></td>
+                            </tr>
+                            <?php 
+                              $desconto = $inscricao->valor_bruto - $inscricao->valor_total;
+                              if($desconto > 0): 
+                            ?>
+                              <tr>
+                                <td colspan="3" style="background-color:#ebccd1;font-weight: bold;">Desconto de <?= $this->exibirMonetario($desconto); ?></td>
+
+                              </tr>
+                            <?php endif; ?>
+                            
+                        </tbody>
+                    </table>
+                  </div>
+                  <?php if(empty((float)$inscricao->valor_total)): ?>
+                    <div class="row text-center">
+                      <div class="col-sm-12">
+                            <button type="submit" class="btn btn-success" name="confirmar">
+                                <img src="<?= $this->basePath('img/ok.png') ?>" alt="Confirmar">
+                                Confirmar inscrição
+                            </button>
+                        </div>
+                    </div>
+                  <?php else: ?>
+                    <div class="row text-center">
+                      <?php if($evento['forma_paypal'] == 'S'): ?>
+                        <div class="col-sm-12" style="margin-top: 10px;">
+                            <button type="submit" class="btn btn-success" name="paypal" style="width: 90%;">
+                                <img src="<?= $this->basePath('img/paypal.png') ?>" alt="Paypal">
+                                Pagar com paypal
+                            </button>
+                        </div>
+                      <?php endif; ?>
+                      <?php if($evento['forma_cielo'] == 'S'): ?>
+                        <div class="col-sm-12" style="margin-top: 10px;">
+                            <button type="submit" name="cielo" class="btn btn-success" style="width: 90%;">
+                                <img src="<?= $this->basePath('img/cielo.png') ?>" alt="Cielo">
+                                Pagar com cielo
+                            </button>
+                        </div>
+                      <?php endif; ?>
+                      <?php if($evento['forma_transferencia'] == 'S'): ?>
+                      <div class="col-sm-12" style="margin-top: 10px;">
+                            <button type="submit" name="transferencia" class="btn btn-success" style="width: 90%;">
+                                <img src="<?= $this->basePath('img/banco.png') ?>" alt="Transferência">
+                                Transferência
+                            </button>
+                        </div>
+                      <?php endif; ?>
+                    </div>
+                  <?php endif; ?>
+            </div>
+          </div>
+      </div>
+    </form>
+
+
+    </div>
+  </div>
+</div>
+    <?php endif; ?>

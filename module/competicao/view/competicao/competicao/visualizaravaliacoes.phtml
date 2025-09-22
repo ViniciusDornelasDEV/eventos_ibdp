@@ -1,0 +1,333 @@
+  <!-- ABAS DE NAVEGAÇÃO -->
+  <div class="container theme-showcase" role="main">
+    <?php foreach ($notas as $numeroAvaliacao => $nota): ?>
+      <button type="button" class="btn btn-primary <?= $numeroAvaliacao == $numAvaliacao ? 'disabled' : '' ?>" onclick="location.href='<?= $this->url('visualizarAvaliacoesCompeticao', array('idChave' => $partida->id, 'avaliacao' => $numeroAvaliacao)); ?>'" style="float: left;margin-right: 5px;">
+       <img src="<?php echo $this->basePath('img/avaliador.png') ?>" alt="Avaliação <?= $numeroAvaliacao+1; ?>"> Avaliação <?= $numeroAvaliacao+1; ?>
+      </button>
+    <?php endforeach; ?>
+
+    <button type="button" class="btn btn-danger" onclick="location.href='<?= $this->url('deletarAvaliacaoCompeticao', array('idCompeticao' => $partida->competicao, 'idChave' => $partida->id, 'idNota' => $notas[$numAvaliacao]['id'])); ?>'" style="float: right;">
+        <img src="<?php echo $this->basePath('img/deletar.png') ?>" alt="Deletar avaliação"> Deletar avaliação
+      </button>
+  </div>
+
+<div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+
+    <ol class="breadcrumb" style="margin-bottom: 0px;">
+      <li><a href="<?= $this->url('competicoes'); ?>">Lista de competições</a></li>
+      <li><a href="<?= $this->url('competicaoChaveamento', array('idCompeticao' => $partida->competicao, 'idChave' => $partida->id)); ?>">chaveamento</a></li>
+      <li class="active">Avaliações</li>
+    </ol>
+  </div>
+
+
+    <div class="container theme-showcase" role="main">
+      <!-- RECORRENTE -->
+      <div class="row">
+          <div class="panel panel-danger">
+          <div class="panel-heading">
+              <h3 class="panel-title"><?= substr($this->converterData($partida['data']), 0, -5) ?> as <?= substr($partida['hora'], 0, -3) ?> <?= $partida['nome_sala'] ?> - recorrente </h3>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                <form class="form-inline" name="frmRecorrente" id="frmRecorrente" role="form" method="POST" action="#">
+                  <div class="row">
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <label>Avaliador: </label>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-3'>
+                        <input type="text" class="form-control" name="nome_avaliador" value="<?= $notas[$numAvaliacao]['nome_avaliador'] ?>">
+                    </div>
+
+                  </div>
+                  <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-3'>
+                      <label>Oradores: </label>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('orador_recorrente_1')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('orador_recorrente_1'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('orador_recorrente_2')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('orador_recorrente_2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                </div>
+                
+                <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-3'>
+                      <p>
+                        <label>Conhecimento da lei e da doutrina</label><br>
+                      </p>
+                    </div>
+
+                    <div class='col-sm-3'>
+                        <?= $this->formElement($formAvaliar->get('nota_lei_recorrente_1')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_lei_recorrente_1'), array('class' => 'alert alert-danger')); ?>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_lei_recorrente_2')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_lei_recorrente_2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                </div>
+                
+                <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-3'>
+                      <p>
+                        <label>Conhecimento dos fatos</label><br>
+                        
+                      </p>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_fatos_recorrente_1')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_fatos_recorrente_1'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_fatos_recorrente_2')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_fatos_recorrente_2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                </div>
+                
+                <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-3'>
+                      <p>
+                        <label>Postura, organização e tempo</label><br>
+                        
+                      </p>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_postura_recorrente_1')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_postura_recorrente_1'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_postura_recorrente_2')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_postura_recorrente_2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-3'>
+                      <p>
+                        <label>Perguntas e respostas</label><br>
+                        
+                      </p>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_resposta_recorrente_1')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_resposta_recorrente_1'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_resposta_recorrente_2')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_resposta_recorrente_2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-3'>
+                      <p>
+                        <label>Pontuação total</label><br>
+                      </p>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_total_recorrente_1')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_total_recorrente_1'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_total_recorrente_2')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_total_recorrente_2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                  </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RECORRIDO -->
+        <div class="row">
+          <div class="panel panel-success">
+          <div class="panel-heading">
+              <h3 class="panel-title"><?= substr($this->converterData($partida['data']), 0, -5) ?> as <?= substr($partida['hora'], 0, -3) ?> <?= $partida['nome_sala'] ?> - recorrido</h3>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                <form class="form-inline" name="frmRecorrido" id="frmRecorrido" role="form" method="POST" action="#">
+                  <div class="row">
+                    <div class='col-sm-3'>
+                      <p>Oradores: </p>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('orador_recorrido_1')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('orador_recorrido_1'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('orador_recorrido_2')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('orador_recorrido_2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-3'>
+                      <p>
+                        <label>Conhecimento da lei e da doutrina</label>
+                        </span>
+                      </p>
+                    </div>
+
+                    <div class='col-sm-3'>
+                        <?= $this->formElement($formAvaliar->get('nota_lei_recorrido_1')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_lei_recorrido_1'), array('class' => 'alert alert-danger')); ?>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_lei_recorrido_2')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_lei_recorrido_2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-3'>
+                      <p>
+                        <label>Conhecimento dos fatos</label>
+                      </p>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_fatos_recorrido_1')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_fatos_recorrido_1'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_fatos_recorrido_2')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_fatos_recorrido_2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-3'>
+                      <p>
+                        <label>Postura, organização e tempo</label>
+                      </p>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_postura_recorrido_1')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_postura_recorrido_1'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_postura_recorrido_2')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_postura_recorrido_2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-3'>
+                      <p>
+                        <label>Perguntas e respostas</label><br>
+                        
+                      </p>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_resposta_recorrido_1')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_resposta_recorrido_1'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_resposta_recorrido_2')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_resposta_recorrido_2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                </div>
+                
+                <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-3'>
+                      <p>
+                        <label>PONTUAÇÃO TOTAL</label>
+                      </p>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_total_recorrido_1')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_total_recorrido_1'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-3'>
+                      <div class="form-group">
+                        <?= $this->formElement($formAvaliar->get('nota_total_recorrido_2')); ?>
+                        <?= $this->formElementErrors($formAvaliar->get('nota_total_recorrido_2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                </div>
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script type="text/javascript">
+        $(document).ready(function(){
+            $("#frmRecorrido :input").prop("disabled", true);
+            $("#frmRecorrente :input").prop("disabled", true);
+        });
+      </script>

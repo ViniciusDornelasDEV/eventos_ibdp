@@ -1,0 +1,103 @@
+<div class="container theme-showcase" role="main" style="margin-bottom:10px;">
+ <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+
+                	<!-- form de pesquisa -->
+                  <form class="form-inline" role="form" method="POST" action="#">
+                      <div class="row">
+                        
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                             <label for="disabledTextInput"><?=$formPesquisa->get('nome_fantasia')->getLabel()?></label>
+                             <?= $this->formElement($formPesquisa->get('nome_fantasia')); ?>
+                          </div>
+                        </div>
+
+                        <div class='col-sm-4'>
+                        <div class="form-group">
+                          <label for="disabledTextInput"><?= $formPesquisa->get('cnpj')->getLabel(); ?></label>
+                          <?= $this->formElement($formPesquisa->get('cnpj')); ?>
+                        </div>
+                      </div>
+                    </div>
+
+                      <div class="row" style="margin-top:20px;">
+                        <button onclick="location.href='<?= $this->url('empresa'); ?>'" type="button" class="btn btn-default" style="float: right;margin-right: 20px;">
+                        <img src="<?= $this->basePath('img/limpar.png'); ?>"> Limpar</button>
+                        <button type="submit" name="enviar" class="btn btn-success" style="float: right;margin-right: 10px;">
+                        <img src="<?= $this->basePath("img/pesquisar.png"); ?>"> Pesquisar</button>
+                      </div>
+
+                </form>
+
+
+            	</div>
+          </div>
+      </div>
+    </div>
+    </div>
+    <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+       <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('empresaNovo'); ?>'" style="float: right;width:100px;">
+      <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+      Novo</button>
+
+      <ol class="breadcrumb" style="margin-bottom: 0px;">
+        <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+        <li class="active">Empresas</li>
+      </ol>
+    </div>
+    <!-- LISTAGEM DOS EQUIPAMENTOS -->
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Listagem de empresas</h3>
+            </div>
+            <div class="panel-body">
+              <?php if($empresas->count() > 0): ?>
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Nome fantasia</th>
+                  <th style="text-align: center">CNPJ</th>
+                  <th style="text-align: center">Responsável</th>
+                  <th style="text-align: center">Status</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach($empresas as $empresa): ?>
+              <tr>
+                <td style="text-align: center"><?= $empresa['nome_fantasia']; ?></td>
+                <td style="text-align: center"><?= $empresa['cnpj']; ?></td>
+                <td style="text-align: center"><?= $empresa['responsavel']; ?></td>
+                <td style="text-align: center"><?= $this->status($empresa['ativo']); ?></td>
+                <td style="text-align: center;">
+                  <img src="<?= $this->basePath('img/editar.png'); ?>" title="Editar" 
+                  onclick="location.href='<?= $this->url('empresaAlterar', array('id' => $empresa['id'])); ?>'" style="cursor: pointer;">
+                  <span style="margin-right:4px;"></span>  
+                  <img src="<?= $this->basePath('img/deletar.png'); ?>" title="Deletar" style="cursor: pointer;" onclick="alerta('<?= $this->url('empresaDeletar', array('id' => $empresa['id'])) ?>', 'desativar');">
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </table>
+          <?php else: ?>
+            <div class="alert alert-info">Nenhuma empresa encontrada!</div>
+        <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container theme-showcase" style="margin-top:0px;" role="main">
+        <div style="float:right;">
+          <?php echo $this->paginationControl($empresas,
+                                        'Sliding',
+                                        'view/paginator', array('route' => 'empresa')); 
+          ?>
+        </div>
+      </div>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        formEmpresa();
+      });
+    </script>

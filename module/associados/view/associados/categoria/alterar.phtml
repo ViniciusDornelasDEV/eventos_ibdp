@@ -1,0 +1,205 @@
+ <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+      <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('categoriaAssociadosNovo'); ?>'" style="float: right;width:100px;">
+      <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+      Novo</button>
+
+      <?php if(!empty($categoria->certificado)): ?>
+      
+        <a  href="<?= $this->url('configurarCertificadoAssociado', array('idCategoria' => $categoria->id)) ?>">                  
+        <button type="button" class="btn btn-danger" style="float: right;margin-right: 5px;">
+        <img src="<?php echo $this->basePath('img/certificado.png') ?>" alt="Configurar certificado">
+        Configurar certificado</button>
+      </a>
+      <?php endif; ?>
+
+    <ol class="breadcrumb" style="margin-bottom: 0px;">
+      <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+      <li><a href="<?= $this->url('listaCategoriaAssociados'); ?>">Categorias</a></li>
+      <li class="active">Novo</li>
+    </ol>
+  </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">Categoria de associado</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <?php echo $this->partial('form/generic', array('form'=> $formCategoria, 'route'=> '')) ?>
+
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+<div class="container theme-showcase" role="main">
+  <div class="row">
+    <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('categoriaAssociadosAlterar', array('idCategoria' => $categoria->id)); ?>'" style="float: right;width:100px;">
+        <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+        Novo</button>
+
+    <ul class="nav nav-tabs">
+      <li class="active"><a style="background-color:#fcf8e3;" data-toggle="tab" href="#tabAnuidade">
+        <img src="<?= $this->basePath('img/agendado.png') ?>"> Anuidade
+      </a></li>
+      <li><a style="background-color:#d9edf7;" data-toggle="tab" href="#tabArquivos">
+        <img src="<?= $this->basePath('img/visualizar.png') ?>"> Arquivos
+      </a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ANUIDADE -->
+<div class="tab-content">
+  <div id="tabAnuidade" class="tab-pane fade in active">
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-warning">
+          <div class="panel-heading">
+              <h3 class="panel-title">Dados da anuidade</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <?php echo $this->partial('form/generic', array('form'=> $formAnuidade, 'route'=> '')) ?>
+
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-warning">
+            <div class="panel-heading">
+              <h3 class="panel-title">Anuidades</h3>
+            </div>
+            <div class="panel-body">
+              <?php if($anuidades->count() == 0): ?>
+                <div class="alert alert-info">Nenhuma anuidade encontrada!</div>
+              <?php else: ?>
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Descrição</th>
+                  <th style="text-align: center">Período</th>
+                  <th style="text-align: center">Data de pagamento</th>
+                  <th style="text-align: center">Valor</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach ($anuidades as $anuidade) : ?>
+                <tr>
+                  <td style="text-align: center"><?= $anuidade->descricao ?></td>
+                  <td style="text-align: center"><?= $this->converterData($anuidade->data_inicio) ?> a <?= $this->converterData($anuidade->data_fim) ?></td>
+                  <td style="text-align: center"><?= $this->converterData($anuidade->data_pagamento) ?></td>
+                  <td style="text-align: center"><?= $this->exibirMonetario($anuidade->valor); ?></td>
+                  <td style="text-align: center;">
+                    <a href="<?= $this->url('categoriaAssociadosAlterar', array('idCategoria' => $categoria['id'], 'idAnuidade' => $anuidade['id'])); ?>">
+                      <img src="<?= $this->basePath('img/editar.png'); ?>" title="Editar" style="cursor: pointer;">
+                    </a>
+                    <span style="margin-right:4px;"></span>  
+                    <a  onclick="alerta('<?= $this->url('associadosAdimplentesAnuidade', array('idAnuidade' => $anuidade->id, 'idCategoria' => $anuidade->categoria)) ?>', 'Tem certeza que deseja marcar todos os associados que pagaram esta anuidade como adimplentes, e todos os outros desta categoria como inadimplentes?');">
+                      <img src="<?= $this->basePath('img/pagar.png'); ?>" title="Atualizar adimplentes/inadimplentes" style="cursor: pointer;">
+                    </a>
+                    <span style="margin-right:4px;"></span>  
+                    <a  onclick="alerta('<?= $this->url('associadosListarSite', array('idAnuidade' => $anuidade->id, 'idCategoria' => $anuidade->categoria)) ?>', 'Tem certeza que deseja incluir todos os associados que pagaram esta anuidade no site e excluir todos os outros do site?');">
+                      <img src="<?= $this->basePath('img/visualizar.png'); ?>" title="Listar pagos no site" style="cursor: pointer;">
+                    </a>
+
+                    
+
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            </table>
+            <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+
+
+
+
+<!-- ARQUIVOS -->
+  <div id="tabArquivos" class="tab-pane fade">
+
+
+
+     <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-info">
+          <div class="panel-heading">
+              <h3 class="panel-title">Vincular arquivos</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <?php echo $this->partial('form/generic', array('form'=> $formArquivos, 'route'=> '')) ?>
+
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Arquivos</h3>
+            </div>
+            <div class="panel-body">
+              <?php if($arquivos->count() == 0): ?>
+                <div class="alert alert-info">Nenhum arquivo encontrado!</div>
+              <?php else: ?>
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Descrição</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach ($arquivos as $arquivo) : ?>
+              <tr>
+                <td style="text-align: center"><?= $arquivo->descricao ?></td>
+                <td style="text-align: center;">
+                  <a  href="<?= $this->url('downloadArquivoAssociado', array('idArquivo' => $arquivo->id)) ?>">
+                    <img src="<?= $this->basePath('img/visualizar.png'); ?>" title="Visualizar" style="cursor: pointer;">
+                  </a>
+                  <span style="margin-right:4px;"></span>  
+                  <a  onclick="alerta('<?= $this->url('deletarArquivoAssociado', array('idArquivo' => $arquivo->id, 'idCategoria' => $categoria->id)) ?>', 'deletar');">
+                    <img src="<?= $this->basePath('img/deletar.png'); ?>" title="Deletar" style="cursor: pointer;">
+                  </a>
+
+
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </table>
+            <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+  </div>
+</div>
+    
+<script type="text/javascript">
+  $(document).ready(function() {
+    $.mask.definitions['~'] = "[+-]";
+    $("#data_inicio").mask("99/99/9999");
+    $("#data_fim").mask("99/99/9999");
+    $("#data_pagamento").mask("99/99/9999");
+    $("#validade_certificado").mask("99/99/9999");
+    $("#valor").maskMoney({symbol:'R$ ', showSymbol:true, thousands:'.', decimal:',', symbolStay: true, allowZero: true});
+  });
+</script>     

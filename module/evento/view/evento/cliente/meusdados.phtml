@@ -1,0 +1,80 @@
+ <div class="container theme-showcase" role="main">
+  <div class="row">
+
+    <ul class="nav nav-tabs">
+      <li class="active">
+        <a style="background-color:#dff0d8;margin-right: 0px;" href="<?= $this->url('inscricoesCliente'); ?>">
+          <img src="<?= $this->basePath('img/inscricao.png') ?>"> Inscrições
+        </a>
+      </li>
+      <?php if($associado && $associado['ativo'] == 'S'): ?>
+        <li>
+          <a style="background-color:#fcf8e3;margin-right: 0px;" href="<?= $this->url('anuidadesCliente'); ?>">
+            <img src="<?= $this->basePath('img/agendado.png') ?>"> Anuidades
+          </a>
+        </li>
+        <li><a style="background-color:#d9edf7;margin-right: 0px;" href="<?= $this->url('arquivosCliente'); ?>">
+          <img src="<?= $this->basePath('img/visualizar.png') ?>"> Arquivos
+        </a>
+        </li>
+        <li><a style="background-color:#f8d7da;margin-right: 0px;" href="<?= $this->url('questionariosCliente'); ?>">
+          <img src="<?= $this->basePath('img/msg.png') ?>"> Questionários/pesquisas
+        </a>
+        </li>
+
+        <?php if($questionario): ?>
+          <button type="button" class="btn btn-danger" onclick="$.colorbox({href:'<?= $this->url('responderQuestionarioAssociado', array('idQuestionario' => $questionario['id'])); ?>'});" style="float: right;">
+              <img src="<?php echo $this->basePath('img/msg.png') ?>" alt="Novo">
+              Responder questionário/pesquisa
+          </button>
+        <?php endif; ?>
+      <?php endif; ?>
+      <li>
+        <a style="background-color:#FFF5EE;margin-right: 0px;" href="<?= $this->url('listarTransmissoes'); ?>">
+          <img src="<?= $this->basePath('img/transmissao.png') ?>"> Transmissões
+        </a>
+      </li>
+      <li>
+        <a style="background-color:#ebebeb;margin-right: 0px;">
+          <img src="<?= $this->basePath('img/usuario.png') ?>"> Meus dados
+        </a>
+      </li>
+
+      <?php if(!empty($associado->certificado)): ?>
+      <li>
+        <a style="background-color:#007bff;margin-right: 0px;" href="<?= $this->url('downloadCertificadoCategoriaAssociado', array('idCategoria' => $associado->id_categoria)) ?>">
+          <img src="<?= $this->basePath('img/download.png') ?>"> Certificado
+        </a>
+      </li>
+      <?php endif; ?>
+      
+    </ul>
+    
+
+  </div>
+</div>
+
+  <div class="container theme-showcase" role="main">
+    <div class="row">
+        <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Alterar associado</h3>
+          </div>
+          <div class="panel-body">
+              <div class="form-group">
+                <?php echo $this->partial('form/associado', array('form'=> $formCliente, 'route'=> '')) ?>
+
+          </div>
+        </div>
+    </div>
+  </div>
+  </div>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        formInscricao();
+        carregarPais(<?= $cliente['pais_endereco'] ?>);
+        $('#cpf').attr('disabled', 'disabled');
+        $('#email').attr('disabled', 'disabled');
+      });
+    </script>

@@ -1,0 +1,33 @@
+<?php $form->prepare(); ?>
+
+<?php if($this->route || $this->route):?>
+    <?php $form->setAttribute('action', $this->url($this->route, $this->params)); ?>
+<?php else: ?>
+	<?php $form->setAttribute('action', "#"); ?>
+<?php endif;?>
+
+<?= $this->form()->openTag($form); ?>
+	
+	
+<?php foreach ($form->getElements() as $element): ?>
+		<div class="row">
+	        <div class='col-sm-8'>
+                <div class="form-group" id="group-<?= $element->getName(); ?>">
+	        
+	        <label for="<?=$element->getName()?>" style="width:250px;"><?=$element->getLabel()?></label>	
+	        	<?= $this->formElement($element); ?>
+	        	<?= $this->formElementErrors($element, array('class' => 'alert alert-danger')); ?>
+	     		</div>
+            </div>
+        </div>
+
+<?php endforeach; ?>
+
+<div class="row" style="margin-top:20px;">
+	<button type="submit" class="btn btn-success" style="float: right;margin-right: 10px;">
+		<img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+		Salvar
+	</button>
+</div>
+
+<?= $this->form()->closeTag($form); ?>

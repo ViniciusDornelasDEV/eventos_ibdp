@@ -1,0 +1,158 @@
+<?php if(isset($formDash)): ?>
+<div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+	<div class="row">
+		<div class="col-sm-12 text-center">
+			<div class="form-group" id="group-dash">
+				<form class="form-inline" role="form" method="POST" action="#">
+					<div class="row">
+	                    <div class='col-sm-10'>
+	                        <?= $this->formElement($formDash->get('evento')); ?>
+	                      
+	                    </div>
+
+	                    <div class='col-sm-2'>
+	                    	<button type="submit" name="pesquisar" class="btn btn-success" style="float: right;margin-right: 10px;">
+                        	<img src="<?= $this->basePath('img/pesquisar.png'); ?>" alt="Pesquisar"> Pesquisar</button>
+	                    </div>
+	                </div>
+				</form>         	        			     		
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6 text-center">
+			<canvas id="quantidadeInscritos" style="height: 370px; max-width: 920px; margin: 0px auto;"></canvas>
+		</div>
+		<div class="col-sm-6">
+			<div class="panel panel-default">
+	            <div class="panel-heading">
+	              <h3 class="panel-title">5 últimos inscritos</h3>
+	            </div>
+	            <div class="panel-body">
+	              <table class="table">
+	                <tr>
+	                  <th style="text-align: center">Inscrito</th>
+	                  <th style="text-align: center">Evento</th>
+	                  <th style="text-align: center">Status da inscrição</th>
+	              </tr>
+	              <?php foreach ($ultimosInscritos as $inscrito) : ?>
+		              <tr>
+		                <td style="text-align: center"><?= $inscrito->nome_completo ?></td>
+		                <td style="text-align: center"><?= $inscrito->nome_evento ?></td>
+		                <td style="text-align: center"><?= $this->StatusDash($inscrito->inscricao_status, $inscrito->status_pagamento) ?></td>
+		              </tr>
+	              <?php endforeach; ?>
+	            </table>
+	          
+	            </div>
+	          </div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-sm-6">
+			<!-- Gráfico inscrições por categoria -->
+			<canvas id="quantidadeCategoria" style="height: 370px; max-width: 920px; margin: 0px auto;"></canvas>
+		</div>
+		<div class="col-sm-6">
+			<!-- Lista de categorias e totais de inscrição -->
+			<div class="panel panel-default">
+	            <div class="panel-heading">
+	              <h3 class="panel-title">Inscritos por categoria e status</h3>
+	            </div>
+	            <div class="panel-body">
+	              <table class="table">
+	                <tr>
+	                  <th style="text-align: center">Categoria</th>
+	                  <th style="text-align: center">Incompleta</th>
+	                  <th style="text-align: center">A pagar</th>
+	                  <th style="text-align: center">Paga</th>
+	              </tr>
+	              <?php foreach ($categoriasStatus as $categoria) : ?>
+		              <tr>
+		                <td style="text-align: center"><?= $categoria['nome_categoria'] ?></td>
+		                <td style="text-align: center"><?= $categoria['quantidade_incompleta'] ?></td>
+		                <td style="text-align: center"><?= $categoria['quantidade_pagar'] ?></td>
+		                <td style="text-align: center"><?= $categoria['quantidade_paga'] ?></td>
+		              </tr>
+	              <?php endforeach; ?>
+	              
+	            </table>
+	          
+	            </div>
+	          </div>
+		</div>
+	</div>
+</div>
+
+
+
+<script>
+window.onload = function () {
+	new Chart(document.getElementById("quantidadeInscritos"), {
+	    type: 'bar',
+	    data: {
+	      labels: ["Incompleta", "A pagar", "Paga"],
+	      datasets: [
+	        {
+	          label: "Quantidade de inscritos",
+	          backgroundColor: ["#df7970", "#6d78ad","#51cda0"],
+	          data: [<?= $totaisInscricoes['incompletas'] ?>,<?= $totaisInscricoes['pagar'] ?>,<?= $totaisInscricoes['pagas'] ?>]
+	        }
+	      ]
+	    },
+	    options: {
+			legend: { display: false },
+			title: {
+				display: true,
+				text: 'Total de inscrições'
+			},
+	    	scales: {
+		        yAxes: [{
+		            ticks: {
+		                beginAtZero:true
+		            }
+		        }]
+	    	}
+	    }
+	});
+
+	new Chart(document.getElementById("quantidadeCategoria"), {
+	    type: 'bar',
+	    data: {
+	      labels: [
+		    <?php foreach ($categorias as $categoria) : ?>
+				"<?= $categoria['nome_categoria'] ?>",
+			<?php endforeach; ?>
+	      ],
+	      datasets: [
+	        {
+	          label: "Quantidade de inscritos por categoria",
+	          backgroundColor: ["#df7970", "#6d78ad","#51cda0", "#007bff", "#6c757d", "#17a2b8", "#ffc107", "#dc3545", "#343a40"],
+	          data: [
+	          	<?php foreach ($categorias as $categoria) : ?>
+					"<?= $categoria['quantidade'] ?>",
+				<?php endforeach; ?>
+	          ]
+	        }
+	      ]
+	    },
+	    options: {
+			legend: { display: false },
+			title: {
+				display: true,
+				text: 'Inscrições por categoria'
+			},
+	    	scales: {
+		        yAxes: [{
+		            ticks: {
+		                beginAtZero:true
+		            }
+		        }]
+	    	}
+	    }
+	});
+}
+</script>
+<?php endif; ?>

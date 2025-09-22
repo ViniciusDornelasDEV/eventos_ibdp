@@ -1,0 +1,145 @@
+ <div class="container theme-showcase" role="main">
+ <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                  <form class="form-inline" role="form" method="POST" action="#">
+                      <div class="row">
+                         <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('adimplente')->getLabel(); ?></label>
+                            <?= $this->formElement($formPesquisa->get('adimplente')); ?>
+                          </div>
+                        </div>
+
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('nome_completo')->getLabel(); ?></label>
+                            <?= $this->formElement($formPesquisa->get('nome_completo')); ?>
+                          </div>
+                        </div>
+
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                             <label for="disabledTextInput"><?=$formPesquisa->get('cpf')->getLabel()?></label>
+                             <?= $this->formElement($formPesquisa->get('cpf')); ?>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="row" style="margin-top:20px;">
+                        <?php if(!$empresa): ?>
+                          <div class='col-sm-4'>
+                            <div class="form-group">
+                               <label for="disabledTextInput"><?=$formPesquisa->get('empresa')->getLabel()?></label>
+                               <?= $this->formElement($formPesquisa->get('empresa')); ?>
+                            </div>
+                          </div>
+                        <?php endif; ?>
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                             <label for="disabledTextInput"><?=$formPesquisa->get('categoria_associado')->getLabel()?></label>
+                             <?= $this->formElement($formPesquisa->get('categoria_associado')); ?>
+                          </div>
+                        </div>
+
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                             <label for="disabledTextInput"><?=$formPesquisa->get('anuidade')->getLabel()?></label>
+                             <?= $this->formElement($formPesquisa->get('anuidade')); ?>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row" style="margin-top:20px;">
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                             <label for="disabledTextInput"><?=$formPesquisa->get('comprovante')->getLabel()?></label>
+                             <?= $this->formElement($formPesquisa->get('comprovante')); ?>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row" style="margin-top:20px;">
+                        <button type="submit" class="btn btn-success" style="float: right;margin-right: 10px;">
+                        <img src="<?= $this->basePath('img/pesquisar.png'); ?>" alt="Pesquisar"> Pesquisar</button>
+                        <button type="submit" name="limpar" class="btn btn-default" style="float: right;margin-right: 10px;">
+                        <img src="<?= $this->basePath('img/limpar.png'); ?>"> Limpar</button>
+                      </div>
+                </form>
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- LISTAGEM DOS EQUIPAMENTOS -->
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Listagem de pagamentos</h3>
+            </div>
+            <div class="panel-body">
+              <?php if($pagamentos->count() > 0): ?>
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Empresa</th>
+                  <th style="text-align: center">Cliente</th>
+                  <th style="text-align: center">CPF</th>
+                  <th style="text-align: center">Anuidade</th>
+                  <th style="text-align: center">Status</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach($pagamentos as $pagamento): ?>
+              <tr>
+                <td style="text-align: center"><?= $pagamento['nome_fantasia']; ?></td>
+                <td style="text-align: center"><?= $pagamento['nome_completo']; ?></td>
+                <td style="text-align: center"><?= $pagamento['cpf']; ?></td>
+                <td style="text-align: center"><?= $pagamento['descricao_anuidade']; ?></td>
+                <?php if(empty($pagamento['data_pagamento'])): ?>
+                  <td style="text-align: center">Inadimplente</td>
+                <?php else: ?>
+                  <td style="text-align: center">Adimplente</td>
+                <?php endif; ?>
+                <td style="text-align: center;">
+                  <a href="<?= $this->url('pagarAnuidade', array('idAssociado' => $pagamento['id_associado'], 'idAnuidade' => $pagamento['id_anuidade'])); ?>">
+                    <img src="<?= $this->basePath('img/money.png'); ?>" title="Pagar" style="cursor: pointer;">
+                  </a>
+                  <?php if(!empty($pagamento['data_hora_comprovante'])): ?>
+                    <a href="<?= $this->url('uploadComprovanteAnuidade', array('idAnuidade' => $pagamento['id_anuidade'], 'idCliente' => $pagamento['id'])); ?>">
+                      <img src="<?php echo $this->basePath('img/uploadok.png') ?>" alt="Comprovante">
+                    </a>
+                  <?php else: ?>
+                    <a href="<?= $this->url('uploadComprovanteAnuidade', array('idAnuidade' => $pagamento['id_anuidade'], 'idCliente' => $pagamento['id'])); ?>">
+                      <img src="<?php echo $this->basePath('img/upload.png') ?>" alt="Comprovante">
+                    </a>
+                  <?php endif; ?>
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </table>
+          <?php else: ?>
+            <div class="alert alert-info">Nenhum associado e anuidade encontrados!</div>
+        <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container theme-showcase" style="margin-top:0px;" role="main">
+        <div style="float:right;">
+          <?php echo $this->paginationControl($pagamentos,
+                                        'Sliding',
+                                        'view/paginator', array('route' => 'listaPagamentosAssociados')); 
+          ?>
+        </div>
+      </div>
+
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $("#cpf").mask("999.999.999-99");
+      });
+    </script>

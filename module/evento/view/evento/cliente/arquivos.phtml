@@ -1,0 +1,122 @@
+<div class="container theme-showcase" role="main">
+  <div class="row">
+
+    <ul class="nav nav-tabs">
+      <li>
+        <a style="background-color:#dff0d8;margin-right: 0px;" href="<?= $this->url('inscricoesCliente'); ?>">
+          <img src="<?= $this->basePath('img/inscricao.png') ?>"> Inscrições
+        </a>
+      </li>
+      <?php if($associado && $associado['ativo'] == 'S'): ?>
+        <li>
+          <a style="background-color:#fcf8e3;margin-right: 0px;" href="<?= $this->url('anuidadesCliente'); ?>">
+            <img src="<?= $this->basePath('img/agendado.png') ?>"> Anuidades
+          </a>
+        </li>
+        <li class="active"><a style="background-color:#d9edf7;margin-right: 0px;">
+          <img src="<?= $this->basePath('img/visualizar.png') ?>"> Arquivos
+        </a>
+        </li>
+        <li><a style="background-color:#f8d7da;margin-right: 0px;" href="<?= $this->url('questionariosCliente'); ?>">
+          <img src="<?= $this->basePath('img/msg.png') ?>"> Questionários/pesquisas
+        </a>
+        </li>
+
+        <?php if($questionario): ?>
+          <button type="button" class="btn btn-danger" onclick="$.colorbox({href:'<?= $this->url('responderQuestionarioAssociado', array('idQuestionario' => $questionario['id'])); ?>'});" style="float: right;">
+              <img src="<?php echo $this->basePath('img/msg.png') ?>" alt="Novo">
+              Responder questionário/pesquisa
+          </button>
+        <?php endif; ?>
+      <?php endif; ?>
+      <li>
+        <a style="background-color:#FFF5EE;margin-right: 0px;" href="<?= $this->url('listarTransmissoes'); ?>">
+          <img src="<?= $this->basePath('img/transmissao.png') ?>"> Transmissões
+        </a>
+      </li>
+      <li>
+        <a style="background-color:#ebebeb;margin-right: 0px;" href="<?= $this->url('meusDadosCliente'); ?>">
+          <img src="<?= $this->basePath('img/usuario.png') ?>"> Meus dados
+        </a>
+      </li>
+
+      <?php if(!empty($associado->certificado)): ?>
+      <li>
+        <a style="background-color:#007bff;margin-right: 0px;" href="<?= $this->url('downloadCertificadoCategoriaAssociado', array('idCategoria' => $associado->id_categoria)) ?>">
+          <img src="<?= $this->basePath('img/download.png') ?>"> Certificado
+        </a>
+      </li>
+      <?php endif; ?>
+      
+    </ul>
+
+
+
+
+  </div>
+</div>
+
+    <!-- LISTAGEM DOS EVENTOS -->
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Meus arquivos</h3>
+            </div>
+            <div class="panel-body">
+              <?php if($arquivos->count() > 0): ?>
+              <div class="table-responsive">
+                <table class="table">
+                  <tr>
+                    <th style="text-align: center">Empresa</th>
+                    <th style="text-align: center">Categoria de associado</th>
+                    <th style="text-align: center">Arquivo</th>
+                    <th style="text-align: center">Ações</th>
+                </tr>
+                <?php 
+                foreach($arquivos as $arquivo): ?>
+                  <?php 
+                  if(
+                    ($arquivo['status_associado'] == 'T')
+                    ||
+                    ($arquivo['status_associado'] == 'A' && $arquivo['exibir_site'] == 'S')
+                    ||
+                    ($arquivo['status_associado'] == 'I' && $arquivo['exibir_site'] == 'N')
+                  ): ?>
+
+                    <tr>
+                      <td style="text-align: center"><?= $arquivo['nome_fantasia']; ?></td>
+                      <td style="text-align: center"><?= $arquivo['nome_categoria']; ?></td>
+                      <td style="text-align: center"><?= $arquivo['descricao_arquivo']; ?></td>
+                      <td style="text-align: center;">
+                        <?php if($arquivo['nome_fantasia'] == '-'): ?>
+                          <a  href="<?= $this->url('downloadArquivoIndividual', array('idArquivo' => $arquivo['id_arquivo'])) ?>">
+                            <img src="<?= $this->basePath('img/download.png'); ?>" title="Editar"  style="cursor: pointer;">
+                          </a>
+                        <?php else: ?>
+                          <a  href="<?= $this->url('downloadArquivoAssociado', array('idArquivo' => $arquivo['id_arquivo'])) ?>">
+                            <img src="<?= $this->basePath('img/download.png'); ?>" title="Editar"  style="cursor: pointer;">
+                          </a>
+                        <?php endif; ?>
+                      </td>
+                    </tr>
+                  <?php endif; ?>
+                <?php endforeach; ?>
+              </table>
+            </div>
+          <?php else: ?>
+             <div class="alert alert-info">Nenhum arquivo encontrado!</div>
+        <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container theme-showcase" style="margin-top:0px;" role="main">
+        <div style="float:right;">
+          <?php echo $this->paginationControl($arquivos,
+                                        'Sliding',
+                                        'view/paginator', array('route' => 'arquivosCliente')); 
+          ?>
+        </div>
+      </div>

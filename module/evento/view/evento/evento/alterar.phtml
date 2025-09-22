@@ -1,0 +1,520 @@
+<div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+
+  <?php if(!$empresa): ?>
+    <button type="button" class="btn btn-danger" onclick="location.href='<?= $this->url('configurarCertificado', array('evento' => $evento->id, 'numerocertificado' => 1)); ?>'" style="float: right;">
+    <img src="<?php echo $this->basePath('img/certificado.png') ?>" alt="Configurar certificado">
+    Configurar certificado</button>
+
+
+  <?php endif; ?>
+    <button type="button" class="btn btn-success" style="float: right;margin-right: 10px;" onclick="alerta('<?= $this->url('replicarEvento', array('idEvento' => $evento->id)); ?>', 'Tem certeza que deseja replicar o evento?');">
+    <img src="<?php echo $this->basePath('img/copiar.png') ?>" alt="Configurar certificado">
+    Replicar evento</button>
+
+    <button type="button" class="btn btn-warning" style="float: right;margin-right: 10px;" onclick="location.href='<?= $this->url('categoriasTrabalho', array('idEvento' => $evento->id)); ?>'">
+    <img src="<?php echo $this->basePath('img/trabalho.png') ?>" alt="Categorias de trabalho">
+    Categorias de trabalho</button>
+    
+
+    <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('cadastrarTransmissao', array('evento' => $evento->id)); ?>'" style="float: right;margin-right: 10px;">
+      <img src="<?php echo $this->basePath('img/transmissao.png') ?>" alt="Transmissões">
+      Transmissões
+    </button>
+
+  <ol class="breadcrumb" style="margin-bottom: 0px;">
+    <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+    <li><a href="<?= $this->url('evento'); ?>">Eventos</a></li>
+    <li class="active">Alterar</li>
+  </ol>
+</div>
+
+<div class="container theme-showcase" role="main">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Alterar evento</h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <?php echo $this->partial('form/evento', array('form'=> $formEvento, 'route'=> '')) ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- QUANTIDADE DE INSCRIÇÕES POR TIPO DE USUÁRIO -->
+<div class="container theme-showcase" role="main">
+  <div class="row">
+    <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('eventoAlterar', array('id' => $evento->id)); ?>'" style="float: right;width:100px;">
+      <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+      Novo</button>
+
+      <button type="button" class="btn btn-success" onclick="location.href='<?= $this->url('opcaoAtividadeNovo', array('evento' => $evento->id)) ?>'" id="btnOpcao" style="float: right;height: 100%;margin-right: 10px;">
+          <img src="<?= $this->basePath('img/add.png'); ?>" alt="Novo">
+          Adicionar opção
+        </button>
+
+    <ul class="nav nav-tabs">
+      <li class="active" onclick="botaoOpcoes(false);"><a style="background-color:#d9edf7;" data-toggle="tab" href="#tabQuantidade">
+        <img src="<?= $this->basePath('img/inscricao.png') ?>"> Quantidade inscritos
+      </a></li>
+      <li onclick="botaoOpcoes(false);"><a style="background-color:#fcf8e3;" data-toggle="tab" href="#tabValor">
+        <img src="<?= $this->basePath('img/money.png') ?>"> Valor inscrição
+      </a></li>
+      <li onclick="botaoOpcoes(false);"><a style="background-color:#f2dede;" data-toggle="tab" href="#tabPromocao">
+        <img src="<?= $this->basePath('img/ticket16.png') ?>"> Código promocional
+      </a></li>
+      <li onclick="botaoOpcoes(true);"><a style="background-color:#dff0d8;" data-toggle="tab" href="#tabAtividades">
+        <img src="<?= $this->basePath('img/atividade.png') ?>"> Atividades
+      </a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="tab-content">
+  <!-- QUANTIDADE DE INSCRITOS -->
+  <div id="tabQuantidade" class="tab-pane fade in active">
+      <div class="container theme-showcase" role="main">
+    <div class="row">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+              <h3 class="panel-title">Vincular quantidade máxima de inscrições por categoria</h3>
+          </div>
+          <div class="panel-body">
+             <div class="form-group">
+                <form class="form-inline" role="form" method="POST" action="#">
+                    <div class="row">
+                      <div class='col-sm-4'>
+                        <div class="form-group">
+                           <label for="disabledTextInput"><?=$formQuantidadeInscricoes->get('cliente_categoria')->getLabel()?></label>
+                           <?= $this->formElement($formQuantidadeInscricoes->get('cliente_categoria')); ?>
+                        </div>
+                      </div>
+
+                      <div class='col-sm-4'>
+                        <div class="form-group">
+                           <label for="disabledTextInput"><?=$formQuantidadeInscricoes->get('quantidade_maxima_inscritos')->getLabel()?></label>
+                           <?= $this->formElement($formQuantidadeInscricoes->get('quantidade_maxima_inscritos')); ?>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                          <label for="disabledTextInput"><?=$formQuantidadeInscricoes->get('descricao_categoria')->getLabel()?></label>
+                           <?= $this->formElement($formQuantidadeInscricoes->get('descricao_categoria')); ?>
+                            <?= $this->formElementErrors($formQuantidadeInscricoes->get('descricao_categoria')); ?>
+                      </div>
+                    </div>
+
+                    <div class="row" style="margin-top:20px;">
+                      <button type="submit" class="btn btn-success" style="float: right;margin-right: 10px;">
+                        <img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+                        Salvar
+                      </button>
+                    </div>
+                </form>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    <?php if(!$quantidadeInscricoes || count($quantidadeInscricoes) == 0): ?>
+    <div class="container theme-showcase" role="main">
+      <div class="alert alert-info">Nenhuma quantidade de inscrição por categoria vinculada!</div>
+    </div>
+    <?php else: ?>
+
+     <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-info">
+            <div class="panel-heading">
+              <h3 class="panel-title">Inscrições por categoria</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Categoria</th>
+                  <th style="text-align: center">Quantidade máxima de inscritos</th>
+                  <th style="text-align: center">Quantidade de inscritos</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach ($quantidadeInscricoes as $inscricao): ?>
+              <tr>
+                <td style="text-align: center"><?= $inscricao['nome_categoria']; ?></td>
+                <td style="text-align: center"><?= $inscricao['quantidade_maxima_inscritos'] ?></td>
+                <td style="text-align: center"><?= $inscricao['quantidade_inscritos'] ?></td>
+                <td style="text-align: center">
+                  <img src="<?= $this->basePath('img/editar.png'); ?>" title="Editar" 
+                  onclick="location.href='<?= $this->url('eventoAlterar', array('id' => $evento->id, 'quantidadeinscricao' => $inscricao['id'])); ?>'" style="cursor: pointer;">
+                  <span style="margin-right:4px;"></span>  
+                  <img src="<?php echo $this->basePath('img/deletar.png') ?>"onclick="alerta('<?= $this->url('quantidadeInscricoesDeletar', array('id' => $inscricao['id'], 'evento' => $evento->id)); ?>', 'deletar');" title="Deletar">
+                </td>
+              
+              </tr>
+            <?php endforeach; ?>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    <?php endif; ?>
+
+  </div>
+
+  <!-- VALOR DA INSCRIÇÃO -->
+  <div id="tabValor" class="tab-pane fade">
+      <div class="container theme-showcase" role="main">
+    <div class="row">
+        <div class="panel panel-warning">
+          <div class="panel-heading">
+              <h3 class="panel-title">Vincular valor da inscrição</h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <?php echo $this->partial('form/generic', array('form'=> $formValor, 'route'=> '')) ?>
+            </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- LISTAGEM DE VALORES -->
+    <?php if(!$valores || $valores->count() == 0): ?>
+    <div class="container theme-showcase" role="main">
+      <div class="alert alert-info">Nenhum valor cadastrado!</div>
+    </div>
+    <?php else: ?>
+
+     <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-warning">
+            <div class="panel-heading">
+              <h3 class="panel-title">Valor da inscrição por data</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Categoria</th>
+                  <th style="text-align: center">Valor</th>
+                  <th style="text-align: center">Data início</th>
+                  <th style="text-align: center">Data término</th>
+                  <th style="text-align: center">Inscrições disponíveis</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach ($valores as $valor): ?>
+              <tr>
+                <td style="text-align: center"><?= $valor->nome_categoria; ?></td>
+                <td style="text-align: center"><?= $this->exibirMonetario($valor->valor_inscricao); ?></td>
+                <td style="text-align: center"><?= $this->converterData($valor->data_inicio_valor); ?></td>
+                <td style="text-align: center"><?= $this->converterData($valor->data_fim_valor); ?></td>
+                <td style="text-align: center"><?= $valor->quantidade_maxima_inscritos - $valor->quantidade_inscritos; ?></td>
+                <td style="text-align: center">
+                  <img src="<?php echo $this->basePath('img/deletar.png') ?>"onclick="alerta('<?= $this->url('valorInscricoesDeletar', array('id' => $valor->id, 'evento' => $evento->id)); ?>', 'deletar');" title="Deletar">
+                </td>
+              </tr>
+            <?php endforeach; ?>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    <?php endif; ?>
+  </div>
+
+  <!-- CÓDIGO PROMOCIONAL -->
+  <div id="tabPromocao" class="tab-pane fade">
+       <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+
+
+      
+       <ul class="nav nav-tabs">
+        <li class="active">
+          <a data-toggle="tab" style="background-color:#f2dede;" href="#comum">
+            <img src="<?= $this->basePath('img/comum.png') ?>"> Comum
+          </a></li>
+        <li>
+          <a data-toggle="tab" style="background-color:#ebccd1;" href="#associados">
+            <img src="<?= $this->basePath('img/associado.png') ?>"> Associados
+          </a></li>
+      </ul>
+  </div>
+
+
+
+<div class="tab-content">
+  <div id="comum" class="tab-pane fade in active">
+      <div class="container theme-showcase" role="main">
+    <div class="row">
+        <div class="panel panel-danger">
+          <div class="panel-heading">
+              <h3 class="panel-title">Vincular código promocional - COMUM</h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <?php echo $this->partial('form/generic', array('form'=> $formPromocao, 'route'=> '')) ?>
+            </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- LISTAGEM DE UNIDADES -->
+    <?php if(!$promocoes || $promocoes->count() == 0): ?>
+    <div class="container theme-showcase" role="main">
+      <div class="alert alert-info">Nenhum código cadastrado!</div>
+    </div>
+    <?php else: ?>
+
+     <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title">Promoções vinculadas</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Código</th>
+                  <th style="text-align: center">Desconto</th>
+                  <th style="text-align: center">Máximo</th>
+                  <th style="text-align: center">Utilizados</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach ($promocoes as $promocao): ?>
+              <tr>
+                <td style="text-align: center"><?= $promocao->codigo_promocional; ?></td>
+                <td style="text-align: center"><?= $promocao->desconto; ?></td>
+                <td style="text-align: center"><?= $promocao->quantidade_maxima; ?></td>
+                <td style="text-align: center"><?= $promocao->quantidade_utilizada; ?></td>
+                <td style="text-align: center">
+                  <img src="<?= $this->basePath('img/editar.png'); ?>" title="Editar" 
+                  onclick="location.href='<?= $this->url('eventoAlterar', array('id' => $evento->id, 'quantidadeinscricao' => 0, 'promocao' => $promocao->id)); ?>'" style="cursor: pointer;">
+                  <span style="margin-right:4px;"></span>  
+                  <img src="<?php echo $this->basePath('img/deletar.png') ?>"onclick="alerta('<?= $this->url('promocaoDeletar', array('id' => $promocao->id, 'evento' => $evento->id)); ?>', 'deletar');" title="Deletar">
+                </td>
+
+              
+              </tr>
+            <?php endforeach; ?>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    <?php endif; ?>
+
+
+  </div>
+  
+
+  <div id="associados" class="tab-pane fade">
+          <div class="container theme-showcase" role="main">
+    <div class="row">
+        <div class="panel panel-danger">
+          <div class="panel-heading">
+              <h3 class="panel-title">Vincular código promocional - ASSOCIADOS</h3>
+          </div>
+          <div class="panel-body">
+            <div class="form-group">
+              <?php echo $this->partial('form/generic', array('form'=> $formPromocaoAssociados, 'route'=> '')) ?>
+            </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- LISTAGEM DE UNIDADES -->
+    <?php if(!$promocoesAssociados || $promocoesAssociados->count() == 0): ?>
+    <div class="container theme-showcase" role="main">
+      <div class="alert alert-info">Nenhum código cadastrado!</div>
+    </div>
+    <?php else: ?>
+
+     <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title">Promoções de associados</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Categoria do evento</th>
+                  <th style="text-align: center">Categoria de associado</th>
+                  <th style="text-align: center">Status do associado</th>
+                  <th style="text-align: center">Desconto</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach ($promocoesAssociados as $promocaoAssociado): ?>
+              <tr>
+                <td style="text-align: center"><?= $promocaoAssociado->nome_categoria_evento; ?></td>
+                <td style="text-align: center"><?= $promocaoAssociado->nome_categoria_associado; ?></td>
+                <td style="text-align: center"><?= $this->statusAssociado($promocaoAssociado->status_associado); ?></td>
+                <td style="text-align: center"><?= $promocaoAssociado->desconto; ?></td>
+                <td style="text-align: center">
+                  <img src="<?= $this->basePath('img/editar.png'); ?>" title="Editar" 
+                  onclick="location.href='<?= $this->url('eventoAlterar', array('id' => $evento->id, 'quantidadeinscricao' => 0, 'promocao' => 0, 'alternativa' => 0, 'promocaoassociado' => $promocaoAssociado->id)); ?>'" style="cursor: pointer;">
+                  <span style="margin-right:4px;"></span>  
+                  <img src="<?php echo $this->basePath('img/deletar.png') ?>"onclick="alerta('<?= $this->url('promocaoAssociadoDeletar', array('id' => $promocaoAssociado->id, 'evento' => $evento->id)); ?>', 'deletar');" title="Deletar">
+                </td>
+              
+              </tr>
+            <?php endforeach; ?>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    <?php endif; ?>
+  
+  </div>
+</div> 
+
+  </div>
+
+  <!-- ATIVIDADES -->
+  <div id="tabAtividades" class="tab-pane fade">
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Vincular opção de atividade</h3>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                <form class="form-inline" role="form" method="POST" action="#">
+                    <div class="row">
+                      <div class='col-sm-4'>
+                        <div class="form-group">
+                           <label for="disabledTextInput"><?=$formAlternativa->get('evento_opcao')->getLabel()?></label>
+                           <?= $this->formElement($formAlternativa->get('evento_opcao')); ?>
+                        </div>
+                      </div>
+
+                      <div class='col-sm-4'>
+                        <div class="form-group">
+                           <label for="disabledTextInput"><?=$formAlternativa->get('local')->getLabel()?></label>
+                           <?= $this->formElement($formAlternativa->get('local')); ?>
+                        </div>
+                      </div>
+
+                      <div class='col-sm-4'>
+                        <div class="form-group">
+                           <label for="disabledTextInput"><?=$formAlternativa->get('atividade')->getLabel()?></label>
+                           <?= $this->formElement($formAlternativa->get('atividade')); ?>
+                        </div>
+                      </div>
+
+                    </div>
+
+                    <div class="row">
+                      <div class="col-sm-12">
+                          <label for="disabledTextInput"><?=$formAlternativa->get('descricao')->getLabel()?></label>
+                           <?= $this->formElement($formAlternativa->get('descricao')); ?>
+                      </div>
+                    </div>
+
+                    <div class="row" style="margin-top:20px;">
+                      <button type="submit" class="btn btn-success" style="float: right;margin-right: 10px;">
+                        <img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+                        Salvar
+                      </button>
+                    </div>
+                </form>
+              </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      <!-- LISTAGEM DE OPCOES -->
+    <?php if(!$opcoesAlternativas || $opcoesAlternativas->count() == 0): ?>
+    <div class="container theme-showcase" role="main">
+      <div class="alert alert-info">Nenhuma opção de programação!</div>
+    </div>
+    <?php else: ?>
+
+     <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Opções vinculadas</h3>
+            </div>
+            <div class="panel-body">
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Opção</th>
+                  <th style="text-align: center">Data</th>
+                  <th style="text-align: center">Atividade</th>
+                  <th style="text-align: center">Local</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach ($opcoesAlternativas as $alternativa): ?>
+              <tr>
+                <td style="text-align: center"><?= $alternativa->titulo; ?></td>
+                <td style="text-align: center"><?= $this->converterData($alternativa->data); ?></td>
+                <td style="text-align: center"><?= $alternativa->atividade; ?></td>
+                <td style="text-align: center"><?= $alternativa->local; ?></td>
+                <td style="text-align: center">
+                  <img src="<?= $this->basePath('img/editar.png'); ?>" title="Editar" 
+                  onclick="location.href='<?= $this->url('eventoAlterar', array('id' => $evento->id, 'quantidadeinscricao' => 0, 'promocao' => 0, 'alternativa' => $alternativa->id)); ?>'" style="cursor: pointer;">
+                  <span style="margin-right:4px;"></span>  
+                  <img src="<?php echo $this->basePath('img/deletar.png') ?>" onclick="alerta('<?= $this->url('alternativaDeletar', array('id' => $alternativa->id, 'evento' => $evento->id)) ?>', 'deletar');" title="Deletar">
+                </td>
+
+              
+              </tr>
+            <?php endforeach; ?>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    <?php endif; ?>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+  
+
+
+  
+
+    
+    <!-- OPÇÕES E ALTERNATIVAS DE ATIVIDADES -->
+    
+    <script type="text/javascript">
+	    $(document).ready(function() {
+			  formEvento();
+        formValor();
+        formOpcoes();
+        $("#btnOpcao").hide();
+      });
+      CKEDITOR.replace('mensagem_cadastro_novo');
+      CKEDITOR.replace('mensagem_cadastro_antigo');
+      CKEDITOR.replace('mensagem_pagamento');
+      CKEDITOR.replace('mensagem_transferencia');
+
+      CKEDITOR.replace('observacoes');
+      CKEDITOR.replace('descricao_categoria');
+      CKEDITOR.replace('descricao');
+
+      function botaoOpcoes(ativar){
+        if(ativar){
+          //mostrar botão
+          $("#btnOpcao").show();
+        }else{
+          //esconder botão
+          $("#btnOpcao").hide();
+        }
+      }
+
+    </script>

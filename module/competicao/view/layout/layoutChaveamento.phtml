@@ -1,0 +1,30 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        
+        <?php echo $this->headTitle($this->translate('Time sistemas'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/sb-admin-2.min.css'); ?>
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            //->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/bootbox.min.js')
+            ->prependFile($this->basePath() . '/js/funcoes.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js')
+        ; ?>
+
+    </head>
+    <body role="document">
+        <?php echo $this->content; ?>
+    </body>
+</html>

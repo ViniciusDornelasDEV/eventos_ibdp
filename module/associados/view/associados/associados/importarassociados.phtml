@@ -1,0 +1,38 @@
+ <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+
+    <ol class="breadcrumb" style="margin-bottom: 0px;">
+      <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+      <li><a href="<?= $this->url('listaAssociados'); ?>">Associados</a></li>
+      <li class="active">Upload de associados</li>
+    </ol>
+  </div>
+  <?php if($numeroAssociados > 0): ?>
+    <div class="container theme-showcase" role="main">
+      <div class="alert alert-info">
+        <strong><?= $numeroAssociados ?></strong> associados inseridos.
+      </div>
+    </div>
+  <?php endif; ?>
+
+  <?php  if(!empty($msg)):  ?>
+    <div class="container theme-showcase" role="main">
+      <div class="alert alert-warning">
+        <?= $msg; ?>
+      </div>
+    </div>
+  <?php endif; ?>
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">Upload de associados</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <?php echo $this->partial('form/generic', array('form'=> $formUpload, 'route'=> '')) ?>
+
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>

@@ -1,0 +1,113 @@
+ <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+ <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                  <form class="form-inline" role="form" method="POST" action="#">
+                      <div class="row">
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                             <label for="disabledTextInput"><?=$formPesquisa->get('nome')->getLabel()?></label>
+                             <?= $this->formElement($formPesquisa->get('nome')); ?>
+                          </div>
+                        </div>
+
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('empresa')->getLabel(); ?></label>
+                            <?= $this->formElement($formPesquisa->get('empresa')); ?>
+                          </div>
+                        </div>
+
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('cliente')->getLabel(); ?></label>
+                            <?= $this->formElement($formPesquisa->get('cliente')); ?>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row" style="margin-top:20px;">
+                        <button onclick="location.href='<?= $this->url('usuario'); ?>'" type="button" class="btn btn-default" style="float: right;margin-right: 20px;">
+                        <img src="<?= $this->basePath('img/limpar.png'); ?>"> Limpar</button>
+                        <button type="submit" class="btn btn-success" style="float: right;margin-right: 10px;">
+                        <img src="<?= $this->basePath('img/pesquisar.png'); ?>" alt="Pesquisar"> Pesquisar</button>
+                      </div>
+                </form>
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+    <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+       <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('usuarioNovo'); ?>'" style="float: right;width:100px;">
+      <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+      Novo</button>
+
+      <button type="button" class="btn btn-default active" onclick="" style="float: left;width:100px;">
+      <img src="<?php echo $this->basePath('img/usuario.png') ?>" alt="Novo">
+      Usuários</button>
+
+
+      <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('tipousuario'); ?>'" style="float: left;width:100px;margin-left:5px;">
+      <img src="<?php echo $this->basePath('img/tipousuario.png') ?>" alt="Novo">
+      Tipos</button>
+    </div>
+    <!-- LISTAGEM DOS CHAMADOS -->
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Listagem de usuários</h3>
+            </div>
+            <div class="panel-body">
+              <?php if($usuarios->count() > 0): ?>
+                <table class="table">
+                  <tr>
+                    <th style="text-align: center">Nome</th>
+                    <th style="text-align: center">Login</th>
+                    <th style="text-align: center">Tipo</th>
+                    <th style="text-align: center">Cliente</th>
+                    <th style="text-align: center">Status</th>
+                    <th style="text-align: center">Ações</th>
+                </tr>
+                <?php foreach($usuarios as $usuario): ?>
+                <tr>
+                  <td style="text-align: center"><?= $usuario['nome']; ?></td>
+                  <td style="text-align: center"><?= $usuario['login']; ?></td>
+
+                  <td style="text-align: center"><?= $usuario['perfil']; ?></td>
+                  <td style="text-align: center"><?= $usuario['nome_empresa']; ?></td>
+
+                  <td style="text-align: center"><?= $this->status($usuario['ativo']); ?></td>
+                  <td style="text-align: center;">
+                    <img src="<?= $this->basePath('img/editar.png'); ?>" title="Editar" 
+                    onclick="location.href='<?= $this->url('usuarioAlterar', array('id' => $usuario['id'])); ?>'" style="cursor: pointer;">
+                    <span style="margin-right:4px;"></span>  
+                    <img src="<?= $this->basePath('img/deletar.png'); ?>" title="Deletar" style="cursor: pointer;" onclick="alerta('<?= $this->url('usuarioDeletar', array('id' => $usuario['id'])) ?>', 'desativar');">
+                  </td>
+                </tr>
+                <?php endforeach; ?>
+              </table>
+            <?php else: ?>
+              <div class="alert alert-info">Nenhum usuário encontrado!</div>
+            <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container theme-showcase" style="margin-top:0px;" role="main">
+        <div style="float:right;">
+          <?php echo $this->paginationControl($usuarios,
+                                        'Sliding',
+                                        'view/paginator', array('route' => 'usuario')); 
+          ?>
+        </div>
+      </div>
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        formUnidade();
+      });
+    </script>

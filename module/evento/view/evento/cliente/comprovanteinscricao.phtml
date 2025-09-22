@@ -1,0 +1,30 @@
+ <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+    <?php if(!empty($inscricao['comprovante'])): ?>
+      <a href="<?= $this->url('downloadComprovante', array('idInscricao' => $inscricao['id'])); ?>">
+        <button type="button" class="btn btn-success" style="float: right;">
+        <img src="<?php echo $this->basePath('img/download.png') ?>" alt="Novo">
+        Download do comprovante</button>
+      </a>
+    <?php endif; ?>
+
+    <ol class="breadcrumb" style="margin-bottom: 0px;">
+      <li><a href="<?= $this->url('inscricoesCliente'); ?>">Inscrições</a></li>
+      <li class="active">Upload de comprovante</li>
+    </ol>
+  </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-success">
+          <div class="panel-heading">
+              <h3 class="panel-title">Upload de comprovante: <?= $inscricao['nome_evento'] ?> </h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <?php echo $this->partial('form/generic', array('form'=> $formArquivo, 'route'=> '')) ?>
+
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>

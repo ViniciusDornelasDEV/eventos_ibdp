@@ -1,0 +1,108 @@
+<?php echo $this->doctype(); ?>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <?php 
+            //$usuaio = $this->getHelperPluginManager()->getServiceLocator()->get('Chamado')->getIdentity();
+        ?>
+        <?php echo $this->headTitle($this->translate('Time sistemas'))->setSeparator(' - ')->setAutoEscape(false) ?>
+
+        <?php echo $this->headMeta()
+            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+        ?>
+
+        <!-- Le styles -->
+        <?php
+        
+        ?>
+        <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/bootstrap-theme.min.css')
+                        ->prependStylesheet($this->basePath() . '/css/colorbox.css'); ?>
+
+        <!-- Scripts -->
+        <?php echo $this->headScript()
+            ->prependFile($this->basePath() . '/js/jquery.autocomplete.js')
+            ->prependFile($this->basePath() . '/js/maskMoney.js')
+            ->prependFile($this->basePath() . '/js/ckEditor/ckeditor.js')
+            ->prependFile($this->basePath() . '/js/bootbox.min.js')
+            ->prependFile($this->basePath() . '/js/bootstrap.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.maskedinput.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.colorbox.js')
+            ->prependFile($this->basePath() . '/js/funcoes.js')
+            ->prependFile($this->basePath() . '/js/canvasjs.min.js')
+            ->prependFile($this->basePath() . '/js/jquery.min.js')
+        ; ?>
+
+    </head>
+  <body role="document">
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a href="<?= $this->url('home'); ?>"><img src="<?php echo $this->basePath('img/logolayout.png') ?>" style="width: 120px; height: 56px;margin-right:20px;margin-top:3px;margin-bottom:3px;" alt="Logo"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <?php
+                //Pegar nome do modulo
+                $rota = explode("\\", $this->getHelperPluginManager()->getServiceLocator()->get('Application')->getMvcEvent()->getRouteMatch()->getParam('controller'));
+            ?>
+            
+            <li class="dropdown <?php echo $rota[0] == 'Evento' ? 'active' : '';  ?>">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Evento<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?= $this->url('evento'); ?>">Eventos</a></li>
+                    <li><a href="<?= $this->url('visualizaInscricoes'); ?>">Inscrições realizadas</a></li>
+                    <li class="divider"></li>
+                    <li><a href="<?= $this->url('listarTrabalhos'); ?>">Trabalhos</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Associados<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="<?= $this->url('listaCategoriaAssociados'); ?>">Categoria</a></li>
+                    <li><a href="<?= $this->url('listaAssociados'); ?>">Associados</a></li>
+                    <li><a href="<?= $this->url('listaPagamentosAssociados'); ?>">Pagamentos</a></li>
+                </ul>
+            </li>
+
+            <li class="dropdown <?php echo $rota[0] == 'Usuario' && $rota[2] == 'Usuario' ? 'active' : '';  ?>">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Configurações<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="<?= $this->url('alterarSenha'); ?>">Alterar minha senha</a></li>
+                <li class="divider"></li>
+                <li><a href="<?php echo $this->url('logout') ?>">Sair</a></li>
+              </ul>
+            </li> 
+          
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="container theme-showcase" role="main" style="margin-top:100px;">
+        <div class="row">
+            <?= $this->flashMessenger()->render('error', array('alert', 'alert-danger')) ?>   
+
+            <?= $this->flashMessenger()->render('warning', array('alert',  'alert-warning')) ?>
+            
+            <?= $this->flashMessenger()->render('success', array('alert',  'alert-success')) ?>
+        </div>
+    </div>
+    <?php echo $this->content; ?>
+    <div class="container theme-showcase" role="main" style="margin-top:100px;">
+    <hr>
+        <footer>
+            <p></p>
+        </footer>
+        <?php echo $this->inlineScript() ?>
+    </div>
+    </body>
+</html>

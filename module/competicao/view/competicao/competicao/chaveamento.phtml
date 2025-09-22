@@ -1,0 +1,217 @@
+ <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+      <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('competicaoNovo'); ?>'" style="float: right;">
+      <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+      Nova competição</button>
+
+    <ol class="breadcrumb" style="margin-bottom: 0px;">
+      <li><a href="<?= $this->url('competicoes'); ?>">Lista de competições</a></li>
+      <li class="active">Novo</li>
+    </ol>
+  </div>
+
+
+  <!-- ABAS DE NAVEGAÇÃO -->
+  <div class="container theme-showcase" role="main">
+  <div class="row">
+
+    <ul class="nav nav-tabs">
+      <li>
+        <a style="background-color:#428bca;margin-right: 0px;color: #FFFFFF;" href="<?= $this->url('competicaoAlterar', array('idCompeticao' => $competicao->id)); ?>">
+          <img src="<?= $this->basePath('img/competicao.png') ?>"> Competição
+        </a>
+      </li>
+      <li>
+        <a style="background-color:#dff0d8;margin-right: 0px;" href="<?= $this->url('competicaoSalas', array('idCompeticao' => $competicao->id)); ?>">
+          <img src="<?= $this->basePath('img/sala.png') ?>"> Salas
+        </a>
+      </li>
+
+      <li>
+        <a class="active" style="background-color:#fcf8e3;margin-right: 0px;">
+          <img src="<?= $this->basePath('img/chaveamento.png') ?>"> Chaveamento
+        </a>
+      </li>
+    </ul>
+    
+
+  </div>
+</div>
+    <form name="frmChaveamento" action="#" method="POST">
+      <!-- DADOS DA RODADA -->
+      <div class="container theme-showcase" role="main">
+        <div class="row">
+          <div class="panel panel-warning">
+            <div class="panel-heading">
+              <h3 class="panel-title">Dados da rodada - <?= $competicao->nome ?></h3>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                <div class="row" style="margin-top:20px;">
+                  <div class='col-sm-4'>
+                    <div class="form-group">
+                       <label for="disabledTextInput"><?=$formChaveamento->get('sala')->getLabel()?></label>
+                       <?= $this->formElement($formChaveamento->get('sala')); ?>
+                       <?= $this->formElementErrors($formChaveamento->get('sala'), array('class' => 'alert alert-danger')); ?>
+                    </div>
+                  </div>
+                  
+                  <div class='col-sm-4'>
+                    <div class="form-group">
+                      <label for="disabledTextInput"><?= $formChaveamento->get('data')->getLabel(); ?></label>
+                      <?= $this->formElement($formChaveamento->get('data')); ?>
+                      <?= $this->formElementErrors($formChaveamento->get('data'), array('class' => 'alert alert-danger')); ?>
+                    </div>
+                  </div>
+
+                  <div class='col-sm-4'>
+                    <div class="form-group">
+                      <label for="disabledTextInput"><?= $formChaveamento->get('hora')->getLabel(); ?></label>
+                      <?= $this->formElement($formChaveamento->get('hora')); ?>
+                      <?= $this->formElementErrors($formChaveamento->get('hora'), array('class' => 'alert alert-danger')); ?>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- recorrente -->
+      <div class="container theme-showcase" role="main">
+        <div class="row">
+          <div class="panel panel-danger">
+            <div class="panel-heading">
+              <h3 class="panel-title">Recorrente - <?= $competicao->nome ?></h3>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                <div class="row">
+                  <div class='col-sm-4'>
+                    <div class="form-group">
+                       <label for="disabledTextInput"><?=$formChaveamento->get('recorrente')->getLabel()?></label>
+                       <?= $this->formElement($formChaveamento->get('recorrente')); ?>
+                       <?= $this->formElementErrors($formChaveamento->get('recorrente'), array('class' => 'alert alert-danger')); ?>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recorrido -->
+      <div class="container theme-showcase" role="main">
+        <div class="row">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Recorrido - <?= $competicao->nome ?></h3>
+            </div>
+            <div class="panel-body">
+              <div class="form-group">
+                <div class="row">
+                  <div class='col-sm-4'>
+                    <div class="form-group">
+                       <label for="disabledTextInput"><?=$formChaveamento->get('recorrido')->getLabel()?></label>
+                       <?= $this->formElement($formChaveamento->get('recorrido')); ?>
+                       <?= $this->formElementErrors($formChaveamento->get('recorrido'), array('class' => 'alert alert-danger')); ?>
+                    </div>
+                  </div>
+                </div>  
+                <div class="row" style="margin-top:20px;">
+                  <button type="submit" class="btn btn-success" style="float: right;margin-right: 10px;">
+                    <img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+                    Salvar
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+  <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+      <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('competicaoChaveamento', array('idCompeticao' => $competicao->id)); ?>'" style="float: right;">
+      <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+      Nova rodada</button>
+  </div>
+
+
+    <!-- Lista de rodadas -->
+    <div class="container theme-showcase" role="main" style="margin-bottom:10px;">
+      <div class="row">
+          <div class="panel panel-warning">
+            <div class="panel-heading">
+              <h3 class="panel-title">Chaveamento</h3>
+            </div>
+            <div class="panel-body">
+              <?php if(count($rodadas) > 0): ?>
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Sala</th>
+                  <th style="text-align: center">Data</th>
+                  <th style="text-align: center">Hora</th>
+                  <th style="text-align: center">Recorrente</th>
+                  <th style="text-align: center">Recorrido</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php 
+                $data = false;
+                $hora = false;
+                $style = 'background-color: #fcf8e3;';
+              ?>
+              <?php 
+                foreach($rodadas as $rodada): 
+                  if($data != $rodada['data'] || $hora != $rodada['hora']){
+                    $data = $rodada['data'];
+                    $hora = $rodada['hora'];
+
+                    if(empty($style)){
+                      $style = 'background-color: #fcf8e3;';
+                    }else{
+                      $style = '';
+                    }
+                  }
+              ?>
+              
+              <tr style="<?= $style; ?>">
+                <td style="text-align: center"><?= $rodada['nome_sala']; ?></td>
+                <td style="text-align: center"><?= $this->converterData($rodada['data']); ?></td>
+                <td style="text-align: center"><?= $rodada['hora']; ?></td>
+                <td style="text-align: center"><?= $rodada['nome_recorrente']; ?></td>
+                <td style="text-align: center"><?= $rodada['nome_recorrido']; ?></td>
+                <td style="text-align: center;">
+                  <img src="<?= $this->basePath('img/editar.png'); ?>" title="Editar" 
+                  onclick="location.href='<?= $this->url('competicaoChaveamento', array('idCompeticao' => $competicao->id, 'idChave' => $rodada['id'])); ?>'" style="cursor: pointer;">
+
+                  <span style="margin-right:4px;"></span>
+
+                  <img src="<?= $this->basePath('img/avaliador.png'); ?>" title="Avaliações" 
+                  onclick="location.href='<?= $this->url('visualizarAvaliacoesCompeticao', array('idChave' => $rodada['id'])); ?>'" style="cursor: pointer;">
+
+                  <span style="margin-right:4px;"></span>
+
+                  <img src="<?= $this->basePath('img/deletar.png'); ?>" title="Desvincular avaliador" style="cursor: pointer;" onclick="alerta('<?= $this->url('deletarRodada', array('idCompeticao' => $competicao->id, 'idChave' => $rodada['id'])) ?>', 'deletar');">
+
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </table>
+          <?php else: ?>
+            <div class="alert alert-info">Nenhum chaveamento encontrado!</div>
+        <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <script type="text/javascript">
+        $(document).ready(function() {
+          $("#data").mask("99/99/9999");
+          $("#hora").mask("99:99");
+        });
+      </script>

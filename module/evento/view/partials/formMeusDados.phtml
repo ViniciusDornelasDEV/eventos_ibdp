@@ -1,0 +1,82 @@
+<?php if(!$this->params)$this->params = array();?>
+<?php $form->prepare(); ?>
+
+<?php if($this->route || $this->route):?>
+    <?php $form->setAttribute('action', $this->url($this->route, $this->params)); ?>
+<?php else: ?>
+	<?php $form->setAttribute('action', "#"); ?>
+<?php endif;?>
+
+<?= $this->form()->openTag($form); ?>
+<?php $row = 0; ?>
+<input type="hidden" name="valor_inscricao" value="<?= $valor_inscricao ?>">
+<div class="row" style="margin-top:20px;">
+<?php foreach ($form->getElements() as $element): ?>
+		<?php 
+			if($element->getName() == 'outro_conselho'){
+				continue;
+			}
+			$attributes = $element->getAttributes();
+			if(isset($attributes['type']) && $attributes['type'] == 'hidden'){
+				echo $this->formElement($element);
+				continue;
+			}
+			$row++; 
+			if($row == 3): 
+				$row = 1;
+		?>
+		</div>
+		<div class="row" style="margin-top:20px;">
+		<?php endif; ?>
+
+	        <div class='col-sm-6'>
+                <div class="form-group" id="group-<?= $element->getName(); ?>">
+	        <?php if($element->getLabel()) :?>
+	        
+	        <label for="<?=$element->getName()?>" style="width:250px;"><?=$element->getLabel()?></label>
+	        
+	        <?php endif;?>
+	        	
+	        	<?= $this->formElement($element); ?>
+	        	<?= $this->formElementErrors($element, array('class' => 'alert alert-danger')); ?>
+
+	        	<?php 
+	        		if($element->getName() == 'conselho'): 
+	        			$element = $form->get('outro_conselho');
+	        	?>
+	        		<?php if(isset($element)): ?>
+	        			<div class="form-group" id="group-outro_conselho" style="margin-top: 10px;">
+	        				<label for="<?=$element->getName()?>" style="width:250px;"><?=$element->getLabel()?></label>
+	        				<?= $this->formElement($element); ?>
+	        				<?= $this->formElementErrors($element, array('class' => 'alert alert-danger')); ?>
+	        			</div>
+	        		<?php endif; ?>
+	        	<?php endif; ?>
+	     		</div>
+            </div>
+
+<?php endforeach; ?>
+</div>
+<div class="row text-center" style="margin-top:20px;">
+        <div class="g-recaptcha" data-sitekey="<?= $credenciais['public'] ?>"></div>
+        <?php if($reCaptchaValid == false): ?>
+             <script type="text/javascript">alert('Informe que não é um robô!');</script>
+        <?php endif; ?>
+    
+</div>
+
+<div class="row text-center" style="margin-top:20px;">
+	<?php 
+		if(isset($this->botao)): 
+			echo $this->botao;
+		else:
+	?>
+	<button type="submit" class="btn btn-success" style="width: 98%;">
+		<img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+		Salvar
+	</button>
+<?php endif; ?>
+</div>
+
+
+<?= $this->form()->closeTag($form); ?>

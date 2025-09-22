@@ -1,0 +1,35 @@
+  <div class="container theme-showcase" role="main" style="margin-bottom:40px;padding:0px;">
+    <div class="breadcrumb2 flat">
+      <a href="<?= $evento->site_evento; ?>">Web site do evento</a>
+      <a href="#" class="active">Inscrição</a>
+    </div>
+  </div>
+
+    <div class="container theme-showcase" role="main" style="margin-top:100px;">
+        <?= $this->flashMessenger()->render('error', array('alert', 'alert-danger')) ?>   
+
+        <?= $this->flashMessenger()->render('warning', array('alert',  'alert-warning')) ?>
+        
+        <?= $this->flashMessenger()->render('success', array('alert',  'alert-success')) ?>
+    </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+         
+            <div class="panel-body">
+                <div class="form-group">
+                  
+                    <?php echo $this->partial('form/umacoluna', array('form'=> $formPessoa)); ?>
+                  
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        formInscricao();
+      });
+    </script>
+

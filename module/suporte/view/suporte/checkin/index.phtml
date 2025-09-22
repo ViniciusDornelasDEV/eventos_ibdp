@@ -1,0 +1,66 @@
+<div class="container theme-showcase" role="main" style="">
+  <img id="profile-img" class="img-responsive center-block" src="<?php echo $this->basePath($evento['banner_evento']); ?>" />
+  <p id="profile-name" class="profile-name-card"></p>
+</div>
+<div class="container theme-showcase" role="main" style="">
+  <div class="card card-container">
+    <form action="" method="POST" class="form-signin" role="form">    
+
+      <div class="row">
+        <label style="text-align: center">
+          <h2 class="form-signin-heading">Informe o CPF</h2>
+        </label>
+        <?= $this->formElement($formCheckin->get('cpf')); ?>
+        <label style="text-align: center">
+          <h2 class="form-signin-heading">ou o NOME</h2>
+        </label>
+        <?= $this->formElement($formCheckin->get('nome_completo')); ?>
+        <?= $this->formElement($formCheckin->get('idCliente')); ?>
+      </div>
+      <br>
+      <div class="row">
+            <input value="Pesquisar inscrito" class="btn btn-lg btn-success btn-block" name="submit" type="submit">
+        </div>
+    </form>
+  </div>
+</div>
+
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $.mask.definitions['~'] = "[+-]";
+      $("#cpf").mask("999.999.999-99");
+      $("#cpf").focus();
+
+
+      var clientes = {
+          <?php foreach ($inscritos as $inscrito) : ?>
+            "<?= $inscrito['cliente'] ?>": "<?= $inscrito['nome_completo'] ?>",
+          <?php endforeach; ?>
+        }
+        var clientesArray = $.map(clientes, function (value, key) { return { value: value, data: key }; });
+
+        $('#nome_completo').autocomplete({
+          lookup: clientesArray,
+          lookupFilter: function(suggestion, originalQuery, queryLowerCase) {
+              var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+              return re.test(suggestion.value);
+          },
+          onSelect: function(suggestion) {
+              $('#idCliente').val(suggestion.data);
+          },
+          onHint: function (hint) {
+              //$('#autocomplete-ajax-x').val(hint);
+          },
+          onInvalidateSelection: function() {
+              //$('#selction-ajax').html('You selected: none');
+          }
+        });
+
+
+    });
+  </script>
+
+
+
+    

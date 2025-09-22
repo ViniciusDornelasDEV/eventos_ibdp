@@ -1,0 +1,70 @@
+<?php if(!$this->params)$this->params = array();?>
+<?php $form->prepare(); ?>
+
+<?php if($this->route || $this->route):?>
+    <?php $form->setAttribute('action', $this->url($this->route, $this->params)); ?>
+<?php else: ?>
+	<?php $form->setAttribute('action', "#"); ?>
+<?php endif;?>
+
+<?= $this->form()->openTag($form); ?>
+        <div class="row">
+            <div class='col-sm-4'>
+                <div class="form-group" id="group-<?= $form->get('empresa')->getName(); ?>">
+                    <label for="<?=$form->get('empresa')->getName()?>"><?=$form->get('empresa')->getLabel()?></label>  
+                    <?= $this->formElement($form->get('empresa')); ?>
+                    <?= $this->formElementErrors($form->get('empresa'), array('class' => 'alert alert-danger')); ?>
+                </div>
+            </div>
+
+            <div class='col-sm-4'>
+                <div class="form-group" id="group-<?= $form->get('nome')->getName(); ?>">
+                    <label for="<?=$form->get('nome')->getName()?>"><?=$form->get('nome')->getLabel()?></label>  
+                    <?= $this->formElement($form->get('nome')); ?>
+                    <?= $this->formElementErrors($form->get('nome'), array('class' => 'alert alert-danger')); ?>
+                </div>
+            </div>
+
+            <div class='col-sm-4'>
+                <div class="form-group" id="group-<?= $form->get('data_inicio')->getName(); ?>">
+                    <label for="<?=$form->get('data_inicio')->getName()?>"><?=$form->get('data_inicio')->getLabel()?></label>  
+                    <?= $this->formElement($form->get('data_inicio')); ?>
+                    <?= $this->formElementErrors($form->get('data_inicio'), array('class' => 'alert alert-danger')); ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:20px;">
+            <div class='col-sm-4'>
+                <div class="form-group" id="group-<?= $form->get('data_fim')->getName(); ?>">
+                    <label for="<?=$form->get('data_fim')->getName()?>"><?=$form->get('data_fim')->getLabel()?></label>  
+                    <?= $this->formElement($form->get('data_fim')); ?>
+                    <?= $this->formElementErrors($form->get('data_fim'), array('class' => 'alert alert-danger')); ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top:20px;">
+            <div class='col-sm-12'>
+                    <label for="<?=$form->get('descricao')->getName()?>"><?=$form->get('descricao')->getLabel()?></label>  
+                    <?= $this->formElement($form->get('descricao')); ?>
+                    <?= $this->formElementErrors($form->get('descricao'), array('class' => 'alert alert-danger')); ?>
+                
+            </div>
+        </div>
+
+<div class="row" style="margin-top:20px;">
+	<?php 
+		if(isset($this->botao)): 
+			echo $this->botao;
+		else:
+	?>
+	<button type="submit" class="btn btn-success" style="float: right;margin-right: 10px;">
+		<img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+		Salvar
+	</button>
+<?php endif; ?>
+</div>
+
+
+<?= $this->form()->closeTag($form); ?>

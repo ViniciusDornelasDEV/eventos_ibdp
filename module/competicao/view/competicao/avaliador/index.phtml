@@ -1,0 +1,96 @@
+ <div class="container theme-showcase" role="main" style="margin-bottom:10px;">
+      <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                  <form class="form-inline" role="form" method="POST" action="#">
+                      <div class="row">
+                      
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                             <label for="disabledTextInput"><?=$formPesquisa->get('nome')->getLabel()?></label>
+                             <?= $this->formElement($formPesquisa->get('nome')); ?>
+                          </div>
+                        </div>
+
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('ativo')->getLabel(); ?></label>
+                            <?= $this->formElement($formPesquisa->get('ativo')); ?>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row" style="margin-top:20px;">
+                        <button type="submit" name="limpar" class="btn btn-default" style="float: right;margin-right: 20px;">
+                        <img src="<?= $this->basePath('img/limpar.png'); ?>"> Limpar</button>
+                        <button type="submit" name="pesquisar" class="btn btn-primary" style="float: right;margin-right: 10px;">
+                        <img src="<?= $this->basePath('img/pesquisar.png'); ?>" alt="Pesquisar"> Pesquisar</button>
+                      </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding: 0px;">
+       <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('avaliadorNovo'); ?>'" style="float: right;min-width:100px;">
+      <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+      Novo</button>
+
+      <button type="button" class="btn btn-success" onclick="location.href='<?= $this->url('importarAvaliadores'); ?>'" style="float: right;min-width:100px;margin-right: 5px;">
+      <img src="<?php echo $this->basePath('img/excel.png') ?>" alt="Importar avaliadores">
+      Importar avaliadores</button>
+
+      <ol class="breadcrumb" style="margin-bottom: 0px;">
+        <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+        <li class="active">Avaliadores</li>
+      </ol>
+    </div>
+    <!-- LISTAGEM DE CATEGORIAS -->
+    <div class="container theme-showcase" role="main" style="margin-bottom:10px;">
+      <div class="row">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">Lista de avaliadores</h3>
+            </div>
+            <div class="panel-body">
+              <?php if($avaliadores->count() > 0): ?>
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Nome</th>
+                  <th style="text-align: center">Email de acesso</th>
+                  <th style="text-align: center">CPF</th>
+                  <th style="text-align: center">Status</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach($avaliadores as $avaliador): ?>
+              <tr>
+                <td style="text-align: center"><?= $avaliador['nome']; ?></td>
+                <td style="text-align: center"><?= $avaliador['email']; ?></td>
+                <td style="text-align: center"><?= $this->caracterVazio($avaliador['cpf']); ?></td>
+                <td style="text-align: center"><?= $this->status($avaliador['ativo']); ?></td>
+                <td style="text-align: center;">
+                  <img src="<?= $this->basePath('img/editar.png'); ?>" title="Editar" 
+                  onclick="location.href='<?= $this->url('avaliadorAlterar', array('id' => $avaliador['id'])); ?>'" style="cursor: pointer;">
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </table>
+          <?php else: ?>
+            <div class="alert alert-info">Nenhum avaliador encontrado!</div>
+        <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container theme-showcase" style="margin-top:0px;padding: 0px;" role="main">
+        <div style="float:right;">
+          <?php echo $this->paginationControl($avaliadores,
+                                        'Sliding',
+                                        'view/paginator', array('route' => 'avaliadoresCompeticao', 'color' => '#007bff')); 
+          ?>
+        </div>
+      </div>
