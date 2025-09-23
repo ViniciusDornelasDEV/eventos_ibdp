@@ -1,0 +1,101 @@
+<div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+    <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('novoContinuadaAssociados'); ?>'" style="float: right;width:100px;">
+        <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+        Novo
+    </button>
+
+    <ol class="breadcrumb" style="margin-bottom: 0px;">
+        <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+        <li><a href="<?= $this->url('listarContinuadaAssociados'); ?>">Educação continuada</a></li>
+        <li class="active">Novo</li>
+    </ol>
+</div>
+
+<div class="container theme-showcase" role="main">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Cadastro de educação continuada</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                <form name="frmContinuada" class="form-inline" method="POST" action="#" enctype='multipart/form-data'>
+
+                  <div class="row">
+                      <div class='col-sm-4'>
+                          <div class="form-group">
+                              <label for="disabledTextInput"><?=$formContinuada->get('nome')->getLabel()?></label>
+                              <?= $this->formElement($formContinuada->get('nome')); ?>
+                              <?= $this->formElementErrors($formContinuada->get('nome'), array('class' => 'alert alert-danger')); ?>
+                          </div>
+                      </div>
+
+                      <div class='col-sm-4'>
+                          <div class="form-group">
+                              <label for="disabledTextInput"><?=$formContinuada->get('link_vimeo')->getLabel()?></label>
+                              <?= $this->formElement($formContinuada->get('link_vimeo')); ?>
+                              <?= $this->formElementErrors($formContinuada->get('link_vimeo'), array('class' => 'alert alert-danger')); ?>
+                          </div>
+                      </div>
+                      
+                      <div class='col-sm-4'>
+                          <div class="form-group">
+                              <label for="disabledTextInput"><?=$formContinuada->get('palestrantes')->getLabel()?></label>
+                              <?= $this->formElement($formContinuada->get('palestrantes')); ?>
+                              <?= $this->formElementErrors($formContinuada->get('palestrantes'), array('class' => 'alert alert-danger')); ?>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="row" style="margin-top: 20px;">
+                      <div class='col-sm-4'>
+                          <div class="form-group">
+                              <label for="disabledTextInput"><?=$formContinuada->get('moderador')->getLabel()?></label>
+                              <?= $this->formElement($formContinuada->get('moderador')); ?>
+                              <?= $this->formElementErrors($formContinuada->get('moderador'), array('class' => 'alert alert-danger')); ?>
+                          </div>
+                      </div>
+
+                      <div class='col-sm-4'>
+                          <div class="form-group">
+                              <label for="disabledTextInput"><?=$formContinuada->get('imagem')->getLabel()?></label>
+                              <?= $this->formElement($formContinuada->get('imagem')); ?>
+                              <?= $this->formElementErrors($formContinuada->get('imagem'), array('class' => 'alert alert-danger')); ?>
+                          </div>
+                      </div>
+
+                      <div class='col-sm-4'>
+                          <div class="form-group">
+                              <label for="disabledTextInput"><?=$formContinuada->get('ativo')->getLabel()?></label>
+                              <?= $this->formElement($formContinuada->get('ativo')); ?>
+                              <?= $this->formElementErrors($formContinuada->get('ativo'), array('class' => 'alert alert-danger')); ?>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="row" style="margin-top: 20px;">
+                      <div class='col-sm-12'>
+                          <label for="disabledTextInput"><?=$formContinuada->get('descricao')->getLabel()?></label>
+                          <?= $this->formElement($formContinuada->get('descricao')); ?>
+                          <?= $this->formElementErrors($formContinuada->get('descricao'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                  </div>
+
+                  <div class="row" style="margin-top:20px;">
+                    <button type="submit" class="btn btn-success" style="float: right;margin-right: 10px;">
+                      <img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+                      Salvar
+                    </button>
+                  </div>
+                  </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        CKEDITOR.replace('descricao');
+    });
+</script>

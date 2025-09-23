@@ -21,7 +21,7 @@ use Evento\Form\ConfiguracoesInscricao as formConfiguracoes;
 use Evento\Form\OpcaoAlternativa as formAlternativa;
 use Evento\Form\Opcao as formOpcao;
 use Evento\Form\PromocaoAssociados as formPromocaoAssociados;
-use Evento\Form\CategoriaTrabalho as formCategoria;
+
 use Evento\Form\Transmissao as formTransmissao;
 
 class EventoController extends BaseController
@@ -113,6 +113,7 @@ class EventoController extends BaseController
                 $dados['mensagem_cadastro_antigo'] = htmlspecialchars($dados['mensagem_cadastro_antigo']);
                 $dados['mensagem_pagamento'] = htmlspecialchars($dados['mensagem_pagamento']);
                 $dados['mensagem_transferencia'] = htmlspecialchars($dados['mensagem_transferencia']);
+                $dados['mensagem_trabalho'] = htmlspecialchars($dados['mensagem_trabalho']);
                 $dados['observacoes'] = htmlspecialchars($dados['observacoes']);
 
                 //salvar evento
@@ -307,7 +308,16 @@ class EventoController extends BaseController
                     $dados['mensagem_cadastro_antigo'] = htmlspecialchars($dados['mensagem_cadastro_antigo']);
                     $dados['mensagem_pagamento'] = htmlspecialchars($dados['mensagem_pagamento']);
                     $dados['mensagem_transferencia'] = htmlspecialchars($dados['mensagem_transferencia']);
+                    $dados['mensagem_trabalho'] = htmlspecialchars($dados['mensagem_trabalho']);
                     $dados['observacoes'] = htmlspecialchars($dados['observacoes']);
+                    $dadosPost = $this->getRequest()->getPost();
+                    $dados['forma_cielo'] = $dadosPost['forma_cielo'];
+                    $dados['forma_paypal'] = $dadosPost['forma_paypal'];
+                    $dados['forma_transferencia'] = $dadosPost['forma_transferencia'];
+                    $dados['forma_ipag'] = $dadosPost['forma_ipag'];
+                    $dados['visualizar_trabalhos'] = $dadosPost['visualizar_trabalhos'];
+
+                    
                     //alterar evento
                     $serviceEvento->update($dados, array('id' => $evento->id));
                     $this->flashMessenger()->addSuccessMessage('Evento alterado com sucesso!');
@@ -709,86 +719,6 @@ class EventoController extends BaseController
         }
 
         return new ViewModel();
-    }
-    
-    public function categoriastrabalhoAction(){
-        $usuario = $this->getServiceLocator()->get('session')->read();
-        $idEvento = $this->params()->fromRoute('idEvento');
-        if(!empty($usuario['empresa'])){
-            $this->layout('layout/empresa');
-            
-            //verificar se evento é da empresa
-            $evento = $this->getServiceLocator()->get('Evento')->getRecord($idEvento);
-            if($evento && $evento['empresa'] != $usuario['empresa']){
-                $this->flashMessenger()->addWarningMessage('Evento não encontrado!');
-                return $this->redirect()->toRoute('evento');
-            }
-
-        }
-
-        $categorias = $this->getServiceLocator()->get('InscricaoTrabalhoCategoria')->getRecords($idEvento, 'evento', array('*'), 'categoria');
-        
-        return new ViewModel(array(
-            'categorias' => $categorias,
-            'idEvento'   => $idEvento
-        ));
-    }
-
-    public function novacategoriatrabalhoAction(){
-        $usuario = $this->getServiceLocator()->get('session')->read();
-        $idEvento = $this->params()->fromRoute('idEvento');
-        if(!empty($usuario['empresa'])){
-            $this->layout('layout/empresa');
-
-            //verificar se evento é da empresa
-            $evento = $this->getServiceLocator()->get('Evento')->getRecord($idEvento);
-            if($evento && $evento['empresa'] != $usuario['empresa']){
-                $this->flashMessenger()->addWarningMessage('Evento não encontrado!');
-                return $this->redirect()->toRoute('evento');
-            }
-        }
-
-        $formCategoria = new formCategoria('frmCategoria');
-
-        if($this->getRequest()->isPost()){
-            $formCategoria->setData($this->getRequest()->getPost());
-            if($formCategoria->isValid()){
-                $dados = $formCategoria->getData();
-                $dados['evento'] = $idEvento;
-                $this->getServiceLocator()->get('InscricaoTrabalhoCategoria')->insert($dados);
-                $this->flashMessenger()->addSuccessMessage('Categoria inserida com sucesso!');
-                return $this->redirect()->toRoute('categoriasTrabalho', array('idEvento' => $idEvento));
-            }
-        }
-
-        return new ViewModel(array(
-            'formCategoria' => $formCategoria,
-            'idEvento'      => $idEvento
-        ));
-
-    }
-
-    public function deletarcategoriatrabalhoAction(){
-        $usuario = $this->getServiceLocator()->get('session')->read();
-        $categoria = $this->getServiceLocator()->get('InscricaoTrabalhoCategoria')->getRecord($this->params()->fromRoute('idCategoria'));
-        if(!empty($usuario['empresa'])){
-            $this->layout('layout/empresa');
-
-            //verificar se evento é da empresa
-            $evento = $this->getServiceLocator()->get('Evento')->getRecord($categoria->evento);
-            if($evento && $evento['empresa'] != $usuario['empresa']){
-                $this->flashMessenger()->addWarningMessage('Evento não encontrado!');
-                return $this->redirect()->toRoute('evento');
-            }
-        }
-
-        $res = $this->getServiceLocator()->get('InscricaoTrabalhoCategoria')->delete(array('id' => $categoria['id']));
-        if($res){
-            $this->flashMessenger()->addSuccessMessage('Categoria excluída com sucesso!');
-        }else{
-            $this->flashMessenger()->addErrorMessage('Erro ao excluir a categoria, por favor tente novamente!');
-        }
-        return $this->redirect()->toRoute('categoriasTrabalho', array('idEvento' => $categoria['evento']));
     }
 
     public function cadastrartransmissaoAction(){

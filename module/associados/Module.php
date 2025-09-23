@@ -110,6 +110,31 @@ class Module
                     $updates->setServiceLocator($sm);
                     return $updates;
                 },
+                'AssociadoIpag' => function($sm) {
+                    $tableGateway = new TableGateway('tb_associado_ipag', $sm->get('db_adapter_main'));
+                    $updates = new Model\AssociadoIpag($tableGateway);
+                    $updates->setServiceLocator($sm);
+                    return $updates;
+                },
+                'AssociadoBeneficios' => function($sm) {
+                    $tableGateway = new TableGateway('tb_associado_clube_beneficios', $sm->get('db_adapter_main'));
+                    $updates = new BaseTable($tableGateway);
+                    $updates->setServiceLocator($sm);
+                    return $updates;
+                },
+                'AssociadoContinuada' => function($sm) {
+                    $tableGateway = new TableGateway('tb_associado_educacao_continuada', $sm->get('db_adapter_main'));
+                    $updates = new BaseTable($tableGateway);
+                    $updates->setServiceLocator($sm);
+                    return $updates;
+                },
+                'AssociadoEbook' => function($sm) {
+                    $tableGateway = new TableGateway('tb_associado_ebook', $sm->get('db_adapter_main'));
+                    $updates = new BaseTable($tableGateway);
+                    $updates->setServiceLocator($sm);
+                    return $updates;
+                },
+                
             ),
             'invokables' => array(
                 'ImageService' => 'Imagine\Gd\Imagine',

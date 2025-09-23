@@ -105,6 +105,10 @@
             <label for="aparecer" style="width:139px;"><?=$form->get('anuidade_deposito')->getLabel()?></label>
             <?= $this->formElement($form->get('anuidade_deposito')); ?>
             <?= $this->formElementErrors($form->get('anuidade_deposito'), array('class' => 'alert alert-danger')); ?>
+            <br>
+            <label for="aparecer" style="width:139px;"><?=$form->get('anuidade_ipag')->getLabel()?></label>
+            <?= $this->formElement($form->get('anuidade_ipag')); ?>
+            <?= $this->formElementErrors($form->get('anuidade_ipag'), array('class' => 'alert alert-danger')); ?>
         </div>
     </div>
 </div>

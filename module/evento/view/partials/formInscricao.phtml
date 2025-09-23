@@ -8,11 +8,16 @@
 					<div class="panel panel-default">
 			          	<div class="panel-heading">
 			              <h3 class="panel-title">
-			              	<input type="radio" value="<?= $valor['id']; ?>" required="required" name="valor_inscricao" aria-invalid="false">
-			              	<?= $valor['nome_categoria'] ?> 
-			              	<span>- <?= html_entity_decode($valor['descricao_categoria']) ?></span>
-			              	<br>
-			              	<?= $this->exibirMonetario($valor['valor_inscricao']) ?> até <?= $this->converterData($valor['data_fim_valor']); ?>
+							<div>
+								<input type="radio" value="<?= $valor['id']; ?>" required="required" name="valor_inscricao" aria-invalid="false">
+			              		<?= $valor['nome_categoria'] ?>
+							</div>
+			              	<div style="font-size: 14;font-weight: 600;margin-top:10px;line-height:1.4;">
+								<?= html_entity_decode($valor['descricao_categoria']) ?>
+							</div>
+			              	<div style="font-size: 16;font-weight: 600;margin-top:10px;">
+								<?= $this->exibirMonetario($valor['valor_inscricao']) ?> até <?= $this->converterData($valor['data_fim_valor']); ?>
+							</div>
 			                  
 
 			              </h3>

@@ -1,0 +1,149 @@
+<div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;margin-top: 50px;">
+  
+  <?php if ($tipoAvaliacao == 'Oral') : ?>
+    <a href="<?= $this->url('avaliarTrabalhosEventoOral', array('idTrabalho' => $trabalho['id_trabalho'])); ?>">
+      <button type="button" name="avaliar" class="btn btn-warning" style="float: right;margin-right: 10px;">
+        <img src="<?php echo $this->basePath('img/trabalho.png') ?>" alt="Avaliar trabalho">
+        Avaliar trabalho oral
+      </button>
+    </a>
+  <?php else: ?>
+    <?php if ($tipoAvaliacao == 'Escrita') : ?>
+      <a href="<?= $this->url('avaliarTrabalhosEventoEscrita', array('idTrabalho' => $trabalho['id_trabalho'])); ?>">
+        <button type="button" name="avaliar" class="btn btn-success" style="float: right;margin-right: 10px;">
+          <img src="<?php echo $this->basePath('img/trabalho.png') ?>" alt="Avaliar trabalho">
+          Avaliar trabalho escrito
+        </button>
+      </a>
+    <?php else: ?>
+      <a href="<?= $this->url('avaliarTrabalhosEventoOral', array('idTrabalho' => $trabalho['id_trabalho'])); ?>">
+        <button type="button" name="avaliar" class="btn btn-warning" style="float: right;margin-right: 10px;">
+          <img src="<?php echo $this->basePath('img/trabalho.png') ?>" alt="Avaliar trabalho">
+          Avaliar trabalho oral
+        </button>
+      </a>
+
+      <a href="<?= $this->url('avaliarTrabalhosEventoEscrita', array('idTrabalho' => $trabalho['id_trabalho'])); ?>">
+        <button type="button" name="avaliar" class="btn btn-success" style="float: right;margin-right: 10px;">
+          <img src="<?php echo $this->basePath('img/trabalho.png') ?>" alt="Avaliar trabalho">
+          Avaliar trabalho escrito
+        </button>
+      </a>
+    <?php endif; ?>
+  <?php endif; ?>
+
+  
+
+  <ol class="breadcrumb" style="margin-bottom: 0px;">
+    <li><a href="<?= $this->url('listaTrabalhosAvaliador'); ?>">Trabalhos</a></li>
+    <li class="active">Visualizar trabalho</li>
+  </ol>
+</div>
+
+  <div class="container theme-showcase" role="main">
+    <div class="row">
+        <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">Visualizar trabalho</h3>
+          </div>
+          <div class="panel-body">
+              <div class="form-group">
+                  <div class="row">
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formTrabalho->get('nome_evento')->getLabel()?></label>
+                         <?= $this->formElement($formTrabalho->get('nome_evento')); ?>
+                         <?= $this->formElementErrors($formTrabalho->get('nome_evento'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formTrabalho->get('nome_categoria')->getLabel()?></label>
+                         <?= $this->formElement($formTrabalho->get('nome_categoria')); ?>
+                         <?= $this->formElementErrors($formTrabalho->get('nome_categoria'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formTrabalho->get('titulo_trabalho')->getLabel()?></label>
+                         <?= $this->formElement($formTrabalho->get('titulo_trabalho')); ?>
+                         <?= $this->formElementErrors($formTrabalho->get('titulo_trabalho'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formTrabalho->get('descritor1')->getLabel()?></label>
+                         <?= $this->formElement($formTrabalho->get('descritor1')); ?>
+                         <?= $this->formElementErrors($formTrabalho->get('descritor1'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formTrabalho->get('descritor2')->getLabel()?></label>
+                         <?= $this->formElement($formTrabalho->get('descritor2')); ?>
+                         <?= $this->formElementErrors($formTrabalho->get('descritor2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formTrabalho->get('descritor3')->getLabel()?></label><br>
+                         <?= $this->formElement($formTrabalho->get('descritor3')); ?>
+                         <?= $this->formElementErrors($formTrabalho->get('descritor3'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" style="margin-top:20px;">
+                    
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formTrabalho->get('apoio_financeiro')->getLabel()?></label>
+                         <?= $this->formElement($formTrabalho->get('apoio_financeiro')); ?>
+                         <?= $this->formElementErrors($formTrabalho->get('apoio_financeiro'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-12'>
+                      <label for="disabledTextInput"><?=$formTrabalho->get('resumo_trabalho')->getLabel()?></label><br>
+                      <?= $this->formElement($formTrabalho->get('resumo_trabalho')); ?>
+                      <?= $this->formElementErrors($formTrabalho->get('resumo_trabalho'), array('class' => 'alert alert-danger')); ?>
+                    </div>
+                  </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  </div>
+
+    <script type="text/javascript">
+
+      $(document).ready(function() {
+        $('#nome_evento').attr('disabled', 'disabled');
+        $('#nome_completo').attr('disabled', 'disabled');
+        $('#cpf').attr('disabled', 'disabled');
+        $('#nome_categoria').attr('disabled', 'disabled');
+        $('#titulo_trabalho').attr('disabled', 'disabled');
+        $('#autores_trabalho').attr('disabled', 'disabled');
+        $('#resumo_trabalho').attr('disabled', 'disabled');
+
+        $('#afiliacao').attr('disabled', 'disabled');
+        $('#descritor1').attr('disabled', 'disabled');
+        $('#descritor2').attr('disabled', 'disabled');
+        $('#descritor3').attr('disabled', 'disabled');
+        $('#apoio_financeiro').attr('disabled', 'disabled');
+
+        CKEDITOR.replace('resumo_trabalho');
+      });
+    </script>

@@ -27,6 +27,11 @@ class Module
 {
     public function onBootstrap(MvcEvent $e)
     {   
+        //se veio HTTP redir p/ HTTPS
+        /*if($_SERVER['SERVER_PORT'] != '443') {
+            header('Location: https://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+            exit();
+        }*/
         ini_set('date.timezone', "America/Sao_Paulo");
         //Config app e service manager
         $this->app = $e->getApplication();
@@ -165,7 +170,7 @@ class Module
                                 'buscarCertificado', 'cep', 'buscarClienteCpf', 'pesquisarAssociados', 'downloadArquivoTrabalho',
                                 'listarTrabalhosPublic', 'tokenRecuperar', 
                                 'competicaoClassificacao', 'competicaoVisualizarChaveamento', 'loginCompeticao', 'retornoAssociadoIpag',
-                                'realizarPagamentoInscricaoIpag', 'retornoInscricaoIpag'
+                                'realizarPagamentoInscricaoIpag', 'realizarPagamentoInscricaoIpagPix', 'retornoInscricaoIpag'
             );
 
         if(in_array($rota, $rotasPublicas)) {

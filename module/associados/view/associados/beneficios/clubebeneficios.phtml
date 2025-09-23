@@ -1,0 +1,42 @@
+<div class="container theme-showcase" role="main">
+  <div class="row">
+    <div class="col-md-3">
+      <?php echo $this->partial(
+        'menu/cliente',
+        array(
+          'associado' => $associado,
+          'questionario' => $questionario,
+          'associado' => $associado,
+          'pagina' => 'clube-beneficios'
+        )
+      );
+      ?>
+    </div>
+
+    <div class="col-md-9">
+      <div class="row">
+        <?php foreach ($beneficios as $beneficio) : ?>
+          <div class="col-sm-6 col-md-6">
+              <div class="text-center" onclick="$.colorbox({href:'<?= $this->url('exibirBeneficio', array('idBeneficio' => $beneficio['id'])); ?>'});">
+                  <img style="width: 420px;height: 210px;" 
+                      src="<?php echo $this->basePath($beneficio['imagem']) ?>" alt="Benefício">
+              </div>
+          </div>
+        <?php endforeach; ?>
+        
+
+
+      </div>
+      <div style="float:right;">
+        <?php echo $this->paginationControl(
+          $beneficios,
+          'Sliding',
+          'view/paginator',
+          array('route' => 'clubeBeneficios')
+        );
+        ?>
+      </div>
+    </div>
+
+  </div>
+</div>

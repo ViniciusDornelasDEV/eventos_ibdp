@@ -77,21 +77,41 @@
         $this->addImageFileInput('certificado_1', 'Certificado 1: ', false);
         $this->addImageFileInput('certificado_2', 'Certificado 2: ', false);
         $this->addImageFileInput('certificado_3', 'Certificado 3: ', false);
-
-        //forma_cielo
-        $this->_addDropdown('forma_cielo', '* Cielo:', true, array('S' => 'Sim', 'N' => 'Não'));
-
-        //forma_paypal
-        $this->_addDropdown('forma_paypal', '* PayPal:', true, array('S' => 'Sim', 'N' => 'Não'));
-
-        //forma_transferencia
-        $this->_addDropdown('forma_transferencia', '* Transferência:', true, array('S' => 'Sim', 'N' => 'Não'));
-
+        
         //enviar_trabalho
         $this->_addDropdown('enviar_trabalho', 'Enviar trabalhos:', false, array('N' => 'Não', 'S' => 'Sim'));
 
         //ativo
         $this->_addDropdown('ativo', 'Ativo:', false, array('S' => 'Sim', 'N' => 'Não'));
+
+        //forma_cielo
+        $this->_addRadio('forma_cielo', '* Cielo: ', true, array('S' => 'Sim', 'N' => 'Não'));
+
+        //forma_paypal
+        $this->_addRadio('forma_paypal', '* PayPal: ', true, array('S' => 'Sim', 'N' => 'Não'));
+
+        //forma_transferencia
+        $this->_addRadio('forma_transferencia', '* Transferência: ', true, array('S' => 'Sim', 'N' => 'Não'));
+
+        //forma_ipag
+        $this->_addRadio('forma_ipag', '* iPag: ', true, array('S' => 'Sim', 'N' => 'Não'));
+
+        $this->_addDropdown('parcelas', '* Número de parcelas:', true, array(
+            1 => '1',
+            2 => '2',
+            3 => '3',
+            4 => '4',
+            5 => '5',
+            6 => '6',
+            7 => '7',
+            8 => '8',
+            9 => '9',
+            10 => '10',
+            11 => '11',
+            12 => '12'
+        ));
+
+        $this->_addRadio('visualizar_trabalhos', '* Visualizar trabalhos: ', true, array('S' => 'Sim', 'N' => 'Não'));
         
         //mensagem_cadastro
         $this->genericTextArea('mensagem_cadastro_novo', '* Mensagem de cadastro p/ novos usuários: (%LOGIN%, %NOME_INSCRITO%)', true, false, false, 0, 900000);
@@ -104,6 +124,9 @@
 
         //mensagem_transferencia
         $this->genericTextArea('mensagem_transferencia', '* Mensagem para transferência bancária: (%LOGIN%, %NOME_INSCRITO%)', true, false, false, 0, 900000);
+
+        //mensagem_trabalho
+        $this->genericTextArea('mensagem_trabalho', '* Mensagem de aprovação do trabalho: (%LOGIN%, %NOME_INSCRITO%)', true, false, false, 0, 900000);
 
         //observacoes
         $this->genericTextArea('observacoes', '* Descrição:', true, true, false, 0, 900000);
@@ -143,6 +166,7 @@
         $data->mensagem_cadastro_antigo = html_entity_decode($data->mensagem_cadastro_antigo);
         $data->mensagem_pagamento = html_entity_decode($data->mensagem_pagamento);
         $data->mensagem_transferencia = html_entity_decode($data->mensagem_transferencia);
+        $data->mensagem_trabalho = html_entity_decode($data->mensagem_trabalho);
         $data->observacoes = html_entity_decode($data->observacoes);
 
 

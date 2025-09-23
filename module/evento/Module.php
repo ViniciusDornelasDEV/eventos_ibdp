@@ -25,13 +25,6 @@ class Module
     public function getServiceConfig() {
         return array(
             'factories' => array(
-                /* My Tables  */
-                /*'Equipamento' => function($sm) {
-                    $tableGateway = new TableGateway('tb_equipamento', $sm->get('db_adapter_main'));
-                    $updates = new Model\Equipamento($tableGateway);
-                    $updates->setServiceLocator($sm);
-                    return $updates;
-                },*/
                 'Evento' => function($sm) {
                     $tableGateway = new TableGateway('tb_evento', $sm->get('db_adapter_main'));
                     $updates = new Model\Evento($tableGateway);
@@ -116,24 +109,8 @@ class Module
                     $updates->setServiceLocator($sm);
                     return $updates;
                 },
-                'InscricaoTrabalho' => function($sm) {
-                    $tableGateway = new TableGateway('tb_evento_trabalho', $sm->get('db_adapter_main'));
-                    $updates = new Model\Trabalho($tableGateway);
-                    $updates->setServiceLocator($sm);
-                    return $updates;
-                },
-                'InscricaoTrabalhoPDF' => function($sm) {
-                    $tableGateway = new TableGateway('tb_evento_trabalho_pdf', $sm->get('db_adapter_main'));
-                    $updates = new BaseTable($tableGateway);
-                    $updates->setServiceLocator($sm);
-                    return $updates;
-                },
-                'InscricaoTrabalhoCategoria' => function($sm) {
-                    $tableGateway = new TableGateway('tb_evento_trabalho_categoria', $sm->get('db_adapter_main'));
-                    $updates = new BaseTable($tableGateway);
-                    $updates->setServiceLocator($sm);
-                    return $updates;
-                },
+                
+                
                 'EventoTransmissao' => function($sm) {
                     $tableGateway = new TableGateway('tb_evento_transmissao', $sm->get('db_adapter_main'));
                     $updates = new BaseTable($tableGateway);

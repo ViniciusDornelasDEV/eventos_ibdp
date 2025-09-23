@@ -31,6 +31,21 @@
 
         $this->addImageFileInput('certificado', 'Certificado: ', true, false, false, false, false, 'image/png, image/jpeg, application/pdf');
 
+        $this->_addDropdown('parcelas', '* Número de parcelas:', true, array(
+            1 => '1',
+            2 => '2',
+            3 => '3',
+            4 => '4',
+            5 => '5',
+            6 => '6',
+            7 => '7',
+            8 => '8',
+            9 => '9',
+            10 => '10',
+            11 => '11',
+            12 => '12'
+        ));
+
         $this->genericTextInput('validade_certificado', 'Validade do certificado:', false, '');
 
         $this->setAttributes(array(

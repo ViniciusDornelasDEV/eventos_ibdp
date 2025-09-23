@@ -42,7 +42,9 @@
 
         $this->_addRadio('anuidade_deposito', '* Transferência: ', true, array('S' => 'Sim', 'N' => 'Não'));
 
-         $this->genericTextArea('dados_deposito', 'Dados da transferência: ', false, false, false, 0, 900000);
+        $this->_addRadio('anuidade_ipag', '* iPag: ', true, array('S' => 'Sim', 'N' => 'Não'));
+
+        $this->genericTextArea('dados_deposito', 'Dados da transferência: ', false, false, false, 0, 900000);
 
         $this->_addDropdown('ativo', 'Ativo:', false, array('S' => 'Sim', 'N' => 'Não'));
                 

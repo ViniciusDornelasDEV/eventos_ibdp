@@ -55,6 +55,7 @@ class UsuarioController extends BaseController
 
             if ($form->isValid()) {
                 if($_POST['g-recaptcha-response']){
+
                     $resposta = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$credenciais['private'].'&response='.$_POST['g-recaptcha-response']."&remoteip=".$_SERVER['REMOTE_ADDR']);
                     $resposta = json_decode($resposta);
                     if(!$resposta->success){
@@ -103,6 +104,10 @@ class UsuarioController extends BaseController
                         $sessao->acl = $this->criarAutorizacao();
                         if(!empty($user['cliente'])){
                             return $this->redirect()->toRoute('inscricoesCliente');
+                        }
+
+                        if($user['id_usuario_tipo'] == 5){
+                            return $this->redirect()->toRoute('listaTrabalhosAvaliador');
                         }
 
                         return $this->redirect()->toRoute('home');

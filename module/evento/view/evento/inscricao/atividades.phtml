@@ -155,12 +155,30 @@
                         </div>
                       <?php endif; ?>
                       <?php if($evento['forma_transferencia'] == 'S'): ?>
-                      <div class="col-sm-12" style="margin-top: 10px;">
+                        <div class="col-sm-12" style="margin-top: 10px;">
                             <button type="submit" name="transferencia" class="btn btn-success" style="width: 90%;">
                                 <img src="<?= $this->basePath('img/banco.png') ?>" alt="Transferência">
                                 Transferência
                             </button>
                         </div>
+                      <?php endif; ?>
+
+                      <?php if($evento['forma_ipag'] == 'S'): ?>
+                        <?php if ($evento['id'] == 12): ?>
+                          <div class="col-sm-12" style="margin-top: 10px;">
+                          <button type="submit" name="pix" class="btn btn-success" style="width: 90%;">
+                              <img src="<?= $this->basePath('img/pix.png') ?>" style="width: 16px; height: 16px" alt="iPag">
+                              PIX
+                          </button>
+                        </div>
+                        <?php else: ?>
+                          <div class="col-sm-12" style="margin-top: 10px;">
+                            <button type="submit" name="cartao" class="btn btn-success" style="width: 90%;">
+                                <img src="<?= $this->basePath('img/ipag.png') ?>" style="width: 16px; height: 16px" alt="iPag">
+                                iPag
+                            </button>
+                          </div>
+                        <?php endif; ?>
                       <?php endif; ?>
                     </div>
                   <?php endif; ?>

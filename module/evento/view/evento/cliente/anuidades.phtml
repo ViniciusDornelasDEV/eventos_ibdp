@@ -1,68 +1,26 @@
 <div class="container theme-showcase" role="main">
   <div class="row">
-    <ul class="nav nav-tabs">
-      <li>
-        <a style="background-color:#dff0d8;margin-right: 0px;"  href="<?= $this->url('inscricoesCliente'); ?>">
-          <img src="<?= $this->basePath('img/inscricao.png') ?>"> Inscrições
-        </a>
-      </li>
-      <?php if($associado && $associado['ativo'] == 'S'): ?>
-        <li class="active">
-          <a style="background-color:#fcf8e3;margin-right: 0px;">
-            <img src="<?= $this->basePath('img/agendado.png') ?>"> Anuidades
-          </a>
-        </li>
-        <li><a style="background-color:#d9edf7;margin-right: 0px;" href="<?= $this->url('arquivosCliente'); ?>">
-          <img src="<?= $this->basePath('img/visualizar.png') ?>"> Arquivos
-        </a>
-        </li>
-        <li><a style="background-color:#f8d7da;margin-right: 0px;" href="<?= $this->url('questionariosCliente'); ?>">
-          <img src="<?= $this->basePath('img/msg.png') ?>"> Questionários/pesquisas
-        </a>
-        </li>
-
-        <?php if($questionario): ?>
-          <button type="button" class="btn btn-danger" onclick="$.colorbox({href:'<?= $this->url('responderQuestionarioAssociado', array('idQuestionario' => $questionario['id'])); ?>'});" style="float: right;">
-              <img src="<?php echo $this->basePath('img/msg.png') ?>" alt="Novo">
-              Responder questionário/pesquisa
-          </button>
-        <?php endif; ?>
-      <?php endif; ?>
-      <li>
-        <a style="background-color:#FFF5EE;margin-right: 0px;" href="<?= $this->url('listarTransmissoes'); ?>">
-          <img src="<?= $this->basePath('img/transmissao.png') ?>"> Transmissões
-        </a>
-      </li>
-      <li>
-        <a style="background-color:#ebebeb;margin-right: 0px;" href="<?= $this->url('meusDadosCliente'); ?>">
-          <img src="<?= $this->basePath('img/usuario.png') ?>"> Meus dados
-        </a>
-      </li>
-
-      <?php if(!empty($associado->certificado)): ?>
-      <li>
-        <a style="background-color:#007bff;margin-right: 0px;" href="<?= $this->url('downloadCertificadoCategoriaAssociado', array('idCategoria' => $associado->id_categoria)) ?>">
-          <img src="<?= $this->basePath('img/download.png') ?>"> Certificado
-        </a>
-      </li>
-      <?php endif; ?>
-      
-    </ul>
-
-
-
-  </div>
-</div>
-
-    <!-- LISTAGEM DOS EVENTOS -->
-    <div class="container theme-showcase" role="main">
+    <div class="col-md-3">
+      <?php echo $this->partial(
+        'menu/cliente',
+        array(
+          'associado' => $associado,
+          'questionario' => $questionario,
+          'associado' => $associado,
+          'pagina' => 'anuidades'
+        )
+      );
+      ?>
+    </div>
+    
+    <div class="col-md-9">
       <div class="row">
-          <div class="panel panel-warning">
-            <div class="panel-heading">
-              <h3 class="panel-title">Minhas anuidades</h3>
-            </div>
-            <div class="panel-body">
-              <?php if($anuidades->count() > 0): ?>
+        <div class="panel panel-warning">
+          <div class="panel-heading">
+            <h3 class="panel-title">Minhas anuidades</h3>
+          </div>
+          <div class="panel-body">
+            <?php if ($anuidades->count() > 0) : ?>
               <div class="table-responsive">
                 <table class="table">
                   <tr>
@@ -74,50 +32,53 @@
                     <th style="text-align: center">Valor pago</th>
                     <th style="text-align: center">Status</th>
                     <th style="text-align: center">Ações</th>
-                </tr>
-                <?php foreach($anuidades as $anuidade): ?>
-                <tr>
-                  <td style="text-align: center"><?= $anuidade['nome_fantasia']; ?></td>
-                  <td style="text-align: center"><?= $anuidade['descricao_anuidade']; ?></td>
-                  <td style="text-align: center"><?= $this->converterData($anuidade['data_inicio']); ?> a <?= $this->converterData($anuidade['data_fim']); ?></td>
-                  <td style="text-align: center"><?= $this->converterData($anuidade['data_vencimento']); ?></td>
-                  <td style="text-align: center"><?= $this->exibirMonetario($anuidade['valor_anuidade']); ?></td>
-                  <td style="text-align: center"><?= $this->caracterVazio($this->exibirMonetario($anuidade['valor_pagamento'])); ?></td>
-                  <?php if(empty($anuidade['data_pagamento'])): ?>
-                    <td style="text-align: center">Inadimplente</td>
-                  <?php else: ?>
-                    <td style="text-align: center">Adimplente</td>
-                  <?php endif; ?>
-                  
-                  <td style="text-align: center;">
-                    <img src="<?= $this->basePath('img/money.png'); ?>" onclick="$.colorbox({href:'<?= $this->url('pagarAnuidadeCliente', array('associado' => $anuidade['id_associado'], 'anuidade' => $anuidade['id_anuidade'])); ?>'});" title="Pagar anuidade"  style="cursor: pointer;">
-                    <span style="margin-right:4px;"></span>
-                    <?php if(empty($anuidade['data_hora_comprovante'])): ?>
-                      <?php $img = 'img/upload.png'; ?>
-                    <?php else: ?>
-                      <?php $img = 'img/uploadok.png'; ?>
-                    <?php endif; ?>
-                    <a href="<?= $this->url('uploadComprovanteAnuidade', array('idAnuidade' => $anuidade['id_anuidade'])) ?>">
-                      <img src="<?= $this->basePath($img); ?>" title="Upload de comprovante">
-                    </a>
-                  </td>
-                </tr>
-                <?php endforeach; ?>
-              </table>
-            </div>
-          <?php else: ?>
-             <div class="alert alert-info">Nenhuma anuidade encontrada!</div>
-        <?php endif; ?>
-            </div>
+                  </tr>
+                  <?php foreach ($anuidades as $anuidade) : ?>
+                    <tr>
+                      <td style="text-align: center"><?= $anuidade['nome_fantasia']; ?></td>
+                      <td style="text-align: center"><?= $anuidade['descricao_anuidade']; ?></td>
+                      <td style="text-align: center"><?= $this->converterData($anuidade['data_inicio']); ?> a <?= $this->converterData($anuidade['data_fim']); ?></td>
+                      <td style="text-align: center"><?= $this->converterData($anuidade['data_vencimento']); ?></td>
+                      <td style="text-align: center"><?= $this->exibirMonetario($anuidade['valor_anuidade']); ?></td>
+                      <td style="text-align: center"><?= $this->caracterVazio($this->exibirMonetario($anuidade['valor_pagamento'])); ?></td>
+                      <?php if (empty($anuidade['data_pagamento'])) : ?>
+                        <td style="text-align: center">Inadimplente</td>
+                      <?php else : ?>
+                        <td style="text-align: center">Adimplente</td>
+                      <?php endif; ?>
+
+                      <td style="text-align: center;">
+                        <img src="<?= $this->basePath('img/money.png'); ?>" onclick="$.colorbox({href:'<?= $this->url('pagarAnuidadeCliente', array('associado' => $anuidade['id_associado'], 'anuidade' => $anuidade['id_anuidade'])); ?>'});" title="Pagar anuidade" style="cursor: pointer;">
+                        <span style="margin-right:4px;"></span>
+                        <?php if (empty($anuidade['data_hora_comprovante'])) : ?>
+                          <?php $img = 'img/upload.png'; ?>
+                        <?php else : ?>
+                          <?php $img = 'img/uploadok.png'; ?>
+                        <?php endif; ?>
+                        <a href="<?= $this->url('uploadComprovanteAnuidade', array('idAnuidade' => $anuidade['id_anuidade'])) ?>">
+                          <img src="<?= $this->basePath($img); ?>" title="Upload de comprovante">
+                        </a>
+                      </td>
+                    </tr>
+                  <?php endforeach; ?>
+                </table>
+              </div>
+            <?php else : ?>
+              <div class="alert alert-info">Nenhuma anuidade encontrada!</div>
+            <?php endif; ?>
           </div>
         </div>
       </div>
-
-      <div class="container theme-showcase" style="margin-top:0px;" role="main">
-        <div style="float:right;">
-          <?php echo $this->paginationControl($anuidades,
-                                        'Sliding',
-                                        'view/paginator', array('route' => 'anuidadesCliente')); 
-          ?>
-        </div>
+      <div style="float:right;">
+        <?php echo $this->paginationControl(
+          $anuidades,
+          'Sliding',
+          'view/paginator',
+          array('route' => 'anuidadesCliente')
+        );
+        ?>
       </div>
+    </div>
+
+  </div>
+</div>

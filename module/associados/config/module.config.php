@@ -316,6 +316,39 @@ return array(
                 ),
             ),
 
+            'realizarPagamentoAssociadoIpag' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/associado/pagamento/ipag/invoice[/:idAssociado][/:idAnuidade]',
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Pagamento',
+                        'action'     => 'realizarpagamentoassociadoipag',
+                    ),
+                ),
+            ),
+
+            'realizarPagamentoAssociadoIpagPix' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/associado/pagamento/ipag/pix/invoice[/:idAssociado][/:idAnuidade]',
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Pagamento',
+                        'action'     => 'realizarpagamentoassociadoipagpix',
+                    ),
+                ),
+            ),
+
+            'retornoAssociadoIpag' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/associado/pagamento/ipag/retorno',
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Pagamento',
+                        'action'     => 'retornoassociadoipag',
+                    ),
+                ),
+            ),
+
             //QUESTIONARIO
             'listaQuestionarioAssociado' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
@@ -466,6 +499,184 @@ return array(
                 ),
             ),
 
+            'listarBeneficiosAssociados' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/associados/beneficios/listar[/:page]',
+                    'constraints' => array(
+                        'page'              => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Beneficios',
+                        'action'     => 'indexbeneficios',
+                    ),
+                ),
+            ),
+             
+            'novoBeneficioAssociados' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/associados/beneficios/novo',
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Beneficios',
+                        'action'     => 'novobeneficios',
+                    ),
+                ),
+            ),
+            'alterarBeneficioAssociados' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/associados/beneficios/alterar[/:idBeneficio]',
+                    'constraints' => array(
+                        'idBeneficio'   => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Beneficios',
+                        'action'     => 'alterarbeneficios',
+                    ),
+                ),
+            ),
+
+            'downloadBeneficiosAssociado' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/associados/download/arquivos[/:id][/:tipoArquivo]',
+                    'constraints' => array(
+                        'id'   => '[0-9]+',
+                        'tipoArquivo'   => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Beneficios',
+                        'action'     => 'downloadarquivo',
+                    ),
+                ),
+            ),
+
+            'clubeBeneficios' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/painel/cliente/clubebeneficios',
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Beneficios',
+                        'action'     => 'clubebeneficios',
+                    ),
+                ),
+            ),
+
+            'exibirBeneficio' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/associados/beneficio/exibir[/:idBeneficio]',
+                    'constraints' => array(
+                        'idBeneficio'   => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Beneficios',
+                        'action'     => 'exibirbeneficio',
+                    ),
+                ),
+            ),
+            
+
+            'listarContinuadaAssociados' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/associados/continuada/listar[/:page]',
+                    'constraints' => array(
+                        'page'              => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Educacaocontinuada',
+                        'action'     => 'indexcontinuada',
+                    ),
+                ),
+            ),
+             
+            'novoContinuadaAssociados' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/associados/continuada/novo',
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Educacaocontinuada',
+                        'action'     => 'novocontinuada',
+                    ),
+                ),
+            ),
+            'alterarContinuadaAssociados' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/associados/continuada/alterar[/:idContinuada]',
+                    'constraints' => array(
+                        'idContinuada'   => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Educacaocontinuada',
+                        'action'     => 'alterarcontinuada',
+                    ),
+                ),
+            ),
+
+            'educacaoContinuada' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/painel/cliente/educacaocontinuada[/:page]',
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Educacaocontinuada',
+                        'action'     => 'educacaocontinuada',
+                    ),
+                ),
+            ),
+        
+
+            'listarEbookAssociados' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/associados/ebook/listar[/:page]',
+                    'constraints' => array(
+                        'page'              => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Ebooks',
+                        'action'     => 'indexebook',
+                    ),
+                ),
+            ),
+             
+            'novoEbookAssociados' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/associados/ebook/novo',
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Ebooks',
+                        'action'     => 'novoebook',
+                    ),
+                ),
+            ),
+            'alterarEbookAssociados' => array(
+                'type' => 'Zend\Mvc\Router\Http\Segment',
+                'options' => array(
+                    'route'    => '/associados/ebook/alterar[/:idEbook]',
+                    'constraints' => array(
+                        'idEbook'   => '[0-9]+'
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Ebooks',
+                        'action'     => 'alterarebook',
+                    ),
+                ),
+            ),
+
+            'ebooks' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/painel/cliente/ebooks',
+                    'defaults' => array(
+                        'controller' => 'Associados\Controller\Ebooks',
+                        'action'     => 'ebooks',
+                    ),
+                ),
+            ),
+
 
         ),
     ),
@@ -476,6 +687,11 @@ return array(
             'Associados\Controller\Pagamento' => 'Associados\Controller\PagamentoController',
             'Associados\Controller\Questionario' => 'Associados\Controller\QuestionarioController',
             'Associados\Controller\Graficos'    => 'Associados\Controller\GraficosController',
+            'Associados\Controller\Beneficios'    => 'Associados\Controller\BeneficiosController',
+            'Associados\Controller\Educacaocontinuada'    => 'Associados\Controller\EducacaocontinuadaController',
+            'Associados\Controller\Ebooks'    => 'Associados\Controller\EbooksController',
+
+
         ),
     ),
     'view_manager' => array(

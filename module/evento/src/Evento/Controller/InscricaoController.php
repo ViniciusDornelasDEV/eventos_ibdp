@@ -20,8 +20,8 @@ use Evento\Form\MudarCategoria as formMudarCategoria;
 use Evento\Form\PagarInscricao as formPagar;
 use Evento\Form\Promocao as formPromocao;
 use Evento\Form\CadastrarSenha as formSenha;
-use Evento\Form\PesquisaTrabalho as formPesquisaTrabalho;
-use Evento\Form\VisualizarTrabalho as formVisualizarTrabalho;
+
+
 
 use Application\Params\Parametros;
 
@@ -111,28 +111,30 @@ class InscricaoController extends BaseController
 
 
         //caso tenha passado o prazo do valor, atualizar inscrição para o proximo valor ativo
-        $valor = $this->getServiceLocator()->get('ValorEvento')->getValoresByEventoAndDate(
-                    $inscricao->evento,
-                    date('Y-m-d'),
-                    $inscricao->id_categoria
-                )->current();
+        if($inscricao->status_pagamento != 2){
+            $valor = $this->getServiceLocator()->get('ValorEvento')->getValoresByEventoAndDate(
+                $inscricao->evento,
+                date('Y-m-d'),
+                $inscricao->id_categoria
+            )->current();
 
-        if(($valor) && $inscricao->valor_bruto != $valor->valor_inscricao){
-            $valorTotal = $valor->valor_inscricao;
-            if($inscricao->valor_bruto != $inscricao->valor_total){
-                //calcular desconto
-                $promocao = $this->getServiceLocator()->get('PromocaoEvento')
-                    ->getRecord($inscricao->codigo_desconto, 'codigo_promocional');
-                if($promocao){
-                    $valorDesconto = ($valor->valor_inscricao*$promocao->desconto)/100;
-                    $valorTotal = $valor->valor_inscricao - $valorDesconto;
+            if(($valor) && $inscricao->valor_bruto != $valor->valor_inscricao){
+                $valorTotal = $valor->valor_inscricao;
+                if($inscricao->valor_bruto != $inscricao->valor_total){
+                    //calcular desconto
+                    $promocao = $this->getServiceLocator()->get('PromocaoEvento')
+                        ->getRecord($inscricao->codigo_desconto, 'codigo_promocional');
+                    if($promocao){
+                        $valorDesconto = ($valor->valor_inscricao*$promocao->desconto)/100;
+                        $valorTotal = $valor->valor_inscricao - $valorDesconto;
+                    }
                 }
+                $serviceInscricao->update(
+                        array('valor_bruto' => $valor->valor_inscricao, 'valor_total' => $valorTotal),
+                        array('id' => $inscricao->id)
+                    );
+                $inscricao = $serviceInscricao->getInscricaoById($idInscricao, $usuario['empresa'], $usuario['cliente']);
             }
-            $serviceInscricao->update(
-                    array('valor_bruto' => $valor->valor_inscricao, 'valor_total' => $valorTotal),
-                    array('id' => $inscricao->id)
-                );
-            $inscricao = $serviceInscricao->getInscricaoById($idInscricao, $usuario['empresa'], $usuario['cliente']);
         }
 
 
@@ -240,12 +242,11 @@ class InscricaoController extends BaseController
     }
 
     public function pagarinscricaoAction(){
-        $formPagar = new formPagar('frmPagar');
         $idInscricao = $this->params()->fromRoute('inscricao');
 
         $inscricao = $this->getServiceLocator()->get('Inscricao')->getInscricaoById($idInscricao);
         $evento = $this->getServiceLocator()->get('Evento')->getRecord($inscricao->evento);
-        
+        $formPagar = new formPagar('frmPagar', $this->getServiceLocator(), $inscricao);        
         $usuario = $this->getServiceLocator()->get('session')->read();
         if($usuario['id_usuario_tipo'] == 3){
             //verificar se inscrição é da mesma empresa 
@@ -262,6 +263,15 @@ class InscricaoController extends BaseController
                 $dados = $formPagar->getData();
                 $dados['status_pagamento'] = 2;
                 $dados['data_hora_pagamento'] = date('Y-m-d H:i:s');
+
+                if(!empty($dados['categoria'])){
+                    $valor = $this->getServiceLocator()->get('ValorEvento')->getRecord($dados['categoria']);
+                    $dados['valor_bruto'] = $valor->valor_inscricao;
+                    $dados['valor_total'] = $valor->valor_inscricao;
+                }
+                unset($dados['categoria']);
+
+                //ValorEvento
                 $this->getServiceLocator()->get('Inscricao')->update($dados, array('id' => $idInscricao));
 
                 //enviar email
@@ -365,17 +375,13 @@ class InscricaoController extends BaseController
                     if(!$resposta->success){
                         die('Ocorreu algum problema, por favor tente novamente!');
                     }
-
-                    //BUSCAR VALOR DA INSCRIÇÃO PELO EVENTO ID(se não vier nada o id foi alterado)
                     $valorInscricao = $this->getServiceLocator()->get('ValorEvento')
                                             ->getValoresByEvento($evento->id, $dados['valor_inscricao'])
                                             ->current();
-
                     if(!$valorInscricao){
                         $this->flashMessenger()->addWarningMessage('Categoria de inscrição não encontrada!');
                         return $this->redirect()->toRoute('realizarInscricao', array('siglaEvento' => $evento->sigla));
                     }
-
                     //pesquisar se existe CPF para a categoria selecionada
                     $serviceSocio = $this->getServiceLocator()->get('Socio');
                     $categorias = $serviceSocio->getRecords($valorInscricao['evento_cliente_categoria'], 'categoria');
@@ -386,7 +392,6 @@ class InscricaoController extends BaseController
                         $cpf = str_replace('-', '', $cpf);
                         $socio = $serviceSocio->getRecordFromArray(array('cpf' => $cpf, 'categoria' => $valorInscricao['evento_cliente_categoria']));
                         if(!$socio){
-
                             $this->flashMessenger()->addErrorMessage('Seu CPF não está na lista de associados, por favor contate o administrador ou selecione outra categoria!');
                             return $this->redirect()->toRoute('meusDadosInscricao', array('tipoPessoa' => $tipoPessoa, 'siglaEvento' => $siglaEvento));
                         }
@@ -606,12 +611,28 @@ class InscricaoController extends BaseController
                     
                                 return $this->redirect()->toRoute('sucesso');
                         }else{
-                            //REDIRECIONAR PARA PAYPAL
-                            $this->getServiceLocator()->get('Inscricao')->update(array( 
-                                'inscricao_status' => 3,
-                                ), 
-                            array('id' => $idInscricao));
-                            return $this->redirect()->toRoute('paypal');
+                            if(isset($dados['cartao'])){
+                                $this->getServiceLocator()->get('Inscricao')->update(array( 
+                                    'inscricao_status' => 3,
+                                    ), 
+                                array('id' => $idInscricao));
+                                return $this->redirect()->toRoute('realizarPagamentoInscricaoIpag');  
+                            }else{
+                                if (isset($dados['pix'])) {
+                                    $this->getServiceLocator()->get('Inscricao')->update(array( 
+                                        'inscricao_status' => 3,
+                                        ), 
+                                    array('id' => $idInscricao));
+                                    return $this->redirect()->toRoute('realizarPagamentoInscricaoIpagPix'); 
+                                }
+                                //REDIRECIONAR PARA PAYPAL
+                                $this->getServiceLocator()->get('Inscricao')->update(array( 
+                                    'inscricao_status' => 3,
+                                    ), 
+                                array('id' => $idInscricao));
+                                return $this->redirect()->toRoute('paypal');    
+                            }
+                            
                         }
                     }
                 }
@@ -851,146 +872,6 @@ class InscricaoController extends BaseController
                 'formCategoria'     =>  $formCategoria,
                 'inscricao'         =>  $inscricao
             ));
-    }
-
-    public function listartrabalhosAction(){
-        //pegar usuário logado
-        $usuario = $this->getServiceLocator()->get('session')->read();
-        
-        //instanciar form de pesquisa
-        $formPesquisa = new formPesquisaTrabalho('fromInscricao', $this->getServiceLocator(), $usuario['empresa']);
-
-        $dados = array();
-
-        //se vier post é uma pesquisa
-        $container = new Container();
-        //unset($container->dados);
-        if(!isset($container->dados)){
-            $container->dados = array();
-        }
-        if($this->getRequest()->isPost()){
-            $dados = $this->getRequest()->getPost();
-            if(isset($dados['limpar'])){
-                unset($container->dados);
-                $this->redirect()->toRoute('listarTrabalhos');
-            }else{
-                $formPesquisa->setData($dados);
-                if($formPesquisa->isValid()){
-                    $container->dados = $formPesquisa->getData();
-                }
-                
-            }
-        }
-        $formPesquisa->setData($container->dados);
-
-        
-        if(!empty($usuario['empresa'])){
-            $container->dados['empresa'] = $usuario['empresa'];
-            $this->layout('layout/empresa');
-        }
-
-        $serviceInscricao = $this->getServiceLocator()->get('Inscricao');
-        $trabalhos = $serviceInscricao->getTrabalhos($container->dados)->toArray();
-
-        //paginação
-        $paginator = new Paginator(new ArrayAdapter($trabalhos));
-        $paginator->setCurrentPageNumber($this->params()->fromRoute('page'));
-        $paginator->setItemCountPerPage(40);
-        $paginator->setPageRange(5);
-
-        return new ViewModel(array(
-                    'formPesquisa'     => $formPesquisa,
-                    'trabalhos'        => $paginator,
-                    'empresa'          => $usuario['empresa'],
-                    'clientes'         => $trabalhos 
-                ));
-    }
-
-    public function visualizartrabalhoAction(){
-        $idInscricao = $this->params()->fromRoute('idInscricao');
-        $usuario = $this->getServiceLocator()->get('session')->read();
-        if(!empty($usuario['empresa'])){
-            $container->dados['empresa'] = $usuario['empresa'];
-            $this->layout('layout/empresa');
-            
-            //verificar se trabalho é da empresa
-            $inscricao = $serviceInscricao->getInscricaoById($idInscricao, $usuario['empresa']);
-            if(!$inscricao){
-                $this->flashMessenger()->addWarningMessage('Trabalho não encontrado!');
-                return $this->redirect()->toRoute('listarTrabalhos');
-            }
-        }
-
-
-        $trabalho = $this->getServiceLocator()->get('Inscricao')->getTrabalhos(array(), $idInscricao)->current();
-        //se veio post, aprovar o trabalho
-        if($this->getRequest()->isPost()){
-            if($trabalho->trabalho_aprovado == 'N'){
-                $this->getServiceLocator()->get('InscricaoTrabalho')
-                    ->update(array('aprovado' => 'S'), array('inscricao' => $idInscricao));
-            }else{
-                $this->getServiceLocator()->get('InscricaoTrabalho')
-                    ->update(array('aprovado' => 'N'), array('inscricao' => $idInscricao));
-            }
-            $this->flashMessenger()->addSuccessMessage('Status alterado com sucesso!');
-            return $this->redirect()->toRoute('listarTrabalhos');
-        }
-
-        $formTrabalho = new formVisualizarTrabalho('frmTrabalho');
-        
-        $formTrabalho->setData($trabalho);
-
-        $arquivos = $this->getServiceLocator()->get('InscricaoTrabalhoPDF')->getRecords($trabalho['id_trabalho'], 'trabalho');
-        
-        return new ViewModel(array(
-            'formTrabalho'  =>  $formTrabalho,
-            'arquivos'      =>  $arquivos,
-            'trabalho'      =>  $trabalho,
-            'idInscricao'   =>  $idInscricao
-        ));
-    }
-
-    public function deletartrabalhoAction(){
-        $idInscricao = $this->params()->fromRoute('idInscricao');
-        $usuario = $this->getServiceLocator()->get('session')->read();
-        if(!empty($usuario['empresa'])){
-            //verificar se trabalho é da empresa
-            $inscricao = $serviceInscricao->getInscricaoById($idInscricao, $usuario['empresa']);
-            if(!$inscricao){
-                $this->flashMessenger()->addWarningMessage('Trabalho não encontrado!');
-                return $this->redirect()->toRoute('listarTrabalhos');
-            }
-        }
-
-        //detelar o trabalho
-        $res = $this->getServiceLocator()->get('InscricaoTrabalho')->deletarTrabalho($idInscricao);
-        if($res == true){
-            $this->flashMessenger()->addSuccessMessage('Trabalho excluído com sucesso!');
-            return $this->redirect()->toRoute('listarTrabalhos');
-        }else{
-            $this->flashMessenger()->addErrorMessage('Erro ao excluir trabalho, por favor tente novamente!');
-            return $this->redirect()->toRoute('visualizarTrabalho', array('idInscricao' => $idInscricao));
-        }
-        return new ViewModel(array());
-    }
-
-    public function downloadarquivotrabalhoAction(){
-        $arquivo = $this->getServiceLocator()->get('InscricaoTrabalhoPDF')->getRecord($this->params()->fromRoute('idArquivo'));
-        $fileName = $arquivo->arquivo;
-        if(!is_file($fileName)) {
-            //Não foi possivel encontrar o arquivo
-        }
-        $fileContents = file_get_contents($fileName);
-
-        $response = $this->getResponse();
-        $response->setContent($fileContents);
-
-        $headers = $response->getHeaders();
-        $headers->clearHeaders()
-            ->addHeaderLine('Content-Type', 'whatever your content type is')
-            ->addHeaderLine('Content-Disposition', 'attachment; filename="' . $fileName . '"')
-            ->addHeaderLine('Content-Length', strlen($fileContents));
-        return $this->response;
     }
 
 }

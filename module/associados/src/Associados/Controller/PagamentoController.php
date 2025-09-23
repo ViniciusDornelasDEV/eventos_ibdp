@@ -3,6 +3,7 @@
 namespace Associados\Controller;
 
 use Application\Controller\BaseController;
+use Application\Form\Associados;
 use Zend\View\Model\ViewModel;
 
 use Zend\Paginator\Paginator;
@@ -12,6 +13,8 @@ use Zend\Session\Container;
 use Associados\Form\Pagar as formPagar;
 use Associados\Form\PesquisarPagamento as formPesquisa;
 use Application\Params\Parametros as arrayParams;
+use Associados\Form\DadosIpag as formIpag;
+use Associados\Classes\Ipag as Ipag;
 
 class PagamentoController extends BaseController
 {
@@ -382,6 +385,11 @@ class PagamentoController extends BaseController
                 ' - '.$responseNvp['L_LONGMESSAGE0'];
                 parent::logSistema($mensagem, 'paypal');
 
+                //10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+                if($responseNvp['L_ERRORCODE0'] == 10486 || $responseNvp['L_ERRORCODE0'] == '10486'){
+                    return new ViewModel(array('idAssociado' => $idAssociado, 'idAnuidade' => $idAnuidade)); 
+                }
+                
                 $this->flashMessenger()->addErrorMessage('Erro ao realizar pagamento, por favor tente novamente ou contate o administrador!');
                 return $this->redirect()->toRoute('anuidadesCliente');
             }
@@ -393,7 +401,157 @@ class PagamentoController extends BaseController
         return $this->redirect()->toRoute('anuidadesCliente');
     }
 
-  
+    public function realizarpagamentoassociadoipagAction(){
+        $this->layout('layout/cliente');
+        $idAssociado = $this->params()->fromRoute('idAssociado');
+        $idAnuidade = $this->params()->fromRoute('idAnuidade');
+        $associado = $this->getServiceLocator()->get('Associado')->getAssociado($idAssociado);
+
+        $formIpag = new formIpag('formIpag', $associado['parcelas']);
+        if($this->getRequest()->isPost()){
+            $formIpag->setData($this->getRequest()->getPost());
+            if($formIpag->isValid()){
+                $dadosCartao = $formIpag->getData();
+                $dataVencimento = explode('/', $dadosCartao['expiry_date']);
+                
+                $pagamento = $this->getServiceLocator()->get('Associado')->getPagamento($idAssociado, $idAnuidade);
+
+                //verificar se já existe pagamento
+                if (!empty($pagamento['id_pagamento'])) {
+                    die('Pagamento já foi efetuado!');
+                }
+
+                $associadoIpag = $this->getServiceLocator()
+                    ->get('AssociadoIpag')
+                    ->getRecordFromArray(array(
+                        'associado' =>  $idAssociado,
+                        'anuidade'  =>  $idAnuidade
+                    ));
+
+                if (!$associadoIpag) {
+                    $associadoIpag = array(
+                        'associado' =>  $idAssociado,
+                        'anuidade'  =>  $idAnuidade
+                    );
+                    $associadoIpag['id'] = $this->getServiceLocator()->get('AssociadoIpag')->insert($associadoIpag);
+                }
+
+                $cliente = $this->getServiceLocator()->get('Cliente')->getClienteById($pagamento['cliente']);
+                $pagamentoAssociado = array(
+                    'amount' => $pagamento['valor'],
+                    'callback_url' => '',
+                    'order_id' => $associadoIpag['id'],
+                    'capture' => false,
+                    'payment' => array(
+                        'type' => 'card',
+                        'method' => $dadosCartao['bandeira'],
+                        'installments' => $dadosCartao['parcelas'],
+                        'card' => array(
+                            'holder' => $dadosCartao['holder'],
+                            'number' => $dadosCartao['number'],
+                            'expiry_month' => $dataVencimento[0],
+                            'expiry_year' => $dataVencimento[1],
+                            'cvv' => $dadosCartao['cvv']
+                        )
+                    ),
+                    'customer' => array(
+                        'name'      => $cliente['nome_completo'],
+                        'cpf_cnpj'  => str_replace(['.', '-'], '', $cliente['cpf'])
+                    )
+                );
+
+                $iPag = new Ipag($this->getServiceLocator());
+                $res = $iPag->realizarPagamentoAssociado($pagamentoAssociado, $associadoIpag);
+                parent::logSistema('REALIZAR PAGAMENTO: '.json_encode($res), 'iPag');
+                $response = $iPag->getResponse();                
+                if ($res !== false) {
+                    //$this->flashMessenger()->addSuccessMessage('Pagamento registrado com sucesso, aguarde a confirmação!');
+                    return $this->redirect()->toRoute('anuidadesCliente');
+                } else {
+                    $this->flashMessenger()->addErrorMessage($iPag->httpCodeMessage());
+                    return $this->redirect()->toRoute('realizarPagamentoAssociadoIpag', array('idAssociado' => $idAssociado, 'idAnuidade' => $idAnuidade));
+                }
+                
+            }
+        }
+
+        return new ViewModel(array(
+            'formIpag' => $formIpag
+        ));
+    }
+
+    public function realizarpagamentoassociadoipagpixAction(){
+        $this->layout('layout/cliente');
+        $idAssociado = $this->params()->fromRoute('idAssociado');
+        $idAnuidade = $this->params()->fromRoute('idAnuidade');
+
+        $pagamento = $this->getServiceLocator()->get('Associado')->getPagamento($idAssociado, $idAnuidade);
+
+        //verificar se já existe pagamento
+        if (!empty($pagamento['id_pagamento'])) {
+            die('Pagamento já foi efetuado!');
+        }
+
+        $associadoIpag = $this->getServiceLocator()
+            ->get('AssociadoIpag')
+            ->getRecordFromArray(array(
+                'associado' =>  $idAssociado,
+                'anuidade'  =>  $idAnuidade
+            ));
+
+        if (!$associadoIpag) {
+            $associadoIpag = array(
+                'associado' =>  $idAssociado,
+                'anuidade'  =>  $idAnuidade
+            );
+            $associadoIpag['id'] = $this->getServiceLocator()->get('AssociadoIpag')->insert($associadoIpag);
+        }
+
+        $cliente = $this->getServiceLocator()->get('Cliente')->getClienteById($pagamento['cliente']);
+        
+        $celular = $cliente['celular'];
+        if (empty($celular)) {
+            $celular = $cliente['telefone'];
+        }
+        $celular = preg_replace('/\D/', '', $celular);
+        $pagamentoAssociado = array(
+            'amount' => $pagamento['valor'],
+            'callback_url' => '',
+            'order_id' => $associadoIpag['id'],
+            'payment' => array(
+                'type' => 'pix',
+                'method' => 'pix',
+                'pix_expires_in' => 60
+            ),
+            'customer' => array(
+                'name'      => $cliente['nome_completo'],
+                'cpf_cnpj'  => str_replace(['.', '-'], '', $cliente['cpf']),
+            )
+        );
+
+        $iPag = new Ipag($this->getServiceLocator());
+        $res = $iPag->realizarPagamentoAssociado($pagamentoAssociado, $associadoIpag);
+        parent::logSistema('REALIZAR PAGAMENTO: '.json_encode($res), 'iPag');
+        $response = $iPag->getResponse();
+        if (isset($response->attributes)) {
+            return $this->redirect()->toUrl($response->attributes->pix->link);
+        } else {
+            $this->flashMessenger()->addErrorMessage($iPag->httpCodeMessage());
+            return $this->redirect()->toRoute('realizarPagamentoAssociadoIpag', array('idAssociado' => $idAssociado, 'idAnuidade' => $idAnuidade));   
+        }
+
+        return new ViewModel(array(
+        ));
+    }
+
+    public function retornoassociadoipagAction()
+    {
+        $dados = json_decode(file_get_contents('php://input'));
+        parent::logSistema('URL RETORNO: '.json_encode($dados), 'iPag');
+        $iPag = new Ipag($this->getServiceLocator());
+        $iPag->capturarRetornoAssociado($dados);
+        die('retorno pagamento associados!');
+    }
 
 }
 

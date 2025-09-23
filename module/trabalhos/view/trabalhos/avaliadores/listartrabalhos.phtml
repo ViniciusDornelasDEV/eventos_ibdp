@@ -1,0 +1,53 @@
+    <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+      <ol class="breadcrumb" style="margin-bottom: 0px;">
+        <li class="active">Trabalhos</li>
+      </ol>
+    </div>
+
+    <!-- LISTAGEM DOS TRABALHOS -->
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Listagem de trabalhos</h3>
+            </div>
+            <div class="panel-body">
+              <?php if($trabalhos->count() > 0): ?>
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Número da avaliação</th>
+                  <th style="text-align: center">Nome do trabalho</th>
+                  <th style="text-align: center">Status</th>
+                  <th style="text-align: center">Avaliado</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach($trabalhos as $trabalho): ?>
+              <tr>
+                <td style="text-align: center"><?= $trabalho['id_trabalho']; ?></td>
+                <td style="text-align: center"><?= $trabalho['titulo_trabalho']; ?></td>
+                <td style="text-align: center"><?= $trabalho['trabalho_aprovado'] == 'S' ? 'Aprovado' : 'A aprovar'; ?>
+                <td style="text-align: center"><?= $trabalho['id_trabalho_avaliacao'] == NULL ? 'A avaliar' : 'Avaliado'; ?></td>
+                <td style="text-align: center;">
+                    <a href="<?= $this->url('visualizarTrabalhosAvaliador', array('idTrabalho' => $trabalho['id_trabalho'])); ?>">
+                        <img src="<?= $this->basePath('img/avaliador.png'); ?>" title="Avaliar trabalho">
+                    </a>
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </table>
+          <?php else: ?>
+             <div class="alert alert-info">Nenhum trabalho encontrado!</div>
+        <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container theme-showcase" style="margin-top:0px;" role="main">
+        <div style="float:right;">
+          <?php echo $this->paginationControl($trabalhos,
+                                        'Sliding',
+                                        'view/paginator', array('route' => 'listaTrabalhosAvaliador')); 
+          ?>
+        </div>
+      </div>

@@ -1,7 +1,12 @@
 <div class="container theme-showcase" id="divBotoes" role="main">
   <div class="row text-center">
     <?php if(empty($pagamento->id_pagamento)): ?>
-        <?php if($pagamento['anuidade_paypal'] == 'N' && $pagamento['anuidade_cielo'] == 'N' && $pagamento['anuidade_deposito'] == 'N'): ?>
+        <?php if (
+              $pagamento['anuidade_paypal'] == 'N' && 
+              $pagamento['anuidade_cielo'] == 'N' && 
+              $pagamento['anuidade_deposito'] == 'N' && 
+              $pagamento['anuidade_ipag'] == 'N'): 
+        ?>
             <div class="alert alert-warning text-center" role="alert">
               <h1>Nenhuma forma de pagamento ativa, favor contatar o administrador!</h1>
             </div>
@@ -25,12 +30,33 @@
           </div>
         <?php endif; ?>
         <?php if($pagamento['anuidade_deposito'] == 'S'): ?>
-        <div class="col-sm-4" style="margin-top: 10px;">
-              <button type="button" onclick="transferencia();" name="transferencia" class="btn btn-success" style="width: 90%;height: 100px;">
-                  <img src="<?= $this->basePath('img/banco.png') ?>" alt="Transferência">
-                  Transferência
-              </button>
+          <div class="col-sm-4" style="margin-top: 10px;">
+            <button type="button" onclick="transferencia();" name="transferencia" class="btn btn-success" style="width: 90%;height: 100px;">
+                <img src="<?= $this->basePath('img/banco.png') ?>" alt="Transferência">
+                Transferência
+            </button>
           </div>
+
+        <?php endif; ?>
+
+        <?php if($pagamento['anuidade_ipag'] == 'S'): ?>
+          <div class="col-sm-4" style="margin-top: 10px;">
+            <a href="<?= $this->url('realizarPagamentoAssociadoIpagPix', array('idAssociado' => $idAssociado, 'idAnuidade' => $idAnuidade)) ?>">
+              <button type="button" class="btn btn-success" name="PÌX" style="width: 90%;height: 100px;">
+                  <img src="<?= $this->basePath('img/pix.png') ?>" style="width: 16px; height: 16px" alt="iPag">
+                  PIX
+              </button>
+            </a>
+          </div>
+
+          <div class="col-sm-4" style="margin-top: 10px;">
+          <a href="<?= $this->url('realizarPagamentoAssociadoIpag', array('idAssociado' => $idAssociado, 'idAnuidade' => $idAnuidade)) ?>">
+            <button type="button" class="btn btn-success" name="paypal" style="width: 90%;height: 100px;">
+                <img src="<?= $this->basePath('img/ipag.png') ?>" style="width: 16px; height: 16px" alt="iPag">
+                Cartão de crédito
+            </button>
+          </a>
+        </div>
         <?php endif; ?>
     <?php else: ?>
       <div class="alert alert-success text-center" role="alert">

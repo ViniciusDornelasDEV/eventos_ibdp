@@ -1,0 +1,59 @@
+<div class="btn-group-vertical" style="width: 100%;" role="group" aria-label="Vertical button group">
+    <button style="background-color:#dff0d8;" onclick="location.href='<?= $this->url('inscricoesCliente'); ?>'" class="btn btn-default menu-buttom <?= $pagina == 'inscricoes' ? 'disabled' : '' ?>">
+        <img src="<?= $this->basePath('img/inscricao.png') ?>"> Inscrições
+    </button>
+
+    <?php if ($associado && $associado['ativo'] == 'S') : ?>
+
+        <button style="background-color:#fcf8e3;" onclick="location.href='<?= $this->url('anuidadesCliente'); ?>'" class="btn btn-default menu-buttom <?= $pagina == 'anuidades' ? 'disabled' : '' ?>">
+            <img src="<?= $this->basePath('img/agendado.png') ?>"> Anuidades
+        </button>
+
+        <button style="background-color:#d9edf7;" onclick="location.href='<?= $this->url('arquivosCliente'); ?>'" class="btn btn-default menu-buttom <?= $pagina == 'arquivos' ? 'disabled' : '' ?>">
+            <img src="<?= $this->basePath('img/visualizar.png') ?>"> Arquivos
+        </button>
+
+        <button style="background-color:#f8d7da;" onclick="location.href='<?= $this->url('questionariosCliente'); ?>'" class="btn btn-default menu-buttom <?= $pagina == 'questionario' ? 'disabled' : '' ?>">
+            <img src="<?= $this->basePath('img/msg.png') ?>"> Questionários/pesquisas
+        </button>
+
+        <?php if ($associado->adimplente == 'S') : ?>
+        <button style="background-color:white;" onclick="location.href='<?= $this->url('ebooks'); ?>'" class="btn btn-default menu-buttom <?= $pagina == 'ebooks' ? 'disabled' : '' ?>">
+            <img src="<?= $this->basePath('img/abrir.png') ?>"> Ebooks
+        </button>
+        <?php endif; ?>
+
+        <?php if ($associado->adimplente == 'S') : ?>
+        <button style="background-color:#c3e6cb;" onclick="location.href='<?= $this->url('clubeBeneficios'); ?>'" class="btn btn-default menu-buttom <?= $pagina == 'clube-beneficios' ? 'disabled' : '' ?>">
+            <img class="icone16" src="<?= $this->basePath('img/ganhador.png') ?>"> Clube de benefícios
+        </button>
+        <?php endif; ?>
+
+        <?php if ($associado->adimplente == 'S') : ?>
+            <button style="background-color:#ffeeba;" onclick="location.href='<?= $this->url('educacaoContinuada'); ?>'" class="btn btn-default menu-buttom <?= $pagina == 'educacao-continuada' ? 'disabled' : '' ?>">
+                <img src="<?= $this->basePath('img/responder.png') ?>"> Educação continuada
+            </button>
+        <?php endif; ?>
+
+        <?php if ($questionario) : ?>
+            <button type="button" class="btn btn-danger menu-buttom <?= $pagina == 'responder-questionario' ? 'disabled' : '' ?>" onclick="$.colorbox({href:'<?= $this->url('responderQuestionarioAssociado', array('idQuestionario' => $questionario['id'])); ?>'});" style="float: right;">
+                <img src="<?php echo $this->basePath('img/msg.png') ?>" alt="Novo">
+                Responder questionário/pesquisa
+            </button>
+        <?php endif; ?>
+    <?php endif; ?>
+
+    <button style="background-color:#FFF5EE;" onclick="location.href='<?= $this->url('listarTransmissoes'); ?>'" class="btn btn-default menu-buttom <?= $pagina == 'transmissoes' ? 'disabled' : '' ?>">
+        <img src="<?= $this->basePath('img/transmissao.png') ?>"> Transmissões
+    </button>
+
+    <button style="background-color:#ebebeb;" onclick="location.href='<?= $this->url('meusDadosCliente'); ?>'" class="btn btn-default menu-buttom <?= $pagina == 'meus-dados' ? 'disabled' : '' ?>">
+        <img src="<?= $this->basePath('img/usuario.png') ?>"> Meus dados
+    </button>
+
+    <?php if (!empty($associado->certificado) && $associado->adimplente == 'S') : ?>
+        <button style="background-color:#F5DEB3;" onclick="location.href='<?= $this->url('downloadCertificadoCategoriaAssociado', array('idCategoria' => $associado->id_categoria)) ?>'" class="btn btn-default menu-buttom <?= $pagina == 'arquivos' ? 'certificado' : '' ?>">
+            <img src="<?= $this->basePath('img/download.png') ?>"> Certificado
+        </button>
+    <?php endif; ?>
+</div>

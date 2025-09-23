@@ -50,6 +50,7 @@
             $this->_addDropdown('cliente', ' Cliente:', false, $clientes);
         }
         
+        $this->_addDropdown('avaliador', 'Avaliador:', false, array('N' => 'Não', 'S' => 'Sim'));
 
         $this->_addDropdown('ativo', 'Ativo:', false, array('S' => 'Sim', 'N' => 'Não'));
         

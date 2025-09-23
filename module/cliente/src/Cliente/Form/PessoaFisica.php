@@ -188,16 +188,6 @@
             );
         }
 
-
-
-
-
-
-
-
-
-
-        
         //email
         if($campos['email']['aparecer'] == 'S'){
             $atributos = $this->booleanByAtivo($campos['email']['obrigatorio']);
@@ -216,11 +206,6 @@
             $atributos = $this->booleanByAtivo($campos['endereco_comercial']['obrigatorio']);
             $this->genericTextInput('endereco_comercial', $atributos['prefixo'].$campos['endereco_comercial']['label_campo'], $atributos['obrigatorio'], 'Endereço comercial');        
         }
-
-
-
-
-
 
         //pais
         if($campos['pais']['aparecer'] == 'S'){
@@ -247,16 +232,6 @@
             }
         }
 
-
-
-
-
-
-
-
-
-
-        
         //cep
         if($campos['cep']['aparecer'] == 'S'){
             $atributos = $this->booleanByAtivo($campos['cep']['obrigatorio']);
@@ -337,23 +312,12 @@
             $atributos = $this->booleanByAtivo($campos['codigo']['obrigatorio']);
             $this->genericTextInput('codigo', $atributos['prefixo'].$campos['codigo']['label_campo'], $atributos['obrigatorio'], 'Código promocional');
         }
-                
-
-
-
-
+        
         //observacoes
         if($campos['observacoes']['aparecer'] == 'S'){
             $atributos = $this->booleanByAtivo($campos['observacoes']['obrigatorio']);
             $this->genericTextInput('observacoes', $atributos['prefixo'].$campos['observacoes']['label_campo'], $atributos['obrigatorio']);
         }
-
-
-
-
-
-
-
 
         $this->setAttributes(array(
             'class'  => 'form-inline'

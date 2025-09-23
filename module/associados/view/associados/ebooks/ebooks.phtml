@@ -1,0 +1,49 @@
+<div class="container theme-showcase" role="main">
+  <div class="row">
+    <div class="col-md-3">
+      <?php echo $this->partial(
+        'menu/cliente',
+        array(
+          'associado' => $associado,
+          'questionario' => $questionario,
+          'associado' => $associado,
+          'pagina' => 'ebooks'
+        )
+      );
+      ?>
+    </div>
+    
+    <div class="col-md-9">
+      <div class="row">
+        <?php foreach ($ebooks as $ebook) : ?>
+          <div class="col-sm-6 col-md-6">
+            <?php if (empty($ebook['link'])) : ?>
+              <div class="text-center" onclick="location.href='<?= $this->url('downloadBeneficiosAssociado', array('id' => $ebook['id'], 'tipoArquivo' => 3)); ?>'">
+                <img style="width: 300px;height: 350px;" src="<?php echo $this->basePath($ebook['imagem_capa']) ?>" alt="Ebook">
+              </div>
+            <?php else : ?>
+              <div class="text-center vcenter">
+                <a href="<?= strtolower($ebook['link']); ?>" target="_blank">
+                  <img style="width: 300px;height: 350px;" src="<?php echo $this->basePath($ebook['imagem_capa']) ?>" alt="Ebook">
+                </a>
+              </div>
+            <?php endif; ?>
+          </div>
+        <?php endforeach; ?>
+        
+
+
+      </div>
+      <div style="float:right;">
+        <?php echo $this->paginationControl(
+          $ebooks,
+          'Sliding',
+          'view/paginator',
+          array('route' => 'clubeBeneficios')
+        );
+        ?>
+      </div>
+    </div>
+
+  </div>
+</div>

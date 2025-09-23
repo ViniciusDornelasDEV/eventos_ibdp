@@ -1,0 +1,189 @@
+<!-- se for cliente não tem filtro -->
+    <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+      <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="form-group">
+                  <form class="form-inline" role="form" method="POST" action="#">
+                      <div class="row">
+                        <?php if(empty($empresa)): ?>
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                             <label for="disabledTextInput"><?=$formPesquisa->get('empresa')->getLabel()?></label>
+                             <?= $this->formElement($formPesquisa->get('empresa')); ?>
+                          </div>
+                        </div>
+                      <?php endif; ?>
+
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('evento')->getLabel(); ?></label>
+                            <?= $this->formElement($formPesquisa->get('evento')); ?>
+                          </div>
+                        </div>
+
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('status')->getLabel(); ?></label>
+                            <?= $this->formElement($formPesquisa->get('status')); ?>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row" style="margin-top:20px;">
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('aprovado')->getLabel(); ?></label>
+                            <?= $this->formElement($formPesquisa->get('aprovado')); ?>
+                          </div>
+                        </div>
+                        
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('nome')->getLabel(); ?></label>
+                            <?= 
+                              $this->formElement($formPesquisa->get('nome')); 
+                              $this->formElement($formPesquisa->get('nome'));
+                            ?>
+                          </div>
+                        </div>
+
+                        <div class='col-sm-4'>
+                          <div class="form-group">
+                            <label for="disabledTextInput"><?= $formPesquisa->get('avaliacoes')->getLabel(); ?></label>
+                            <?= 
+                              $this->formElement($formPesquisa->get('avaliacoes')); 
+                              $this->formElement($formPesquisa->get('avaliacoes'));
+                            ?>
+                          </div>
+                        </div>
+
+                      </div>
+
+                      <div class="row" style="margin-top:20px;">
+                        <button type="submit" name="limpar" class="btn btn-default" style="float: right;margin-right: 20px;">
+                        <img src="<?= $this->basePath('img/limpar.png'); ?>"> Limpar</button>
+                        <button type="submit" name="pesquisar" class="btn btn-success" style="float: right;margin-right: 10px;">
+                        <img src="<?= $this->basePath('img/pesquisar.png'); ?>" alt="Pesquisar"> Pesquisar</button>
+                      </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+      <button type="button" class="btn btn-danger" 
+        onclick="location.href='<?= $this->url('recalcularTrabalhos'); ?>'" 
+        style="float: right;">
+          <img src="<?php echo $this->basePath('img/avaliador.png') ?>" alt="Novo">
+          Calcular pontuação
+      </button>
+    
+      <button type="button" class="btn btn-primary" 
+        onclick="location.href='<?= $this->url('exportarTrabalhos'); ?>'" 
+        style="float: right;margin-right: 5px; width:100px;">
+          <img src="<?php echo $this->basePath('img/excel.png') ?>" alt="Novo">
+          Exportar
+      </button>
+
+      <ol class="breadcrumb" style="margin-bottom: 0px;">
+        <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+        <li class="active">Trabalhos</li>
+      </ol>
+    </div>
+
+    <!-- LISTAGEM DOS TRABALHOS -->
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Listagem de trabalhos</h3>
+            </div>
+            <div class="panel-body">
+              <?php if($trabalhos->count() > 0): ?>
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">ID</th>
+                  <th style="text-align: center">Categoria</th>
+                  <th style="text-align: center">Título</th>
+                  <th style="text-align: center">Nome do inscrito</th>
+                  <th style="text-align: center">CPF</th>
+                  <th style="text-align: center">Status</th>
+                  <th style="text-align: center">Avaliações</th>
+                  <th style="text-align: center">Pontuação</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach($trabalhos as $trabalho): ?>
+              <tr>
+                <td style="text-align: center"><?= $trabalho['id_trabalho']; ?></td>
+                <td style="text-align: center"><?= $trabalho['nome_categoria']; ?></td>
+                <td style="text-align: center"><?= $trabalho['titulo_trabalho']; ?></td>
+                <td style="text-align: center"><?= $trabalho['nome_completo']; ?></td>
+                <td style="text-align: center"><?= $trabalho['cpf']; ?></td>
+                <td style="text-align: center"><?= $trabalho['trabalho_aprovado'] == 'S' ? 'Aprovado' : 'A aprovar'; ?></td>
+                <td style="text-align: center"><span class="badge"><?= $trabalho['avaliacoes']; ?></span></td>
+                <td style="text-align: center"><?= empty($trabalho['pontuacao']) ? '-' : $trabalho['pontuacao']; ?></td>
+                <td style="text-align: center;">
+                  <?php if(empty($trabalho['categoria_trabalho'])): ?>
+                    -
+                  <?php else: ?>
+                    <a href="<?= $this->url('visualizarTrabalho', array('idInscricao' => $trabalho['id_inscricao'])); ?>">
+                      <img src="<?= $this->basePath('img/visualizar.png'); ?>" title="Visualizar">
+                    </a>
+
+                    <a href="<?= $this->url('vincularAvaliadorEvento', array('idInscricao' => $trabalho['id_inscricao'])); ?>">
+                      <img src="<?= $this->basePath('img/atividade.png'); ?>" title="Vincular avaliadores">
+                    </a>
+
+
+                  <?php endif; ?>
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </table>
+          <?php else: ?>
+             <div class="alert alert-info">Nenhum trabalho encontrado!</div>
+        <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container theme-showcase" style="margin-top:0px;" role="main">
+        <div style="float:right;">
+          <?php echo $this->paginationControl($trabalhos,
+                                        'Sliding',
+                                        'view/paginator', array('route' => 'listarTrabalhos')); 
+          ?>
+        </div>
+      </div>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        var clientes = {
+          <?php foreach ($clientes as $cliente) : ?>
+            "<?= $cliente['cliente'] ?>": "<?= $cliente['nome_completo'] ?>",
+          <?php endforeach; ?>
+        }
+        var clientesArray = $.map(clientes, function (value, key) { return { value: value, data: key }; });
+
+        $('#nome').autocomplete({
+          lookup: clientesArray,
+          lookupFilter: function(suggestion, originalQuery, queryLowerCase) {
+              var re = new RegExp('\\b' + $.Autocomplete.utils.escapeRegExChars(queryLowerCase), 'gi');
+              return re.test(suggestion.value);
+          },
+          onSelect: function(suggestion) {
+              $('#cliente').val(suggestion.data);
+          },
+          onHint: function (hint) {
+              //$('#autocomplete-ajax-x').val(hint);
+          },
+          onInvalidateSelection: function() {
+              //$('#selction-ajax').html('You selected: none');
+          }
+        });
+      });
+    </script>

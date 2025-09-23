@@ -31,9 +31,8 @@ class ValorEvento Extends BaseTable {
         }); 
     }
 
-    public function getValoresByCadEvento($idEvento, $idValor = false){
-        return $this->getTableGateway()->select(function($select) use ($idEvento, $idValor) {
-
+    public function getValoresByCadEvento($idEvento, $idValor = false, $idEventoCategoria = false){
+        return $this->getTableGateway()->select(function($select) use ($idEvento, $idValor, $idEventoCategoria) {
             $select->join(
                     array('c' => 'tb_cliente_categoria'),
                     'c.id = evento_cliente_categoria',
@@ -52,6 +51,10 @@ class ValorEvento Extends BaseTable {
 
             if($idValor){
                 $select->where(array('tb_evento_cliente_valor.id' => $idValor));
+            }
+
+            if($idEventoCategoria){
+                $select->where(array('ec.id' => $idEventoCategoria));
             }
 
             $select->order('c.nome, data_inicio_valor');

@@ -1,0 +1,65 @@
+<div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+    <ol class="breadcrumb" style="margin-bottom: 0px;">
+      <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+      <li><a href="<?= $this->url('listarTrabalhos'); ?>">Trabalhos</a></li>
+      <li class="active">Vincular avaliador</li>
+    </ol>
+  </div>
+
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+          <div class="panel-heading">
+              <h3 class="panel-title">Vincular avaliadores ao trabalho <b><?= $trabalho['titulo_trabalho'] ?></b></h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <form name="frmAvaliadores" class="form-inline" method="POST" action="#" enctype='multipart/form-data'>
+                    <div class="row">
+                      <div class='col-sm-6'>
+                        <div class="form-group">
+                          <label for="disabledTextInput"><?=$frmVincularAvaliador->get('avaliador1')->getLabel()?></label><br>
+                          <?= $this->formElement($frmVincularAvaliador->get('avaliador1')); ?>
+                          <?= $this->formElementErrors($frmVincularAvaliador->get('avaliador1'), array('class' => 'alert alert-danger')); ?>
+                        </div>
+                      </div>
+
+                      <div class='col-sm-6'>
+                        <div class="form-group">
+                          <label for="disabledTextInput"><?=$frmVincularAvaliador->get('avaliador2')->getLabel()?></label><br>
+                          <?= $this->formElement($frmVincularAvaliador->get('avaliador2')); ?>
+                          <?= $this->formElementErrors($frmVincularAvaliador->get('avaliador2'), array('class' => 'alert alert-danger')); ?>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class='col-sm-6'>
+                        <div class="form-group">
+                          <label for="disabledTextInput"><?=$frmVincularAvaliador->get('avaliador3')->getLabel()?></label><br>
+                          <?= $this->formElement($frmVincularAvaliador->get('avaliador3')); ?>
+                          <?= $this->formElementErrors($frmVincularAvaliador->get('avaliador3'), array('class' => 'alert alert-danger')); ?>
+                        </div>
+                      </div>
+
+                      <div class='col-sm-6'>
+                        <div class="form-group">
+                          <label for="disabledTextInput"><?=$frmVincularAvaliador->get('avaliador4')->getLabel()?></label><br>
+                          <?= $this->formElement($frmVincularAvaliador->get('avaliador4')); ?>
+                          <?= $this->formElementErrors($frmVincularAvaliador->get('avaliador4'), array('class' => 'alert alert-danger')); ?>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row" style="margin-top:20px;">
+                      <button type="submit" class="btn btn-success" style="float: right;margin-right: 10px;">
+                        <img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+                        Salvar
+                      </button>
+                    </div>
+                  </form>
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>

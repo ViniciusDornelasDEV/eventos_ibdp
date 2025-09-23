@@ -135,7 +135,7 @@ abstract class Base extends Form {
      * @param int $maxLength (default: 100)
      * @return void
      */
-    protected function genericTextInput($name, $label = false, $required = true, $placeholder = false, $disabled = false) {
+    protected function genericTextInput($name, $label = false, $required = true, $placeholder = false, $disabled = false, $style = '') {
 
         $this->add(array(
             'name' => $name,
@@ -145,7 +145,8 @@ abstract class Base extends Form {
                 'class' => 'form-control',
                 'placeholder' => $placeholder,
                 'disabled' => $disabled,
-                'id'    => $name
+                'id'    => $name,
+                'style' => $style
             ),
             'options' => array(
                 'label' => $label,
@@ -153,7 +154,7 @@ abstract class Base extends Form {
         ));
 
         if($required) {
-            $this->setMinMaxLenght($name, $required, 1, 100);
+            $this->setMinMaxLenght($name, $required, 1, 1000);
         } else {
             $this->allowEmpty($name);
         }
@@ -671,6 +672,27 @@ abstract class Base extends Form {
             'allow_empty'=> true
         );             
     }
+
+    public function addPDF($name, $label, $required = false) {
+        $this->add(array(
+          'required'=> $required,
+          'name' => $name,
+          'type' => 'File',
+          'options' => array(
+              'label' => $label,
+          ),
+          'attributes' => array(
+                  'id' => $name,
+                  'class' => 'filestyle'
+              )
+      )); 
+        
+     
+      $this->inputFilterArray[$name] = array(
+          'name' => $name,
+          'allow_empty'=> true
+      );             
+  }
     
     public function addVideoInputFile($name, $label, $required = false, $id = false, $class = 'form-control') {
         

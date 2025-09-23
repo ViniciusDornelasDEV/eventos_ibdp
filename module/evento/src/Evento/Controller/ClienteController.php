@@ -14,7 +14,7 @@ use Associados\Form\ResponderQuestionario as formResponder;
 use Evento\Form\Cliente as formAssociado;
 use Evento\Form\ComprovanteAnuidade as formComprovante;
 use Evento\Form\ComprovanteInscricao as formComprovanteInscricao;
-use Evento\Form\EnviarTrabalho as formTrabalho;
+
 use Evento\Form\PesquisaTrabalhoPublic as formPesquisaTrabalho;
 
 class ClienteController extends BaseController
@@ -47,10 +47,16 @@ class ClienteController extends BaseController
             $questionario = $this->getServiceLocator()->get('Questionario')->getAvaliacaoAberta($associado)->current();
         }
 
+        $trabalhos = false;
+        if($usuario['avaliador'] == 'S'){
+            $trabalhos = $serviceInscricao->getTrabalhos(array('avaliador' => $usuario['id']))->toArray();
+        }
+
         return new ViewModel(array(
             'inscricoes'    =>  $paginator,
             'associado'     =>  $associado,
-            'questionario'  =>  $questionario
+            'questionario'  =>  $questionario,
+            'trabalhos'     =>  $trabalhos
         ));
     }
 
@@ -428,129 +434,6 @@ class ClienteController extends BaseController
         ));
     }
 
-    public function enviartrabalhoAction(){
-        $this->layout('layout/cliente');
-        $usuario = $this->getServiceLocator()->get('session')->read();
-
-        //verificar se inscrição é realmente do inscrito
-        $inscricao = $this->getServiceLocator()->get('Inscricao')->getRecord($this->params()->fromRoute('idInscricao'));
-        if($inscricao['cliente'] != $usuario['cliente']){
-            $this->flashMessenger()->addWarningMessage('Inscrição não encontrada!');
-            return $this->redirect()->toRoute('inscricoesCliente');
-        }
-        $formTrabalho = new formTrabalho('frmTrabalho', $this->getServiceLocator(), $inscricao['evento']);
-
-        if($inscricao['status_pagamento'] != 2 && $inscricao['status_pagamento'] != 8 && $inscricao['status_pagamento'] != 9){
-            $this->flashMessenger()->addWarningMessage('Apenas inscrições com pagamento confirmado podem enviar trabalhos!');
-            return $this->redirect()->toRoute('inscricoesCliente');
-        }
-
-        //verificar se já não existe trabalho para a inscrição
-        $trabalho = $this->getServiceLocator()->get('InscricaoTrabalho')->getRecord($this->params()->fromRoute('idInscricao'), 'inscricao');
-        if($trabalho){
-            $this->flashMessenger()->addWarningMessage('Um trabalho já foi enviado, favor entrar em contato com o administrador!');
-            return $this->redirect()->toRoute('inscricoesCliente');
-        }
-        $erroPDF = false;
-        if($this->getRequest()->isPost()){
-            $formTrabalho->setData($this->getRequest()->getPost());
-            if($formTrabalho->isValid()){
-                $files = $this->getRequest()->getfiles()->toArray();
-                foreach ($files['arquivos'] as $file) {
-                    if($file['type'] != 'application/pdf'){
-                        $erroPDF = true;
-                        break;
-                    }
-                }
-
-                if($erroPDF == false){
-                    //fazer upload e mandar para model salvar em transaction
-                    $files = $this->uploadPdfTrabalhos($files, $this->params()->fromRoute('idInscricao'));
-                    $res = $this->getServiceLocator()
-                        ->get('InscricaoTrabalho')
-                        ->salvarTrabalho($formTrabalho->getData(), $files, $this->params()->fromRoute('idInscricao'));
-
-                    if($res == true){
-                        $this->flashMessenger()->addSuccessMessage('Trabalho salvo com sucesso!');
-                        return $this->redirect()->toRoute('inscricoesCliente');
-                    }
-                }
-
-            }
-        }
-
-        //pesquisar associado
-        $associado = $this->getServiceLocator()->get('Associado')->getAssociados(array('cliente' => $usuario['cliente']))->current();
-        $questionario = false;
-        if($associado){
-            $questionario = $this->getServiceLocator()->get('Questionario')->getAvaliacaoAberta($associado)->current();
-        }
-
-        return new ViewModel(array(
-            'formTrabalho' => $formTrabalho,
-            'associado'    => $associado,
-            'questionario' => $questionario,
-            'erroPDF'      => $erroPDF
-        ));
-    }
-
-    public function listartrabalhospublicAction(){
-        $this->layout('layout/login');
-        $evento = $this->getServiceLocator()->get('Evento')->getRecord($this->params()->fromRoute('sigla'), 'sigla');
-        $formPesquisa = new formPesquisaTrabalho('frmTrabalho', $this->getServiceLocator(), $evento['id']);
-
-        //se vier post é uma pesquisa
-        $container = new Container();
-        //unset($container->dados);
-        if(!isset($container->dados)){
-            $container->dados = array('aprovado' => 'S', 'evento' => $evento['id']);
-        }
-        if($this->getRequest()->isPost()){
-            $dados = $this->getRequest()->getPost();
-            if(isset($dados['limpar'])){
-                unset($container->dados);
-                $this->redirect()->toRoute('listarTrabalhosPublic', array('sigla' => $evento['sigla']));
-            }else{
-                $formPesquisa->setData($dados);
-                if($formPesquisa->isValid()){
-                    $dados = $formPesquisa->getData();
-                    $dados['aprovado'] = 'S';
-                    $dados['evento'] = $evento['id'];
-                    $container->dados = $dados;
-                }
-                
-            }
-        }
-        $formPesquisa->setData($container->dados);
-
-        //pesquisar os trbalhos
-        $serviceInscricao = $this->getServiceLocator()->get('Inscricao');
-        $trabalhos = $serviceInscricao->getTrabalhos($container->dados)->toArray();
-
-        $paginator = new Paginator(new ArrayAdapter($trabalhos));
-        $paginator->setCurrentPageNumber($this->params()->fromRoute('page'));
-        $paginator->setItemCountPerPage(40);
-        $paginator->setPageRange(5);
-
-        return new ViewModel(array(
-            'formPesquisa'  =>  $formPesquisa,
-            'trabalhos'     =>  $paginator,
-            'evento'        =>  $evento,
-            'trabAutocomplete' => $trabalhos
-        ));
-    }
-
-    public function visualizartrabalhospublicAction(){
-        $this->layout('layout/login');
-        $trabalho = $this->getServiceLocator()->get('InscricaoTrabalho')->getTrabalho($this->params()->fromRoute('idTrabalho'));
-        $arquivos = $this->getServiceLocator()->get('InscricaoTrabalhoPDF')->getRecords($trabalho['id'], 'trabalho');
-
-        return new ViewModel(array(
-            'trabalho'      =>  $trabalho,
-            'arquivos'      =>  $arquivos,
-        ));
-    }
-
     public function listartransmissoesAction(){
         $this->layout('layout/cliente');
         $usuario = $this->getServiceLocator()->get('session')->read();
@@ -631,33 +514,7 @@ class ClienteController extends BaseController
         return '';
     }
 
-    public function uploadPdfTrabalhos($arquivos, $idInscricao){
-        $caminho = 'public/arquivos/cliente';
-        if(!file_exists($caminho)){
-            mkdir($caminho);
-        }
-
-        $caminho .= '/'.$idInscricao;
-        if(!file_exists($caminho)){
-            mkdir($caminho);
-        }       
-
-        $caminho .= '/trabalho';
-        if(!file_exists($caminho)){
-            mkdir($caminho);
-        } 
-
-        $uploadedFiles = array();
-        foreach ($arquivos['arquivos'] as $key => $arquivo) {
-            if(!empty($arquivo['tmp_name'])){
-                if(move_uploaded_file($arquivo['tmp_name'], $caminho.'/'.$arquivo['name'])){
-                    $uploadedFiles[] = array('arquivo' => $caminho.'/'.$arquivo['name'], 'nome' => $arquivo['name']);
-                }
-            }
-        }
-
-        return $uploadedFiles;
-    }
+    
 
 }
 ?>

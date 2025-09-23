@@ -4,15 +4,15 @@ namespace Evento\Controller;
 
 use Application\Controller\BaseController;
 use Zend\View\Model\ViewModel;
-
 use Zend\Session\Container;
-use DOMPDFModule\View\Model\PdfModel;
 use Zend\Http\Client;
 use Zend\Http\Client\Adapter\Curl;
-use Zend\Http\Request;
 
 use Evento\Form\PlanilhaCielo as formUpload;
 use Application\Params\Parametros as arrayParams;
+use Associados\Form\DadosIpag as formIpag;
+use Associados\Classes\Ipag as Ipag;
+
 
 class PagamentoController extends BaseController
 {   
@@ -442,6 +442,11 @@ class PagamentoController extends BaseController
                 ' - '.$responseNvp['L_LONGMESSAGE0'];
                 parent::logSistema($mensagem, 'paypal');
 
+                //10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+                if($responseNvp['L_ERRORCODE0'] == 10486 || $responseNvp['L_ERRORCODE0'] == '10486'){
+                    return new ViewModel();                  
+                }
+
                 $this->flashMessenger()->addErrorMessage('Erro ao realizar pagamento, por favor tente novamente ou contate o administrador!');
                 return $this->redirect()->toRoute('atividades', array('inscricao' => $idInscricao));
             }
@@ -451,6 +456,128 @@ class PagamentoController extends BaseController
     public function cancelamentopaypalAction(){
         $this->flashMessenger()->addWarningMessage('Pagamento cancelado pelo usuário!');
         return $this->redirect()->toRoute('atividades');
+    }
+
+    public function realizarpagamentoinscricaoipagAction(){
+        $sessao = new Container();
+        $idInscricao = $sessao->offsetGet('inscricao');
+        $this->layout('layout/avaliacao');
+        $inscricao = $this->getServiceLocator()->get('Inscricao')->getRecord($idInscricao);
+        $evento = $this->getServiceLocator()->get('Evento')->getRecordFromArray(array('id' => $inscricao['evento'], 'ativo' => 'S'));
+        $this->layout()->evento = $evento;
+        
+        $formIpag = new formIpag('formIpag', $evento['parcelas']);
+
+        if($this->getRequest()->isPost()){
+            $formIpag->setData($this->getRequest()->getPost());
+            if($formIpag->isValid()){
+                $dadosCartao = $formIpag->getData();
+                $dataVencimento = explode('/', $dadosCartao['expiry_date']);                
+                $cliente = $this->getServiceLocator()->get('Cliente')->getClienteById($inscricao['cliente']);
+                //verificar se já existe pagamento
+                if ($inscricao['status_pagamento'] == 2) {
+                    die('Pagamento já foi efetuado!');
+                }
+
+                $pagamentoInscricao = array(
+                    'amount' => $inscricao['valor_total'],
+                    'callback_url' => '',
+                    'order_id' => 'i-'.$inscricao['id'],
+                    'capture' => false,
+                    'payment' => array(
+                        'type' => 'card',
+                        'method' => $dadosCartao['bandeira'],
+                        'installments' => $dadosCartao['parcelas'],
+                        'card' => array(
+                            'holder' => $dadosCartao['holder'],
+                            'number' => $dadosCartao['number'],
+                            'expiry_month' => $dataVencimento[0],
+                            'expiry_year' => $dataVencimento[1],
+                            'cvv' => $dadosCartao['cvv']
+                        )
+                    ),
+                    'customer' => array(
+                        'name'      => $cliente['nome_completo'],
+                        'cpf_cnpj'  => str_replace(['.', '-'], '', $cliente['cpf']),
+                    )
+                );
+
+                $iPag = new Ipag($this->getServiceLocator());
+                $res = $iPag->realizarPagamentoInscricao($pagamentoInscricao, $inscricao);
+                parent::logSistema('REALIZAR PAGAMENTO INSCRICAO: '.json_encode($res), 'iPagInsc');
+                $response = $iPag->getResponse();
+                
+                if ($res == true) {
+                    //$this->flashMessenger()->addSuccessMessage('Pagamento registrado com sucesso, aguarde a confirmação!');
+                    return $this->redirect()->toRoute('sucesso');
+                } else {
+                    $this->flashMessenger()->addErrorMessage($iPag->httpCodeMessage());
+                    return $this->redirect()->toRoute('realizarPagamentoInscricaoIpag');
+                }
+                
+            }
+        }
+
+        return new ViewModel(array(
+            'formIpag' => $formIpag
+        ));
+    }
+
+    public function realizarpagamentoinscricaoipagpixAction(){
+        $sessao = new Container();
+        $idInscricao = $sessao->offsetGet('inscricao');
+        $this->layout('layout/avaliacao');
+        $inscricao = $this->getServiceLocator()->get('Inscricao')->getRecord($idInscricao);
+        $evento = $this->getServiceLocator()->get('Evento')->getRecordFromArray(array('id' => $inscricao['evento'], 'ativo' => 'S'));
+        $this->layout()->evento = $evento;
+        
+        $cliente = $this->getServiceLocator()->get('Cliente')->getClienteById($inscricao['cliente']);
+
+        $cliente['telefone'] = parent::formatarTelefone($cliente['telefone']);
+        $cliente['celular'] = parent::formatarTelefone($cliente['celular']);
+
+        if ($inscricao['status_pagamento'] == 2) {
+            die('Pagamento já foi efetuado!');
+        }
+
+        $pagamentoInscricao = array(
+            'amount' => $inscricao['valor_total'],
+            'callback_url' => '',
+            'order_id' => 'i-'.$inscricao['id'],
+            'payment' => array(
+                'type' => 'pix',
+                'method' => 'pix',
+                'pix_expires_in' => 60
+            ),
+            'customer' => array(
+                'name'      => $cliente['nome_completo'],
+                'cpf_cnpj'  => str_replace(['.', '-'], '', $cliente['cpf']),
+            )
+        );
+
+        $iPag = new Ipag($this->getServiceLocator());
+        $res = $iPag->realizarPagamentoInscricao($pagamentoInscricao, $inscricao);
+        parent::logSistema('REALIZAR PAGAMENTO INSCRICAO: '.json_encode($res), 'iPagInsc');
+        $response = $iPag->getResponse();
+        
+        if (isset($response->attributes)) {
+            return $this->redirect()->toUrl($response->attributes->pix->link);
+        } else {
+            $this->flashMessenger()->addErrorMessage($iPag->httpCodeMessage());
+            return $this->redirect()->toRoute('atividades');
+        }
+                
+        return new ViewModel(array(
+        ));
+    }
+
+    public function retornoinscricaoipagAction()
+    {
+        $dados = json_decode(file_get_contents('php://input'));
+        parent::logSistema('URL RETORNO INSCRICAO: '.json_encode($dados), 'iPagInsc');
+        $iPag = new Ipag($this->getServiceLocator());
+        $iPag->capturarRetornoInscricao($dados);
+        die('retorno pagamento inscricao ipag!');
     }
 
     public function uploadImagem($arquivos, $caminho, $dados){

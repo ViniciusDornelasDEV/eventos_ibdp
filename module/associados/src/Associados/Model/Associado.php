@@ -268,6 +268,12 @@ class Associado Extends BaseTable {
                     array('*')
                 );
 
+            $select->join(
+                array('ac' => 'tb_associado_categoria'),
+                'ac.id = categoria_associado',
+                array('nome_categoria' => 'nome', 'certificado', 'id_categoria' => 'id', 'validade_certificado', 'parcelas')
+            );
+
             $select->where(array('tb_associado.id' => $idAssociado));
         })->current();
     }
@@ -451,7 +457,7 @@ class Associado Extends BaseTable {
             $select->join(
                     array('e' => 'tb_empresa'),
                     'e.id = tb_associado.empresa',
-                    array('nome_fantasia', 'anuidade_paypal', 'anuidade_cielo', 'anuidade_deposito', 'dados_deposito')
+                    array('nome_fantasia', 'anuidade_paypal', 'anuidade_cielo', 'anuidade_deposito', 'anuidade_ipag', 'dados_deposito')
                 );
 
 
@@ -784,9 +790,7 @@ class Associado Extends BaseTable {
         $connection->beginTransaction();
 
         try {
-            if(strtotime($anuidade['data_pagamento']) < strtotime(date('Y-m-d'))){
-                parent::update(array('exibir_site' => 'N'), array('categoria_associado' => $idCategoria));
-            }
+            parent::update(array('exibir_site' => 'N'), array('categoria_associado' => $idCategoria));
             if($pagamentos->count() > 0){
               $sql = 'UPDATE tb_associado SET exibir_site = "S" WHERE id IN(';
               foreach ($pagamentos as $pagamento) {

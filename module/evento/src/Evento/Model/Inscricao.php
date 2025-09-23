@@ -9,9 +9,9 @@ class Inscricao Extends BaseTable {
     
     public function mudarStatusPagamento($inscricao){
         if($inscricao->status_pagamento == 2){
-          parent::update(array('status_pagamento' => 1), array('id' => $inscricao->id));
+          $this->update(array('status_pagamento' => 1), array('id' => $inscricao->id));
         }else{
-          parent::update(array('status_pagamento' => 2), array('id' => $inscricao->id));
+          $this->update(array('status_pagamento' => 2), array('id' => $inscricao->id));
         }
     }
 
@@ -241,7 +241,9 @@ class Inscricao Extends BaseTable {
                           'mensagem_cadastro_antigo',
                           'mensagem_pagamento',
                           'mensagem_transferencia',
-                          'empresa'
+                          'mensagem_trabalho',
+                          'empresa',
+                          'id_evento' => 'id'
                         ),
                     'inner'
                 );
@@ -453,9 +455,16 @@ class Inscricao Extends BaseTable {
             $select->join(
                 array('et' => 'tb_evento_trabalho'),
                 'et.inscricao = tb_inscricao.id',
-                array('categoria_trabalho' => 'categoria'),
+                array('categoria_trabalho' => 'categoria', 'id_trabalho' => 'id', 'trabalho_aprovado' => 'aprovado', 'poster'),
                 'LEFT'
               );
+
+            /*$select->join(
+                array('etp' => 'tb_evento_trabalho_poster'),
+                'et.id = etp.avaliacao',
+                array('id_poster' => 'id'),
+                'LEFT'
+              );*/
             
             if(!empty($params['empresa'])){
               $select->where(array('empresa' => $params['empresa']));
@@ -699,6 +708,45 @@ class Inscricao Extends BaseTable {
       return false;
     }
 
+    public function pagarIpag($callback, $inscricao){
+      $adapter = $this->getTableGateway()->getAdapter();
+      $connection = $adapter->getDriver()->getConnection();
+      $connection->beginTransaction();
+      
+      try {
+        //atualizar inscrição
+        parent::update(array(
+          'tipo_pagamento'=>  $callback->attributes->method,
+          'ipag_id'       =>  $callback->id,
+          'descricao'     =>  $callback->attributes->status->code.' - '.
+                              $callback->attributes->status->message.': '.
+                              $callback->attributes->gateway->message,
+          'data'          =>  date('Y-m-d H:i:s'),
+          'forma_pagamento'     => 12,
+          'status_pagamento'    => 2
+          ), array('id' => $inscricao->id
+        ));
+
+        //atualizar status de pagamento
+        $tbInscricaoStatus = new TableGateway('tb_inscricao_status_pagamento', $adapter);
+        $tbInscricaoStatus->insert(array('inscricao' => $inscricao->id, 'status' => 2));
+        
+        //somar +1 à quantidade de inscritos da categoria
+        $tbCategoria = new TableGateway('tb_evento_cliente_categoria', $adapter);
+        $categoria = $tbCategoria->select(array('id' => $inscricao['cliente_categoria']))->current();
+        $categoria->quantidade_inscritos++;
+        $tbCategoria->update(array('quantidade_inscritos' => $categoria->quantidade_inscritos), array('id' => $inscricao['cliente_categoria']));
+
+        $connection->commit();
+        return true;
+      } catch (Exception $e) {
+        $connection->rollback();
+        return false;
+      }
+      $connection->rollback();
+      return false;
+    }
+
 
     private function calcularValorInscricao($valorInscricao, $desconto, $quantidadeMembros){
         if($desconto > 0){
@@ -899,8 +947,11 @@ class Inscricao Extends BaseTable {
             $select->join(
                     array('et' => 'tb_evento_trabalho'),
                     'et.inscricao = tb_inscricao.id',
-                    array('id_trabalho' => 'id', 'categoria_trabalho' => 'categoria', 'titulo_trabalho' => 'titulo', 'autores_trabalho' => 'autores', 'resumo_trabalho' => 'resumo', 'trabalho_aprovado' => 'aprovado'),
-                    'left'
+                    array('id_inscricao' => 'inscricao', 'id_trabalho' => 'id', 'categoria_trabalho' => 'categoria', 'titulo_trabalho' => 'titulo', 'autores_trabalho' => 'autores', 
+                      'resumo_trabalho' => 'resumo', 'trabalho_aprovado' => 'aprovado', 'afiliacao', 'descritor1', 'descritor2', 'descritor3', 
+                      'apoio_financeiro', 'avaliador1', 'avaliador2', 'avaliador3', 'avaliador4', 'poster', 'apoio_financeiro', 'pontuacao', 
+                      'poster', 'pode_postar', 'link_video', 'comite_etica', 'stricto_sensu', 'mestrado_doutorado', 'poster'),
+                    'inner'
                 );
 
             $select->join(
@@ -925,11 +976,14 @@ class Inscricao Extends BaseTable {
               $select->where(array('tb_inscricao.evento' => $params['evento']));
             }
 
-            if(isset($params['status']) && $params['status'] == 'A'){
-              $select->where->isNull('et.id');
-            }else{
-              $select->where->isNotNull('et.id');
+            if(isset($params['status'])){
+              if($params['status'] == 'A'){
+                $select->where->isNull('et.id');
+              }else{
+                $select->where->isNotNull('et.id');
+              }
             }
+            
 
             if(!empty($params['nome'])){
               $select->where->like('c.nome_completo', '%'.$params['nome'].'%');
@@ -952,10 +1006,54 @@ class Inscricao Extends BaseTable {
             }
 
             if(!empty($params['autores'])){
-              $select->where->like('et.autores', '%'.$params['autores'].'%');
+              $select->where->like('c.nome_completo', '%'.$params['autores'].'%');
             }
 
-            $select->order('c.nome_completo');
+            if(!empty($params['sigla'])){
+              $select->where->like('e.sigla', '%'.$params['sigla'].'%');
+            }
+
+            if(!empty($params['visualizar_trabalhos'])){
+              $select->where(array('e.visualizar_trabalhos' => 'S'));
+            }
+
+            if(!empty($params['avaliador'])){
+              $select->where->nest
+                ->equalTo('et.avaliador1', $params['avaliador'])
+                ->or->equalTo('et.avaliador2', $params['avaliador'])
+                ->or->equalTo('et.avaliador3', $params['avaliador'])
+                ->or->equalTo('et.avaliador4', $params['avaliador'])
+              ->unnest;
+
+              $select->join(
+                array('eta' => 'tb_evento_trabalho_avaliador'),
+                new Expression('eta.avaliador = '.$params['avaliador'].' AND et.id = eta.avaliacao'),
+                array('normas', 'id_trabalho_avaliacao' => 'id'),
+                'left'
+              );
+
+              $select->group(array('et.id'));
+            }else{
+              $select->join(
+                array('eta' => 'tb_evento_trabalho_avaliador'),
+                'et.id = eta.avaliacao',
+                array(),
+                'left'
+              );
+              $select->group(array('et.id'));
+              $select->columns(array('avaliacoes' => new Expression('COUNT(eta.id)'), 'id_inscricao' => 'id'));
+
+              if($params['avaliacoes'] !== '' && $params['avaliacoes'] !== NULL){
+                $select->having('COUNT(eta.avaliacao) = '.$params['avaliacoes']);
+              }
+
+            }
+
+            if($params['id_trabalho']){
+              $select->where(array('et.id' => $params['id_trabalho']));
+            }
+
+            $select->order('et.id');
         });
     }
 

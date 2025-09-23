@@ -211,45 +211,7 @@ return array(
                 ),
             ),
 
-            'categoriasTrabalho' => array(
-                'type' => 'Zend\Mvc\Router\Http\Segment',
-                'options' => array(
-                    'route'    => '/evento/trabalhos/categorias[/:idEvento]',
-                    'constraints' => array(
-                        'idEvento'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Evento\Controller\Evento',
-                        'action'     => 'categoriastrabalho',
-                    ),
-                ),
-            ),
-            'novaCategoriaTrabalho' => array(
-                'type' => 'Zend\Mvc\Router\Http\Segment',
-                'options' => array(
-                    'route'    => '/evento/trabalhos/categorias/nova[/:idEvento]',
-                    'constraints' => array(
-                        'idEvento'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Evento\Controller\Evento',
-                        'action'     => 'novacategoriatrabalho',
-                    ),
-                ),
-            ),
-            'deletarCategoriaTrabalho' => array(
-                'type' => 'Zend\Mvc\Router\Http\Segment',
-                'options' => array(
-                    'route'    => '/evento/trabalhos/categorias/excluir[/:idCategoria]',
-                    'constraints' => array(
-                        'idCategoria'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Evento\Controller\Evento',
-                        'action'     => 'deletarcategoriatrabalho',
-                    ),
-                ),
-            ),
+            
             'cadastrarTransmissao' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
@@ -293,46 +255,7 @@ return array(
                     ),
                 ),
             ),
-            'visualizarTrabalho' => array(
-                'type' => 'Zend\Mvc\Router\Http\Segment',
-                'options' => array(
-                    'route'    => '/evento/trabalhos/visualizar[/:idInscricao]',
-                    'constraints' => array(
-                        'idInscricao'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Evento\Controller\Inscricao',
-                        'action'     => 'visualizartrabalho',
-                    ),
-                ),
-            ),
-            'deletarTrabalho' => array(
-                'type' => 'Zend\Mvc\Router\Http\Segment',
-                'options' => array(
-                    'route'    => '/evento/trabalhos/deletar[/:idInscricao]',
-                    'constraints' => array(
-                        'idInscricao'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Evento\Controller\Inscricao',
-                        'action'     => 'deletartrabalho',
-                    ),
-                ),
-            ),
             
-            'listarTrabalhos' => array(
-                'type' => 'Zend\Mvc\Router\Http\Segment',
-                'options' => array(
-                    'route'    => '/evento/trabalhos/listar[/:page]',
-                    'constraints' => array(
-                        'page'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Evento\Controller\Inscricao',
-                        'action'     => 'listartrabalhos',
-                    ),
-                ),
-            ),
 
 
             'gerenciarInscricao' => array(
@@ -443,20 +366,8 @@ return array(
                     ),
                 ),
             ),
+    
             
-
-
-
-
-
-
-
-
-
-
-
-
-
             'realizarInscricao2' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
@@ -606,6 +517,40 @@ return array(
                     'defaults' => array(
                         'controller' => 'Evento\Controller\Pagamento',
                         'action'     => 'cancelamentopaypal',
+                    ),
+                ),
+            ),
+
+            'realizarPagamentoInscricaoIpag' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/evento/pagamento/ipag/cartao',
+                    'defaults' => array(
+                        'controller' => 'Evento\Controller\Pagamento',
+                        'action'     => 'realizarpagamentoinscricaoipag',
+                    ),
+                ),
+            ),
+
+            'realizarPagamentoInscricaoIpagPix' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/evento/pagamento/ipag/pix',
+                    'defaults' => array(
+                        'controller' => 'Evento\Controller\Pagamento',
+                        'action'     => 'realizarpagamentoinscricaoipagpix',
+                    ),
+                ),
+            ),
+            
+
+            'retornoInscricaoIpag' => array(
+                'type' => 'Zend\Mvc\Router\Http\Literal',
+                'options' => array(
+                    'route'    => '/evento/pagamento/ipag/retorno',
+                    'defaults' => array(
+                        'controller' => 'Evento\Controller\Pagamento',
+                        'action'     => 'retornoinscricaoipag',
                     ),
                 ),
             ),
@@ -767,59 +712,6 @@ return array(
                 ),
             ),
 
-            'enviarTrabalho' => array(
-                'type' => 'Zend\Mvc\Router\Http\Segment',
-                'options' => array(
-                    'route'    => '/painel/cliente/trabalho/enviar[/:idInscricao]',
-                    'constraints' => array(
-                        'idInscricao'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Evento\Controller\Cliente',
-                        'action'     => 'enviartrabalho',
-                    ),
-                ),
-            ),
-
-            'listarTrabalhosPublic' => array(
-                'type' => 'Zend\Mvc\Router\Http\Segment',
-                'options' => array(
-                    'route'    => '/trabalhos[/:sigla]',
-                    'defaults' => array(
-                        'controller' => 'Evento\Controller\Cliente',
-                        'action'     => 'listartrabalhospublic',
-                    ),
-                ),
-            ),
-
-            'visualizarTrabalhosPublic' => array(
-                'type' => 'Zend\Mvc\Router\Http\Segment',
-                'options' => array(
-                    'route'    => '/trabalhos/visualizar[/:idTrabalho]',
-                    'constraints' => array(
-                        'idTrabalho'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Evento\Controller\Cliente',
-                        'action'     => 'visualizartrabalhospublic',
-                    ),
-                ),
-            ),
-
-            'downloadArquivoTrabalho' => array(
-                'type' => 'Zend\Mvc\Router\Http\Segment',
-                'options' => array(
-                    'route'    => '/painel/cliente/trabalho/download[/:idArquivo]',
-                    'constraints' => array(
-                        'idArquivo'     => '[0-9]+',
-                    ),
-                    'defaults' => array(
-                        'controller' => 'Evento\Controller\Inscricao',
-                        'action'     => 'downloadarquivotrabalho',
-                    ),
-                ),
-            ),
-
             'listarTransmissoes' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
@@ -845,10 +737,6 @@ return array(
                 ),
             ),
             
-
-            
-
-            
         ),
     ),
 	'controllers' => array(
@@ -870,7 +758,8 @@ return array(
             'form/inscricao2'              => __DIR__ . '/../view/partials/formInscricao2.phtml',
             'layout/cielo'           => __DIR__ . '/../view/layout/layoutcielo.phtml',
             'form/evento'              => __DIR__ . '/../view/partials/formEvento.phtml',
-            'form/meusdados'              => __DIR__ . '/../view/partials/formMeusDados.phtml'
+            'form/meusdados'              => __DIR__ . '/../view/partials/formMeusDados.phtml',
+            'menu/cliente'              => __DIR__ . '/../view/partials/menuCliente.phtml'
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',

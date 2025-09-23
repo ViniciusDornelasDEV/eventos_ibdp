@@ -11,7 +11,15 @@
 <?php $row = 0; ?>
 <div class="row" style="margin-top:20px;">
 <?php foreach ($form->getElements() as $element): ?>
-		<?php if(in_array($element->getName(), array('observacoes', 'mensagem_cadastro_novo', 'mensagem_cadastro_antigo', 'mensagem_pagamento', 'mensagem_transferencia'))): ?>
+		<?php if(in_array($element->getName(), array(
+				'observacoes', 
+				'mensagem_cadastro_novo', 
+				'mensagem_cadastro_antigo', 
+				'mensagem_pagamento', 
+				'mensagem_transferencia', 
+				'mensagem_trabalho'
+			))): 
+		?>
 			</row>
 
 			<div class="row" style="margin-top:70px;">
@@ -37,6 +45,37 @@
 			</div>
 			<div class="row" style="margin-top:20px;">
 			<?php endif; ?>
+				
+				<?php 
+					if (in_array($element->getName(), array('forma_paypal', 'forma_transferencia', 'forma_ipag'))) {
+						$row--;
+						continue;
+					}	
+				?>
+
+				<?php if($element->getName() == 'forma_cielo'): ?>
+					<div class='col-sm-4' style="margin-bottom: 20px;">
+						<div class="form-group" id="group-aparecer">
+							<label for="aparecer">Formas de pagamento:</label><br>
+							<label for="aparecer" style="width:139px;"><?=$form->get('forma_cielo')->getLabel()?></label>
+							<?= $this->formElement($form->get('forma_cielo')); ?>
+							<?= $this->formElementErrors($form->get('forma_cielo'), array('class' => 'alert alert-danger')); ?>
+							<br>
+							<label for="aparecer" style="width:139px;"><?=$form->get('forma_paypal')->getLabel()?></label>
+							<?= $this->formElement($form->get('forma_paypal')); ?>
+							<?= $this->formElementErrors($form->get('forma_paypal'), array('class' => 'alert alert-danger')); ?>
+							<br>
+							<label for="aparecer" style="width:139px;"><?=$form->get('forma_transferencia')->getLabel()?></label>
+							<?= $this->formElement($form->get('forma_transferencia')); ?>
+							<?= $this->formElementErrors($form->get('forma_transferencia'), array('class' => 'alert alert-danger')); ?>
+							<br>
+							<label for="aparecer" style="width:139px;"><?=$form->get('forma_ipag')->getLabel()?></label>
+							<?= $this->formElement($form->get('forma_ipag')); ?>
+							<?= $this->formElementErrors($form->get('forma_ipag'), array('class' => 'alert alert-danger')); ?>
+						</div>
+					</div>
+				<?php continue; ?>
+				<?php endif; ?>
 
 		        <div class='col-sm-4'>
 	                <div class="form-group" id="group-<?= $element->getName(); ?>">
@@ -50,6 +89,9 @@
 		        	<?= $this->formElementErrors($element, array('class' => 'alert alert-danger')); ?>
 		     		</div>
 	            </div>
+				
+					
+
 
 		<?php endif; ?>
 

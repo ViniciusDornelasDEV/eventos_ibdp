@@ -98,6 +98,7 @@ class EmpresaController extends BaseController
                     $dadosInsert['anuidade_paypal'] = $dados['anuidade_paypal'];
                     $dadosInsert['anuidade_cielo'] = $dados['anuidade_cielo'];
                     $dadosInsert['anuidade_deposito'] = $dados['anuidade_deposito'];
+                    $dadosInsert['anuidade_ipag'] = $dados['anuidade_ipag'];
                     
                     //validar formas de pagamento
                     if($dados['anuidade_paypal'] == 'S'){

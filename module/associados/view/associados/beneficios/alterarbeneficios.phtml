@@ -1,0 +1,74 @@
+<div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+    <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('novoBeneficioAssociados'); ?>'" style="float: right;width:100px;">
+        <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+        Novo
+    </button>
+
+    <ol class="breadcrumb" style="margin-bottom: 0px;">
+        <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+        <li><a href="<?= $this->url('listarBeneficiosAssociados'); ?>">Benefícios</a></li>
+        <li class="active">Alterar</li>
+    </ol>
+</div>
+
+<div class="container theme-showcase" role="main">
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Alteração de benefícios de associado</h3>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                <form name="frmTrabalho" class="form-inline" method="POST" action="#" enctype='multipart/form-data'>
+
+                  <div class="row">
+                      <div class='col-sm-4'>
+                          <div class="form-group">
+                              <label for="disabledTextInput"><?=$formBeneficios->get('nome')->getLabel()?></label>
+                              <?= $this->formElement($formBeneficios->get('nome')); ?>
+                              <?= $this->formElementErrors($formBeneficios->get('nome'), array('class' => 'alert alert-danger')); ?>
+                          </div>
+                      </div>
+
+                      <div class='col-sm-4'>
+                          <div class="form-group">
+                              <label for="disabledTextInput"><?=$formBeneficios->get('imagem')->getLabel()?></label>
+                              <?= $this->formElement($formBeneficios->get('imagem')); ?>
+                              <?= $this->formElementErrors($formBeneficios->get('imagem'), array('class' => 'alert alert-danger')); ?>
+                          </div>
+                      </div>
+
+                      <div class='col-sm-4'>
+                          <div class="form-group">
+                              <label for="disabledTextInput"><?=$formBeneficios->get('ativo')->getLabel()?></label>
+                              <?= $this->formElement($formBeneficios->get('ativo')); ?>
+                              <?= $this->formElementErrors($formBeneficios->get('ativo'), array('class' => 'alert alert-danger')); ?>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row" style="margin-top: 20px;">
+                      <div class='col-sm-12'>
+                          <label for="disabledTextInput"><?=$formBeneficios->get('descricao')->getLabel()?></label>
+                          <?= $this->formElement($formBeneficios->get('descricao')); ?>
+                          <?= $this->formElementErrors($formBeneficios->get('descricao'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                  </div>
+
+                  <div class="row" style="margin-top:20px;">
+                    <button type="submit" class="btn btn-success" style="float: right;margin-right: 10px;">
+                      <img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+                      Salvar
+                    </button>
+                  </div>
+                  </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        CKEDITOR.replace('descricao');
+    });
+</script>

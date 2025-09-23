@@ -1,0 +1,190 @@
+<?php if($erroPDF): ?>
+<div class="container theme-showcase" role="main">
+  <div class="row">
+    <div class="alert alert-info" role="alert">
+      Favor enviar arquivo(s) no formato PDF!
+    </div>
+  </div>
+</div>
+<?php endif; ?>
+<div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+  <ol class="breadcrumb" style="margin-bottom: 0px;">
+    <li><a href="<?= $this->url('inscricoesCliente'); ?>">Inscrições</a></li>
+    <li class="active">Enviar poster</li>
+  </ol>
+</div>
+
+<div class="container theme-showcase" role="main">
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title">Enviar pôster</h3>
+            </div>
+            <div class="panel-body">
+                <form name="frmPoster" class="form-inline" method="POST" action="#" enctype='multipart/form-data'>
+                    <div class="row">
+                        <div class='col-sm-4'>
+                            <div class="form-group">
+                                <label for="disabledTextInput"><?=$formPoster->get('poster')->getLabel()?></label><br>
+                                <?= $this->formElement($formPoster->get('poster')); ?>
+                                <?= $this->formElementErrors($formPoster->get('poster'), array('class' => 'alert alert-danger')); ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:20px;">
+                        <div class='col-sm-12'>
+                            <button type="submit" class="btn btn-info" style="float: right;margin-right: 10px;">
+                            <img src="<?php echo $this->basePath('img/salvar.png') ?>" alt="Salvar">
+                            Salvar
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+  <div class="container theme-showcase" role="main">
+    <div class="row">
+        <div class="panel panel-success">
+        <div class="panel-heading">
+            <h3 class="panel-title">Trabalho</h3>
+          </div>
+          <div class="panel-body">
+              <div class="form-group">
+                  <div class="row">
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formPoster->get('categoria')->getLabel()?></label><br>
+                         <?= $this->formElement($formPoster->get('categoria')); ?>
+                         <?= $this->formElementErrors($formPoster->get('categoria'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formPoster->get('titulo')->getLabel()?></label><br>
+                         <?= $this->formElement($formPoster->get('titulo')); ?>
+                         <?= $this->formElementErrors($formPoster->get('titulo'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formPoster->get('afiliacao')->getLabel()?></label><br>
+                         <?= $this->formElement($formPoster->get('afiliacao')); ?>
+                         <?= $this->formElementErrors($formPoster->get('afiliacao'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formPoster->get('descritor1')->getLabel()?></label><br>
+                         <?= $this->formElement($formPoster->get('descritor1')); ?>
+                         <?= $this->formElementErrors($formPoster->get('descritor1'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formPoster->get('descritor2')->getLabel()?></label><br>
+                         <?= $this->formElement($formPoster->get('descritor2')); ?>
+                         <?= $this->formElementErrors($formPoster->get('descritor2'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formPoster->get('descritor3')->getLabel()?></label><br>
+                         <?= $this->formElement($formPoster->get('descritor3')); ?>
+                         <?= $this->formElementErrors($formPoster->get('descritor3'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formPoster->get('autores')->getLabel()?></label><br>
+                         <?= $this->formElement($formPoster->get('autores')); ?>
+                         <?= $this->formElementErrors($formPoster->get('autores'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+                    <div class='col-sm-4'>
+                      <div class="form-group">
+                         <label for="disabledTextInput"><?=$formPoster->get('apoio_financeiro')->getLabel()?></label><br>
+                         <?= $this->formElement($formPoster->get('apoio_financeiro')); ?>
+                         <?= $this->formElementErrors($formPoster->get('apoio_financeiro'), array('class' => 'alert alert-danger')); ?>
+                      </div>
+                    </div>
+
+               
+                  </div>
+
+                  <div class="row" style="margin-top:20px;">
+                    <div class='col-sm-12'>
+                      <label for="disabledTextInput"><?=$formPoster->get('resumo')->getLabel()?></label><br>
+                      <?= $this->formElement($formPoster->get('resumo')); ?>
+                      <?= $this->formElementErrors($formPoster->get('resumo'), array('class' => 'alert alert-danger')); ?>
+                    </div>
+                  </div>
+          </div>
+        </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title">Arquivos vinculados</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                  <tr>
+                    <th style="text-align: center">Arquivo</th>
+                </tr>
+                <tr>
+                  <td style="text-align: center"><a href="<?= $this->url('downloadArquivoTrabalho', array('idArquivo' => $trabalho->id, 'nomeCampo' => 'resumo_sem_autores')); ?>">Resumo sem autores</a></td>
+                </tr>
+
+                <tr>
+                  <td style="text-align: center"><a href="<?= $this->url('downloadArquivoTrabalho', array('idArquivo' => $trabalho->id, 'nomeCampo' => 'resumo_completo')); ?>">Resumo completo</a></td>
+                </tr>
+
+                <tr>
+                  <td style="text-align: center"><a href="<?= $this->url('downloadArquivoTrabalho', array('idArquivo' => $trabalho->id, 'nomeCampo' => 'comite_etica')); ?>">Cópia do parecer (CEP, PROSPERO ou TCLE)</a></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript"> 
+        $(document).ready(function() {
+            $('#categoria').attr('disabled', 'disabled');
+            $('#titulo').attr('disabled', 'disabled');
+            $('#autores').attr('disabled', 'disabled');
+            $('#nome_categoria').attr('disabled', 'disabled');
+            $('#titulo_trabalho').attr('disabled', 'disabled');
+            $('#autores_trabalho').attr('disabled', 'disabled');
+            $('#resumo').attr('disabled', 'disabled');
+
+            $('#afiliacao').attr('disabled', 'disabled');
+            $('#descritor1').attr('disabled', 'disabled');
+            $('#descritor2').attr('disabled', 'disabled');
+            $('#descritor3').attr('disabled', 'disabled');
+            $('#apoio_financeiro').attr('disabled', 'disabled');
+
+            CKEDITOR.replace('resumo');
+        });
+    </script>

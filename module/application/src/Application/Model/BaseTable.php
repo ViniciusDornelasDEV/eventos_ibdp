@@ -401,8 +401,10 @@ class BaseTable {
                     if($key != 'codigo_embed'){
                         $object[$key] = strip_tags($object[$key]);
                     }
-                    $minusculo = array('senha', 'arquivo', 'banner_evento', 'certificado_1', 'certificado_2', 'certificado_3', 'mensagem_cadastro_novo', 'mensagem_cadastro_antigo', 'mensagem_pagamento', 'mensagem_transferencia', 'observacoes', 
-                        'descricao_categoria', 'resumo', 'mensagem', 'dados_deposito', 'codigo_embed', 'comprovante', 'descricao', 'certificado');
+                    $minusculo = array('senha', 'arquivo', 'banner_evento', 'certificado_1', 'certificado_2', 'certificado_3', 'mensagem_cadastro_novo', 
+                        'mensagem_cadastro_antigo', 'mensagem_pagamento', 'mensagem_transferencia', 'mensagem_trabalho', 'observacoes', 
+                        'descricao_categoria', 'resumo', 'mensagem', 'dados_deposito', 'codigo_embed', 'comprovante', 'descricao', 'certificado', 'poster',
+                        'resumo_sem_autores', 'resumo_completo', 'comite_etica', 'stricto_sensu', 'mestrado_doutorado', 'imagem', 'imagem_capa', 'link_video');
                     if(!in_array($key, $minusculo)){
                         $object[$key] = mb_convert_case($object[$key], MB_CASE_UPPER, 'UTF-8');
                         

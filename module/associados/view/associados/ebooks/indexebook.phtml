@@ -1,0 +1,66 @@
+<div class="container theme-showcase" role="main" style="margin-bottom:10px;padding:0px;">
+       <button type="button" class="btn btn-default" onclick="location.href='<?= $this->url('novoEbookAssociados'); ?>'" style="float: right;width:100px;">
+      <img src="<?php echo $this->basePath('img/novo.png') ?>" alt="Novo">
+      Novo</button>
+
+      <ol class="breadcrumb" style="margin-bottom: 0px;">
+        <li><a href="<?= $this->url('home'); ?>">Home</a></li>
+        <li class="active">Ebook's de associados</li>
+      </ol>
+    </div>
+    <!-- LISTAGEM DOS EQUIPAMENTOS -->
+    <div class="container theme-showcase" role="main">
+      <div class="row">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">Listagem de ebook's</h3>
+            </div>
+            <div class="panel-body">
+              <?php if($ebooks->count() > 0): ?>
+              <table class="table">
+                <tr>
+                  <th style="text-align: center">Nome</th>
+                  <th style="text-align: center">Status</th>
+                  <th style="text-align: center">Ações</th>
+              </tr>
+              <?php foreach($ebooks as $ebook): ?>
+              <tr>
+                <td style="text-align: center"><?= $ebook['nome']; ?></td>
+                <td style="text-align: center"><?= $this->status($ebook['ativo']); ?></td>
+                <td style="text-align: center;">
+                  <img src="<?= $this->basePath('img/editar.png'); ?>" title="Editar" 
+                  onclick="location.href='<?= $this->url('alterarEbookAssociados', array('idEbook' => $ebook['id'])); ?>'" style="cursor: pointer;">
+
+                  <?php if (!empty($ebook['arquivo'])) : ?>
+                    <span style="margin-right:4px;"></span>        
+                    <img src="<?= $this->basePath('img/visualizar.png'); ?>" title="Download arquivo" 
+                    onclick="location.href='<?= $this->url('downloadBeneficiosAssociado', array('id' => $ebook['id'], 'tipoArquivo' => 3)); ?>'" style="cursor: pointer;">
+                  <?php endif; ?>
+                    
+                  <?php if (!empty($ebook['link'])) : ?>
+                    <span style="margin-right:4px;"></span>        
+                    <a href="<?= $ebook['link']; ?>" target="_blank">
+                      <img src="<?= $this->basePath('img/redirecionar.png'); ?>" title="Download arquivo" style="cursor: pointer;">
+                    </a>
+                    
+                  <?php endif; ?>
+                </td>
+              </tr>
+              <?php endforeach; ?>
+            </table>
+          <?php else: ?>
+            <div class="alert alert-info">Nenhum e-book encontrado!</div>
+        <?php endif; ?>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container theme-showcase" style="margin-top:0px;" role="main">
+        <div style="float:right;">
+          <?php echo $this->paginationControl($ebooks,
+                                        'Sliding',
+                                        'view/paginator', array('route' => 'listarEbookAssociados')); 
+          ?>
+        </div>
+      </div>

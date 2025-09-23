@@ -631,9 +631,7 @@ abstract class BaseController extends AbstractActionController {
         $caminho = 'public/log/';
 
         if(!file_exists($caminho)){
-
             mkdir($caminho);
-
         }
 
 
@@ -806,6 +804,44 @@ abstract class BaseController extends AbstractActionController {
         } else {
             return $letter;
         }
+    }
+
+    function formatarTelefone($telefone) {
+        // Remove todos os caracteres que não são dígitos
+        $telefone = preg_replace("/[^0-9]/", "", $telefone);
+    
+        // Verifica se o número de telefone é válido
+        if (strlen($telefone) != 11) {
+            return '';
+        }
+    
+        // Formata o telefone com a máscara
+        $telefoneFormatado = "(" . substr($telefone, 0, 2) . ") " . substr($telefone, 2, 5) . "-" . substr($telefone, 7);
+    
+        return $telefoneFormatado;
+    }
+
+    public function gerarMediasAvaliacoes($avaliacoes){
+        $medias = array();
+        $medias['total'] = 0;
+        foreach($avaliacoes as $key => $avaliacao){
+            
+            if (!empty($avaliacao['normas'])) {
+                //avaliacao escrita
+                $medias[$key] = bcadd($avaliacao['normas'], $avaliacao['originalidade'], 2);
+                $medias[$key] = bcadd($medias[$key], $avaliacao['relevancia'], 2);
+            } else {
+                //avaliacao oral
+                $medias[$key] = bcadd($avaliacao['postura'], $avaliacao['conhecimentos'], 2);
+                $medias[$key] = bcadd($medias[$key], $avaliacao['clareza'], 2);
+            }
+
+            $medias[$key] = bcdiv($medias[$key],3, 2);
+            $medias['total'] = bcadd($medias[$key], $medias['total'], 2);
+        }
+        $numeroAvaliacoes = count($avaliacoes) == 0 ? 1 : count($avaliacoes);
+        $medias['total'] = bcdiv($medias['total'], $numeroAvaliacoes, 2);
+        return $medias;
     }
 
 
