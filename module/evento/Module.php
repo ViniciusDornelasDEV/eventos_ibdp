@@ -111,8 +111,8 @@ class Module
                 },
                 
                 
-                'EventoTransmissao' => function($sm) {
-                    $tableGateway = new TableGateway('tb_evento_transmissao', $sm->get('db_adapter_main'));
+                'EventoVideo' => function($sm) {
+                    $tableGateway = new TableGateway('tb_evento_video', $sm->get('db_adapter_main'));
                     $updates = new BaseTable($tableGateway);
                     $updates->setServiceLocator($sm);
                     return $updates;

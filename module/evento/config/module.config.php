@@ -212,31 +212,31 @@ return array(
             ),
 
             
-            'cadastrarTransmissao' => array(
+            'cadastrarVideo' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/evento/transmissoes/cadastrar[/:evento][/:transmissao]',
+                    'route'    => '/evento/videos/cadastrar[/:evento][/:video]',
                     'constraints' => array(
                         'evento'     => '[0-9]+',
-                        'transmissao'     => '[0-9]+',
+                        'video'     => '[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Evento\Controller\Evento',
-                        'action'     => 'cadastrartransmissao',
+                        'action'     => 'cadastrarvideo',
                     ),
                 ),
             ),
-            'deletarTransmissao' => array(
+            'deletarVideo' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/evento/transmissoes/deletar[/:evento][/:transmissao]',
+                    'route'    => '/evento/videos/deletar[/:evento][/:video]',
                     'constraints' => array(
                         'evento'     => '[0-9]+',
-                        'transmissao'     => '[0-9]+',
+                        'video'     => '[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Evento\Controller\Evento',
-                        'action'     => 'deletartransmissao',
+                        'action'     => 'deletarvideo',
                     ),
                 ),
             ),
@@ -712,27 +712,27 @@ return array(
                 ),
             ),
 
-            'listarTransmissoes' => array(
+            'listarVideos' => array(
                 'type' => 'Zend\Mvc\Router\Http\Literal',
                 'options' => array(
-                    'route'    => '/transmissoes',
+                    'route'    => '/videos',
                     'defaults' => array(
                         'controller' => 'Evento\Controller\Cliente',
-                        'action'     => 'listartransmissoes',
+                        'action'     => 'listarvideos',
                     ),
                 ),
             ),
 
-            'visualizarTransmissao' => array(
+            'visualizarVideo' => array(
                 'type' => 'Zend\Mvc\Router\Http\Segment',
                 'options' => array(
-                    'route'    => '/transmissoes/visualizar[/:transmissao]',
+                    'route'    => '/videos/visualizar[/:evento]',
                     'constraints' => array(
-                        'transmissao'     => '[0-9]+',
+                        'evento'     => '[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'Evento\Controller\Cliente',
-                        'action'     => 'visualizartransmissao',
+                        'action'     => 'visualizarvideo',
                     ),
                 ),
             ),

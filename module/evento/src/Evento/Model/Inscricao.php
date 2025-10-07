@@ -1057,21 +1057,20 @@ class Inscricao Extends BaseTable {
         });
     }
 
-     public function getTransmissoes($idCliente){
+     public function getVideos($idCliente, $group = false, $idEvento = false){
       
-        return $this->getTableGateway()->select(function($select) use ($idCliente) {
+        return $this->getTableGateway()->select(function($select) use ($idCliente, $group, $idEvento) {
             $select->join(
                     array('e' => 'tb_evento'),
                     'e.id = tb_inscricao.evento',
-                    array('sigla', 'nome_evento' => 'nome', 'certificado_1', 'enviar_trabalho'),
+                    array('id_evento' => 'id','sigla', 'nome_evento' => 'nome', 'certificado_1', 'enviar_trabalho'),
                     'inner'
                 );
 
             $select->join(
-                    array('et' => 'tb_evento_transmissao'),
-                    'e.id = et.evento',
-                    array('id_transmissao' => 'id', 'descricao_transmissao' => 'descricao', 'sala', 'inicio_transmissao' => 'inicio', 'fim_transmissao' => 'fim', 
-                    'codigo_embed'),
+                    array('ev' => 'tb_evento_video'),
+                    'e.id = ev.evento',
+                    array('id_video' => 'id', 'descricao_video' => 'descricao', 'link_video'),
                     'inner'
                 );
 
@@ -1084,12 +1083,15 @@ class Inscricao Extends BaseTable {
                 ->or->equalTo('status_pagamento', 9)
                 ->unnest;
 
-            //verificar data/hora
-            $dataAtual = date('Y-m-d H:i:s');
-            //$select->where->between("$dataAtual", 'et.inicio', 'et.fim');
-            $select->where('et.fim >= "'.$dataAtual.'"');
+            if ($idEvento) {
+              $select->where(array('e.id' => $idEvento));
+            }
 
-            $select->order('tb_inscricao.id DESC, inicio ASC, sala');
+            if ($group) {
+              $select->group('e.id');
+            }
+
+            $select->order('tb_inscricao.id DESC, e.id DESC, ev.id DESC');
 
         });
     }

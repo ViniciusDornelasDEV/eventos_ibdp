@@ -1,0 +1,417 @@
+
+
+2019-09-26T18:23:09Z - Inscrição: 3. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2019-09-26T18:27:58Z - Inscrição: 3. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2019-09-26T18:31:06Z - Inscrição: 3. Erro número:  - 
+
+2019-09-26T19:07:50Z - Inscrição: 3. Erro número: 10412 - Payment has already been made for this InvoiceID.
+
+2019-09-27T12:25:01Z - Inscrição: 5. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2019-09-27T15:42:55Z - Inscrição: 12. Erro número:  - 
+
+2019-09-27T15:44:12Z - Inscrição: 12. Erro número: 10412 - Payment has already been made for this InvoiceID.
+
+2019-09-30T13:25:49Z - Inscrição: 5. Erro número:  - 
+
+2019-09-30T13:29:32Z - Inscrição: 21. Erro número:  - 
+
+2019-09-30T13:32:57Z - Inscrição: 21. Erro número: 10412 - Payment has already been made for this InvoiceID.
+
+2019-09-30T13:38:13Z - Inscrição: 12. Erro número:  - 
+
+2019-09-30T13:39:02Z - Inscrição: 12. Erro número: 11607 - A successful transaction has already been completed for this token.
+
+2019-09-30T13:40:29Z - Inscrição: 12. Erro número: 10412 - Payment has already been made for this InvoiceID.
+
+2019-09-30T13:42:07Z - Inscrição: 21. Erro número: 10412 - Payment has already been made for this InvoiceID.
+
+2019-09-30T13:44:31Z - Inscrição: 22. Erro número:  - 
+
+2019-09-30T13:46:26Z - Inscrição: 23. Erro número:  - 
+
+2019-11-04T23:34:02Z - Inscrição: 87. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2019-11-04T23:34:51Z - Inscrição: 87. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2019-11-05T01:07:26Z - Anuidade: 4, associado: 121. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2019-11-07T18:06:21Z - Inscrição: 90. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2019-12-16T20:02:37Z - Anuidade: 2, associado: 119. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-01-16T00:37:26Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-16T00:37:52Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-16T08:42:36Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-16T08:44:05Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-16T12:17:23Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-16T16:00:24Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-16T16:00:44Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-16T16:00:51Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-16T16:22:36Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-16T17:33:23Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-16T20:14:41Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-16T20:16:04Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-16T20:19:02Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-16T20:21:13Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-22T02:38:38Z - Anuidade: , associado: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-01-23T01:19:20Z - Anuidade: 4, associado: 212. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-01-31T15:17:02Z - Anuidade: 4, associado: 234. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-01-31T15:31:23Z - Anuidade: 4, associado: 234. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-02-03T19:56:36Z - Anuidade: 4, associado: 109. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-02-10T16:20:06Z - Anuidade: 4, associado: 190. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-04-01T18:37:42Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-04-01T18:41:15Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-04-01T18:43:42Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-04-01T18:44:47Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-04-01T18:46:49Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-04-01T18:48:04Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-04-01T18:49:55Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-06-04T14:13:50Z - Inscrição: 306. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-06-04T14:16:49Z - Inscrição: 305. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-06-04T14:18:50Z - Inscrição: 305. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-06-10T01:42:13Z - Inscrição: 354. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-06-10T01:43:49Z - Inscrição: 354. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-08-20T14:21:19Z - Anuidade: 11, associado: 180. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-08-20T14:22:09Z - Anuidade: 11, associado: 180. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-08-20T14:23:47Z - Anuidade: 11, associado: 180. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-08-20T14:40:13Z - Anuidade: 11, associado: 296. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-08-20T19:34:15Z - Anuidade: 11, associado: 381. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-08-26T16:07:22Z - Anuidade: 11, associado: 129. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-08-26T16:10:41Z - Anuidade: 11, associado: 129. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-08-31T21:12:21Z - Anuidade: 4, associado: 52. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+ - Anuidade: 11, associado: 135. Erro número:  - 
+
+2020-09-02T13:35:36Z - Anuidade: 9, associado: 398. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-02T15:32:27Z - Anuidade: 9, associado: 398. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-10T22:27:58Z - Anuidade: 11, associado: 309. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-11T00:34:27Z - Anuidade: 11, associado: 386. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-13T21:13:01Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-09-15T00:54:52Z - Anuidade: 11, associado: 245. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-15T16:33:17Z - Anuidade: 11, associado: 361. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-15T16:34:28Z - Anuidade: 11, associado: 361. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-18T01:14:55Z - Inscrição: 640. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-18T01:16:02Z - Inscrição: 640. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-18T01:16:45Z - Inscrição: 640. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-21T12:35:59Z - Anuidade: 11, associado: 494. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-21T12:36:38Z - Anuidade: 11, associado: 494. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-21T12:38:32Z - Inscrição: 676. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-22T13:59:47Z - Inscrição: 730. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-22T14:26:02Z - Inscrição: 729. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-22T14:26:55Z - Inscrição: 729. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-22T14:28:05Z - Inscrição: 729. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-23T13:39:05Z - Anuidade: 11, associado: 210. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-23T15:42:40Z - Anuidade: , associado: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-09-24T14:54:50Z - Inscrição: 802. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-09-30T18:30:33Z - Anuidade: 11, associado: 361. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-10-05T22:16:34Z - Anuidade: , associado: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-10-26T01:07:23Z - Anuidade: , associado: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-11-11T16:05:11Z - Anuidade: , associado: . Erro número: 10002 - You do not have permissions to make this API call
+
+2020-11-28T14:34:19Z - Anuidade: 11, associado: 178. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2020-11-28T14:35:10Z - Anuidade: 11, associado: 178. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-01-07T17:37:21Z - Anuidade: 9, associado: 541. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-03-09T16:01:16Z - Anuidade: 9, associado: 551. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-03-19T00:42:11Z - Anuidade: 11, associado: 212. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-03-20T03:29:15Z - Anuidade: 11, associado: 553. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-04-18T16:20:23Z - Anuidade: , associado: . Erro número: 10002 - You do not have permissions to make this API call
+
+2021-08-02T13:44:13Z - Anuidade: 14, associado: 261. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-08-04T23:30:03Z - Anuidade: 14, associado: 510. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-08-06T16:49:43Z - Anuidade: 13, associado: 454. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-08-10T11:12:02Z - Anuidade: 14, associado: 460. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-08-17T02:22:58Z - Anuidade: 14, associado: 283. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-08-18T16:13:53Z - Anuidade: 14, associado: 211. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-08-18T16:25:20Z - Anuidade: , associado: . Erro número: 10002 - You do not have permissions to make this API call
+
+2021-08-18T18:23:22Z - Anuidade: 14, associado: 460. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-08-19T18:56:03Z - Anuidade: 14, associado: 276. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-09-08T15:37:30Z - Anuidade: 13, associado: 530. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-10-20T14:02:19Z - Anuidade: 14, associado: 460. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-11-01T20:28:21Z - Anuidade: 14, associado: 460. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-11-01T20:29:17Z - Anuidade: 14, associado: 460. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-11-04T13:56:02Z - Anuidade: 14, associado: 430. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-11-04T14:05:05Z - Anuidade: 14, associado: 430. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2021-11-09T02:19:07Z - Anuidade: , associado: . Erro número: 10002 - You do not have permissions to make this API call
+
+2022-01-26T18:57:00Z - Anuidade: , associado: . Erro número: 10002 - You do not have permissions to make this API call
+
+2022-01-26T19:07:21Z - Anuidade: , associado: . Erro número: 10002 - You do not have permissions to make this API call
+
+2022-01-27T15:38:55Z - Anuidade: , associado: . Erro número: 10002 - You do not have permissions to make this API call
+
+2022-01-27T16:02:26Z - Anuidade: , associado: . Erro número: 10002 - You do not have permissions to make this API call
+
+2022-01-31T17:26:41Z - Anuidade: 14, associado: 274. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-01-31T17:27:36Z - Anuidade: 14, associado: 274. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-04-13T10:42:19Z - Anuidade: 11, associado: 312. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-04-13T10:44:51Z - Anuidade: 14, associado: 312. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-17T16:16:31Z - Inscrição: 1502. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-17T16:17:23Z - Inscrição: 1502. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-17T16:18:43Z - Inscrição: 1502. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-17T16:53:55Z - Inscrição: 1508. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-17T18:56:26Z - Inscrição: 1519. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-17T18:57:52Z - Inscrição: 1519. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-17T19:03:29Z - Inscrição: 1519. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-17T19:04:43Z - Inscrição: 1519. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-17T19:10:46Z - Inscrição: 1519. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-17T20:47:08Z - Inscrição: 1519. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-18T18:57:15Z - Inscrição: 1526. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-18T20:21:28Z - Inscrição: 1502. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-19T12:40:07Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2022-10-19T12:54:51Z - Inscrição: 1591. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-19T12:55:42Z - Inscrição: 1591. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-19T14:08:27Z - Inscrição: 1602. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-19T17:16:21Z - Inscrição: 1626. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-19T19:29:30Z - Inscrição: 1591. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-19T19:30:22Z - Inscrição: 1591. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-20T18:59:27Z - Inscrição: 1669. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-20T19:39:15Z - Inscrição: 1687. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-20T23:55:40Z - Inscrição: 1691. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-20T23:55:55Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2022-10-25T13:08:01Z - Inscrição: 1726. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-25T14:29:29Z - Inscrição: 1726. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-10-27T17:16:01Z - Inscrição: 1731. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-08T00:32:05Z - Inscrição: 1763. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-08T22:28:27Z - Inscrição: 1766. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-08T22:29:41Z - Inscrição: 1766. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+ - Inscrição: . Erro número:  - 
+
+2022-11-09T17:20:16Z - Inscrição: 1766. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-14T22:24:27Z - Inscrição: 1770. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-16T15:48:40Z - Inscrição: 1770. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-16T16:03:17Z - Inscrição: 1770. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-16T22:01:34Z - Inscrição: 1770. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-17T20:17:41Z - Inscrição: 1775. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-21T20:03:14Z - Inscrição: 1775. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-21T20:04:37Z - Inscrição: 1775. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-22T12:33:52Z - Inscrição: 1775. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-22T12:34:37Z - Inscrição: 1775. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-22T12:35:15Z - Inscrição: 1775. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-11-22T23:09:29Z - Inscrição: 1775. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-12-07T15:12:25Z - Inscrição: 1817. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-12-07T15:13:46Z - Inscrição: 1817. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-12-07T15:15:00Z - Inscrição: 1817. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-12-07T15:34:36Z - Inscrição: 1817. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2022-12-12T19:06:09Z - Inscrição: 1800. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-01-04T16:48:20Z - Inscrição: 1869. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-01-04T16:49:10Z - Inscrição: 1869. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-01-04T16:50:03Z - Inscrição: 1869. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-01-04T16:53:33Z - Inscrição: 1869. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-01-11T15:29:17Z - Inscrição: 1917. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-01-11T15:41:52Z - Inscrição: 1917. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-01-13T18:21:24Z - Inscrição: 1960. Erro número: 10419 - Express Checkout PayerID is missing.
+
+2023-01-13T21:00:12Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2023-01-13T21:02:23Z - Inscrição: 1888. Erro número: 13122 - This transaction cannot be completed because it violates the PayPal User Agreement.
+
+2023-01-13T21:03:28Z - Inscrição: 1888. Erro número: 13122 - This transaction cannot be completed because it violates the PayPal User Agreement.
+
+2023-01-14T13:31:49Z - Inscrição: 1993. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-01-14T13:48:16Z - Inscrição: 1993. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-01-14T13:55:21Z - Anuidade: 17, associado: 108. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-01-14T15:36:23Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2023-01-14T19:14:49Z - Inscrição: 2037. Erro número: 10417 - Instruct the customer to retry the transaction using an alternative payment method from the customers PayPal wallet. The transaction did not complete with the customers selected payment method.
+
+2023-01-14T19:28:33Z - Inscrição: 2030. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-01-14T22:14:41Z - Inscrição: 2065. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-01-29T01:00:39Z - Inscrição: 2176. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-02-03T19:09:21Z - Inscrição: 2214. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-02-04T00:53:04Z - Inscrição: 2217. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-02-04T02:04:03Z - Inscrição: 2216. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-02-04T02:05:08Z - Inscrição: 2216. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-02-11T11:17:36Z - Inscrição: 1908. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-02-16T21:36:15Z - Inscrição: 2284. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-02-16T21:36:45Z - Inscrição: 2284. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-02-18T18:10:50Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2023-02-20T19:08:21Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2023-02-20T19:42:44Z - Inscrição: 2314. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-02-21T16:56:44Z - Inscrição: 2339. Erro número: 10417 - Instruct the customer to retry the transaction using an alternative payment method from the customers PayPal wallet. The transaction did not complete with the customers selected payment method.
+
+2023-03-10T23:14:23Z - Inscrição: 2435. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-03-13T13:19:34Z - Inscrição: 2457. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-03-13T13:20:14Z - Inscrição: 2457. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-03-13T15:14:05Z - Inscrição: 2458. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-03-13T23:46:49Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2023-03-13T23:48:53Z - Inscrição: 2487. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-03-14T14:07:49Z - Inscrição: 2476. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-03-14T20:39:38Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2023-03-14T20:42:15Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call
+
+2023-03-15T22:10:08Z - Inscrição: 2486. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-03-23T13:14:13Z - Inscrição: 2530. Erro número: 13113 - The Buyer cannot pay with PayPal for this Transaction.
+
+2023-04-11T23:35:23Z - Inscrição: 2550. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-04-12T12:33:15Z - Inscrição: 2550. Erro número: 10486 - This transaction couldn't be completed. Please redirect your customer to PayPal.
+
+2023-04-12T23:27:56Z - Inscrição: . Erro número: 10002 - You do not have permissions to make this API call

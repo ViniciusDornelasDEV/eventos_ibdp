@@ -434,7 +434,7 @@ class ClienteController extends BaseController
         ));
     }
 
-    public function listartransmissoesAction(){
+    public function listarvideosAction(){
         $this->layout('layout/cliente');
         $usuario = $this->getServiceLocator()->get('session')->read();
         $associado = $this->getServiceLocator()->get('Associado')->getAssociados(array('cliente' => $usuario['cliente']))->current();
@@ -449,22 +449,21 @@ class ClienteController extends BaseController
             $questionario = $this->getServiceLocator()->get('Questionario')->getAvaliacaoAberta($associado)->current();
         }
 
-        //pesquisar transmissões em aberto
-        $transmissoes = $this->getServiceLocator()->get('Inscricao')->getTransmissoes($usuario['cliente']);
-
+        $videos = $this->getServiceLocator()->get('Inscricao')->getVideos($usuario['cliente'], true);
         return new ViewModel(array(
-            'transmissoes'  =>  $transmissoes,
+            'videos'        =>  $videos,
             'associado'     =>  $associado,
             'questionario'  =>  $questionario
         ));
     }
 
-    public function visualizartransmissaoAction(){
-        $transmissao = $this->getServiceLocator()->get('EventoTransmissao')->getRecord($this->params()->fromRoute('transmissao'));
+    public function visualizarvideoAction(){
+        $usuario = $this->getServiceLocator()->get('session')->read();
+        $videos = $this->getServiceLocator()->get('Inscricao')->getVideos($usuario['cliente'], false, $this->params()->fromRoute('evento'));
 
         $view = new ViewModel();
         $view->setTerminal(true);
-        $view->setVariables(array('transmissao'   =>  $transmissao));
+        $view->setVariables(array('videos'  =>  $videos));
         return $view;
     }
 

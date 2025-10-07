@@ -27,134 +27,15 @@ use Cliente\Form\Upload as formUpload;
 
 class IndexController extends BaseController
 {
-
-    /*public function estadoCivil($estado){
-        if(strpos($estado, 'Solt')){
-            return 1;
-        }
-
-        if(strpos($estado, 'Cas')){
-            return 2;
-        }
-
-        if(strpos($estado, 'Sep')){
-            return 3;
-        }
-
-        if(strpos($estado, 'Divo')){
-            return 4;
-        }
-
-        if(strpos($estado, 'Vi')){
-            return 5;
-        }
-    }
-
-    public function nacionalidade($nacionalidade){
-        if(strpos($nacionalidade, 'Br')){
-            return 1;
-        }
-
-        return 2;
-    }
-
-    public function formatarCep($cep){
-        $cep = str_replace('-', '', $cep);
-        $cep = str_replace('.', '', $cep);
-        $cep = trim($cep);
-        if(!empty($cep) && strlen($cep) == 8){
-            $cep = $this->mask($cep,'#####-###');
-        }
-        return $cep;
-    }
-
-    public function formatarCpf($cpf, $row){
-        $cpf = str_replace('.', '', $cpf);
-        $cpf = str_replace('-', '', $cpf);
-        $cpf = str_replace(' ', '', $cpf);
-        if(strlen($cpf) != 11){
-            $cpf = str_pad($cpf, 11, '0', STR_PAD_LEFT);
-        }
-         $cpf = $this->mask($cpf, "###.###.###-##");
-
-        return $cpf;
-    }
-
-
-    function mask($val, $mask){
-        $maskared = '';
-        $k = 0;
-        for($i = 0; $i<=strlen($mask)-1; $i++){
-        if($mask[$i] == '#'){
-            if(isset($val[$k]))
-                $maskared .= $val[$k++];
-            }else{
-                if(isset($mask[$i]))
-                $maskared .= $mask[$i];
-            }
-        }
-        return $maskared;
-    }*/
-
-
-
     public function indexAction()
     {   
-        /*$objReader = new \PHPExcel_Reader_Excel5();
-        $objReader->setReadDataOnly(true);
-        $objPHPExcel = $objReader->load('public/arquivos/enderecos.xls');
-        $objPHPExcel->setActiveSheetIndex(0);
-
-        $sheet = $objPHPExcel->getSheet(0); 
-        $highestRow = $sheet->getHighestRow(); 
-
-        $serviceAssociado = $this->getServiceLocator()->get('Associado');
-        $serviceCidade = $this->getServiceLocator()->get('Cidade');
-        $cpfAnterior = '';
-        $numEndereco = 1;
-        for ($row = 2; $row <= $highestRow; $row++){
-            $rowData = $sheet->rangeToArray('A'.$row.':'.'W'.$row,
-                                                NULL,
-                                                true,
-                                                true,
-                                                false);
-            $rowData = $rowData[0];
-            if(!empty($rowData[1])){
-                $cpf = $this->formatarCpf($rowData[1], $row);
-                if($cpf != $cpfAnterior){
-                    $cpfAnterior = $cpf;
-                    $numEndereco = 1;
-                    $associado = $serviceAssociado->getAssociadoPlanilha($cpf)->current();
-                    if(!$associado){
-                        $cpfAnterior = '';
-                        continue;
-                    }
-                }else{
-                    $numEndereco++;
-                }
-                $cidade = $serviceCidade->getCidadeAssociado($rowData[4], $rowData[3]);
-                
-                echo utf8_decode('UPDATE tb_cliente SET 
-                    endereco_'.$numEndereco.' = "'.$rowData[2].'", 
-                    cidade_'.$numEndereco.' = '.$cidade['id'].', 
-                    telefone_'.$numEndereco.' = "'.$rowData[5].'",
-                    site_'.$numEndereco.' = "'.$rowData[6].'",
-                    email_'.$numEndereco.' = "'.$rowData[7].'" WHERE id = '.$associado['cliente'].';<br>');
-                
-            }
-
-
-        }
-       
-        die();*/
-        
         $usuario = $this->getServiceLocator()->get('session')->read();
         $params = array();
         if($usuario['id_usuario_tipo'] == 3){
             $this->layout('layout/empresa');
             $params['empresa'] = $usuario['empresa'];
         }
-
+        
         $formDash = new formDash('formDash', $this->getServiceLocator(), $params);
         $serviceEvento = $this->getServiceLocator()->get('Evento');
         $serviceInscricao = $this->getServiceLocator()->get('Inscricao');

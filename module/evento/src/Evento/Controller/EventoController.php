@@ -22,7 +22,7 @@ use Evento\Form\OpcaoAlternativa as formAlternativa;
 use Evento\Form\Opcao as formOpcao;
 use Evento\Form\PromocaoAssociados as formPromocaoAssociados;
 
-use Evento\Form\Transmissao as formTransmissao;
+use Evento\Form\Video as formVideo;
 
 class EventoController extends BaseController
 {
@@ -721,8 +721,8 @@ class EventoController extends BaseController
         return new ViewModel();
     }
 
-    public function cadastrartransmissaoAction(){
-        $formTransmissao = new formTransmissao('frmTransmissao');
+    public function cadastrarvideoAction(){
+        $formVideo = new formVideo('frmVideo');
         $evento = $this->getServiceLocator()->get('Evento')->getRecord($this->params()->fromRoute('evento'));
 
         //verificar se é empresa
@@ -735,61 +735,61 @@ class EventoController extends BaseController
             }
         }
 
-        $idTransmissao = $this->params()->fromRoute('transmissao');
-        if($idTransmissao){
-            $transmissao = $this->getServiceLocator()->get('EventoTransmissao')->getRecord($idTransmissao);
-            if($transmissao->evento != $evento->id){
-                $this->flashMessenger()->addWarningMessage('Transmissão não encontrada!');
-                return $this->redirect()->toRoute('cadastrarTransmissao', array('evento' => $evento->id));
+        $idVideo = $this->params()->fromRoute('video');
+        if($idVideo){
+            $video = $this->getServiceLocator()->get('EventoVideo')->getRecord($idVideo);
+            if($video->evento != $evento->id){
+                $this->flashMessenger()->addWarningMessage('Vídeo não encontrado!');
+                return $this->redirect()->toRoute('cadastrarVideo', array('evento' => $evento->id));
             }
-            $formTransmissao->setData($transmissao);
+            $formVideo->setData($video);
         }
         ///se veio post salvar ou alterar
         if($this->getRequest()->isPost()){
-            $formTransmissao->setData($this->getRequest()->getPost());
-            if($formTransmissao->isValid()){
+            $formVideo->setData($this->getRequest()->getPost());
+            if($formVideo->isValid()){
                 //alterar
-                if($idTransmissao){
-                    $this->getServiceLocator()->get('EventoTransmissao')->update($formTransmissao->getData(), array('id' => $idTransmissao));
-                    $this->flashMessenger()->addSuccessMessage('Transmissão alterada com sucesso!');
-                    return $this->redirect()->toRoute('cadastrarTransmissao', array('evento' => $evento->id));
+                if($idVideo){
+                    $this->getServiceLocator()->get('EventoVideo')->update($formVideo->getData(), array('id' => $idVideo));
+                    $this->flashMessenger()->addSuccessMessage('Vídeo alterado com sucesso!');
+                    return $this->redirect()->toRoute('cadastrarVideo', array('evento' => $evento->id));
                 }else{
                     //salvar
-                    $dados = $formTransmissao->getData();
+                    $dados = $formVideo->getData();
                     $dados['evento'] = $evento->id;
-                    $this->getServiceLocator()->get('EventoTransmissao')->insert($dados);
-                    $this->flashMessenger()->addSuccessMessage('Transmissão cadastrada com sucesso!');
-                    return $this->redirect()->toRoute('cadastrarTransmissao', array('evento' => $evento->id));
+                    $this->getServiceLocator()->get('EventoVideo')->insert($dados);
+                    $this->flashMessenger()->addSuccessMessage('Vídeo cadastrado com sucesso!');
+                    return $this->redirect()->toRoute('cadastrarVideo', array('evento' => $evento->id));
                 }
             }
         }
 
-        //pesquisar transmissões do evento
-        $transmissoes = $this->getServiceLocator()->get('EventoTransmissao')->getRecords($evento->id, 'evento', array('*'), 'inicio ASC, sala');
+        //pesquisar vídeos do evento
+        $videos = $this->getServiceLocator()->get('EventoVideo')->getRecords($evento->id, 'evento', array('*'), 'id DESC');
         return new ViewModel(array(
-            'formTransmissao'   =>  $formTransmissao,
-            'transmissoes'      =>  $transmissoes,
-            'evento'            =>  $evento
+            'formVideo'   =>  $formVideo,
+            'videos'      =>  $videos,
+            'evento'      =>  $evento
         ));
     }
 
-    public function deletartransmissaoAction(){
-        //validar se evento e transmissão são da empresa 
+    public function deletarvideoAction(){
+        //validar se evento e vídeo são da empresa 
         $usuario = $this->getServiceLocator()->get('session')->read();
         if($usuario['id_usuario_tipo'] == 3){
             $evento = $this->getServiceLocator()->get('Evento')->getRecord($this->params()->fromRoute('evento'));
-            $transmissao = $this->getServiceLocator()->get('EventoTransmissao')->getRecord($this->params()->fromRoute('transmissao'));
+            $video = $this->getServiceLocator()->get('EventoVideo')->getRecord($this->params()->fromRoute('video'));
 
-            if($usuario['empresa'] != $evento->empresa || $evento->id != $transmissao->evento){
-                $this->flashMessenger()->addWarningMessage('Evento ou transmissão não encontrados!');
+            if($usuario['empresa'] != $evento->empresa || $evento->id != $video->evento){
+                $this->flashMessenger()->addWarningMessage('Evento ou video não encontrados!');
                 return $this->redirect()->toRoute('evento');
             }
         }
 
-        //deletar a transmissão
-        $this->getServiceLocator()->get('EventoTransmissao')->delete(array('id' => $this->params()->fromRoute('transmissao')));
-        $this->flashMessenger()->addSuccessMessage('Transmissão excluída com sucesso!');
-        return $this->redirect()->toRoute('cadastrarTransmissao', array('evento' => $this->params()->fromRoute('evento')));
+        //deletar o vídeo
+        $this->getServiceLocator()->get('EventoVideo')->delete(array('id' => $this->params()->fromRoute('video')));
+        $this->flashMessenger()->addSuccessMessage('Vídeo excluído com sucesso!');
+        return $this->redirect()->toRoute('cadastrarVideo', array('evento' => $this->params()->fromRoute('evento')));
     }
 
     public function uploadImagem($arquivo, $caminho, $dados, $idEvento){

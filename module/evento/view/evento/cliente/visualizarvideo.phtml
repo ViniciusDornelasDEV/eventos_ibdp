@@ -1,0 +1,16 @@
+<?php if (!$videos) : ?>
+	<h1>Nenhum vídeo cadastrado para o evento selecionado!</h1>
+<?php else: ?>
+	<?php foreach ($videos as $video) : ?>
+		<?= $video->descricao_video; ?>
+		<BR>
+		<?= $video->link_video; ?>
+		echo '<br>----<br>';
+	<?php endforeach; ?>
+<?php endif; ?>
+
+<style type="text/css">
+	body {
+    	margin: 0;
+	}
+</style>

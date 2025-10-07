@@ -11,7 +11,7 @@
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.3.*",
         "zendframework/zftool": "dev-master",
-        "imagine/Imagine": "dev-master",
+        "imagine/imagine": "dev-master",
         "adaoex/zf2-excel": "dev-master"
     }
 }

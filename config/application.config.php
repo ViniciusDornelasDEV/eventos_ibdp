@@ -16,6 +16,7 @@ return  array(
         'suporte',
         'associados',
         'competicao',
+        'trabalhos',
         'ZF2Excel'
     ),
     'module_listener_options' => array(
