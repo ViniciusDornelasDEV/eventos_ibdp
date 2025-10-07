@@ -31,9 +31,15 @@
                     <tr>
                       <td style="text-align: center"><?= $video['sigla']; ?> - <?= $video['nome_evento']; ?></td>
                       <td style="text-align: center;">
-                        <a href="<?= $this->url('visualizarVideo', array('evento' => $video['id_evento'])); ?>" target="_blank">
-                          <img src="<?= $this->basePath('img/transmissao.png'); ?>" title="Visualizar" style="cursor: pointer;">
-                        </a>
+                        <img src="<?= $this->basePath('img/transmissao.png'); ?>" 
+                          onclick="$.colorbox({
+                            href:'<?= $this->url('visualizarVideo', array('evento' => $video['id_evento'])); ?>',
+                            width: '100%',
+                            height: '100%',
+                            maxWidth: '100%',
+                            maxHeight: '100%',
+                            scrolling: false
+                          });" title="Visualizar" style="cursor: pointer;">
                       </td>
                     </tr>
                   <?php endforeach; ?>

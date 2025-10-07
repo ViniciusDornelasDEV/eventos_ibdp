@@ -460,10 +460,9 @@ class ClienteController extends BaseController
     public function visualizarvideoAction(){
         $usuario = $this->getServiceLocator()->get('session')->read();
         $videos = $this->getServiceLocator()->get('Inscricao')->getVideos($usuario['cliente'], false, $this->params()->fromRoute('evento'));
-
         $view = new ViewModel();
         $view->setTerminal(true);
-        $view->setVariables(array('videos'  =>  $videos));
+        $view->setVariables(array('videos'  =>  $videos->toArray()));
         return $view;
     }
 

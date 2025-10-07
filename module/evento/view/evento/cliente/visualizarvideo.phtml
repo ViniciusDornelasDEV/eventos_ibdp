@@ -1,16 +1,161 @@
-<?php if (!$videos) : ?>
+<?php if (count($videos) == 0) : ?>
 	<h1>Nenhum vídeo cadastrado para o evento selecionado!</h1>
 <?php else: ?>
-	<?php foreach ($videos as $video) : ?>
-		<?= $video->descricao_video; ?>
-		<BR>
-		<?= $video->link_video; ?>
-		echo '<br>----<br>';
-	<?php endforeach; ?>
-<?php endif; ?>
 
-<style type="text/css">
-	body {
-    	margin: 0;
-	}
+<?php 
+function getYoutubeId($url) {
+    $pattern = '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i';
+    if (preg_match($pattern, $url, $matches)) {
+        return $matches[1]; // ID com 11 caracteres
+    }
+    return null;
+}
+?>
+
+<div class="video-wrapper">
+  <div id="player"></div>
+  <div class="click-shield"></div>
+  <div class="hide-logo"></div>
+
+  <!-- Controles -->
+  <div class="controls btn-group">
+  	<button class="btn btn-primary" onclick="prevVideo()">⏮️ Anterior</button>
+    <button class="btn btn-primary" onclick="nextVideo()">⏭️ Próximo</button>
+
+    <button class="btn btn-success" onclick="player.playVideo()">▶️ Play</button>
+    <button class="btn btn-danger" onclick="player.pauseVideo()">⏸️ Pause</button>
+  </div>
+</div>
+
+<script>
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+document.head.appendChild(tag);
+
+<?php
+$ids = [];
+foreach ($videos as $video) {
+    $id = getYoutubeId($video['link_video']);
+    if ($id) {
+        $ids[] = $id;
+    }
+}
+?>
+var player;
+var videos = <?php echo json_encode($ids); ?>;
+console.log('VIDEOS:', videos)
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('player', {
+    videoId: videos[0], // inicia no primeiro
+    playerVars: {
+      controls: 0,
+      rel: 0,
+      modestbranding: 1,
+      disablekb: 1,
+	  showinfo: 0,
+      fs: 0,
+      origin: window.location.origin
+    }
+  });
+}
+currentIndex = 0;
+window.loadVideo = function (index) {
+  if (!player || !videos[index]) return;
+  currentIndex = index;
+  player.loadVideoById(videos[currentIndex]);
+}
+
+window.nextVideo = function () {
+  if (!player || !videos || !videos.length) return;
+  currentIndex = (currentIndex + 1) % videos.length;
+  player.loadVideoById(videos[currentIndex]);
+}
+
+window.prevVideo = function () {
+  if (!player || !videos || !videos.length) return;
+  currentIndex = (currentIndex - 1 + videos.length) % videos.length;
+  player.loadVideoById(videos[currentIndex]);
+}
+
+document.addEventListener("click", function(e){
+  if (e.target.classList.contains("click-shield") && player) {
+    var state = player.getPlayerState();
+    // 1 = tocando | 2 = pausado
+    if (state === YT.PlayerState.PLAYING) {
+      player.pauseVideo();
+    } else {
+      player.playVideo();
+    }
+  }
+});
+</script>
+
+<style>
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 85%;   /* opcional: limita largura */
+  aspect-ratio: 16/9;  /* mantém proporção */
+  background: #000;
+  margin: 0 auto;      /* centraliza no container */
+  overflow: hidden;
+}
+
+/* player ocupa toda a área */
+#player,
+.video-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* camada transparente que intercepta cliques */
+.click-shield {
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+  background: transparent;
+  z-index: 2;
+}
+
+/* controles sobrepostos, centralizados no rodapé */
+.controls {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  gap: 8px;
+  background: rgba(0,0,0,0.6);
+  padding: 6px 12px;
+  border-radius: 6px;
+}
+
+/* estilo básico para botões (Bootstrap 2 friendly) */
+.controls .btn {
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 4px;
+}
+
+/* Fundo da tela atrás do modal */
+#cboxOverlay {
+  background: #000 !important;
+  opacity: 1 !important;  /* opaco total, sem transparência */
+}
+
+/* Caixa do Colorbox sem bordas/fundos extras */
+#colorbox,
+#cboxContent,
+#cboxLoadedContent {
+  background: #000 !important;
+  border: none !important;
+}
+#cboxOverlay { background:#000 !important; opacity:1 !important; }
+
+
 </style>
+<?php endif; ?>
