@@ -1056,46 +1056,6 @@ class Inscricao Extends BaseTable {
             $select->order('et.id');
         });
     }
-
-     public function getVideos($idCliente, $group = false, $idEvento = false){
-      
-        return $this->getTableGateway()->select(function($select) use ($idCliente, $group, $idEvento) {
-            $select->join(
-                    array('e' => 'tb_evento'),
-                    'e.id = tb_inscricao.evento',
-                    array('id_evento' => 'id','sigla', 'nome_evento' => 'nome', 'certificado_1', 'enviar_trabalho'),
-                    'inner'
-                );
-
-            $select->join(
-                    array('ev' => 'tb_evento_video'),
-                    'e.id = ev.evento',
-                    array('id_video' => 'id', 'descricao_video' => 'descricao', 'link_video'),
-                    'inner'
-                );
-
-
-            $select->where(array('tb_inscricao.cliente' => $idCliente));
-            
-            $select->where->nest
-                ->equalTo('status_pagamento', 2)
-                ->or->equalTo('status_pagamento', 8)
-                ->or->equalTo('status_pagamento', 9)
-                ->unnest;
-
-            if ($idEvento) {
-              $select->where(array('e.id' => $idEvento));
-            }
-
-            if ($group) {
-              $select->group('e.id');
-            }
-
-            $select->order('tb_inscricao.id DESC, e.id DESC, ev.id DESC');
-
-        });
-    }
-
 }
 
 

@@ -33,6 +33,10 @@
             <button style="background-color:#ffeeba;" onclick="location.href='<?= $this->url('educacaoContinuada'); ?>'" class="btn btn-default menu-buttom <?= $pagina == 'educacao-continuada' ? 'disabled' : '' ?>">
                 <img src="<?= $this->basePath('img/responder.png') ?>"> Educação continuada
             </button>
+
+            <button style="background-color:#FFF5EE;" onclick="location.href='<?= $this->url('listarVideos'); ?>'" class="btn btn-default menu-buttom <?= $pagina == 'transmissoes' ? 'disabled' : '' ?>">
+                <img src="<?= $this->basePath('img/transmissao.png') ?>"> Vídeos
+            </button>
         <?php endif; ?>
 
         <?php if ($questionario) : ?>
@@ -43,9 +47,7 @@
         <?php endif; ?>
     <?php endif; ?>
 
-    <button style="background-color:#FFF5EE;" onclick="location.href='<?= $this->url('listarVideos'); ?>'" class="btn btn-default menu-buttom <?= $pagina == 'transmissoes' ? 'disabled' : '' ?>">
-        <img src="<?= $this->basePath('img/transmissao.png') ?>"> Vídeos
-    </button>
+
 
     <button style="background-color:#ebebeb;" onclick="location.href='<?= $this->url('meusDadosCliente'); ?>'" class="btn btn-default menu-buttom <?= $pagina == 'meus-dados' ? 'disabled' : '' ?>">
         <img src="<?= $this->basePath('img/usuario.png') ?>"> Meus dados

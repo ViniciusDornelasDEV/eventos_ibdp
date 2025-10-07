@@ -113,7 +113,7 @@ class Module
                 
                 'EventoVideo' => function($sm) {
                     $tableGateway = new TableGateway('tb_evento_video', $sm->get('db_adapter_main'));
-                    $updates = new BaseTable($tableGateway);
+                    $updates = new Model\EventoVideo($tableGateway);
                     $updates->setServiceLocator($sm);
                     return $updates;
                 },

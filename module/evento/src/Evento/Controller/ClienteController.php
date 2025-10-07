@@ -448,8 +448,8 @@ class ClienteController extends BaseController
         if($associado){
             $questionario = $this->getServiceLocator()->get('Questionario')->getAvaliacaoAberta($associado)->current();
         }
+        $videos = $this->getServiceLocator()->get('EventoVideo')->getVideos(true);
 
-        $videos = $this->getServiceLocator()->get('Inscricao')->getVideos($usuario['cliente'], true);
         return new ViewModel(array(
             'videos'        =>  $videos,
             'associado'     =>  $associado,
@@ -459,7 +459,7 @@ class ClienteController extends BaseController
 
     public function visualizarvideoAction(){
         $usuario = $this->getServiceLocator()->get('session')->read();
-        $videos = $this->getServiceLocator()->get('Inscricao')->getVideos($usuario['cliente'], false, $this->params()->fromRoute('evento'));
+        $videos = $this->getServiceLocator()->get('EventoVideo')->getVideos();
         $view = new ViewModel();
         $view->setTerminal(true);
         $view->setVariables(array('videos'  =>  $videos->toArray()));
