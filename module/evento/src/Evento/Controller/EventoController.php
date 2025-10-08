@@ -748,19 +748,19 @@ class EventoController extends BaseController
         if($this->getRequest()->isPost()){
             $formVideo->setData($this->getRequest()->getPost());
             if($formVideo->isValid()){
-                //alterar
-                if($idVideo){
-                    $this->getServiceLocator()->get('EventoVideo')->update($formVideo->getData(), array('id' => $idVideo));
-                    $this->flashMessenger()->addSuccessMessage('Vídeo alterado com sucesso!');
-                    return $this->redirect()->toRoute('cadastrarVideo', array('evento' => $evento->id));
-                }else{
-                    //salvar
-                    $dados = $formVideo->getData();
-                    $dados['evento'] = $evento->id;
-                    $this->getServiceLocator()->get('EventoVideo')->insert($dados);
-                    $this->flashMessenger()->addSuccessMessage('Vídeo cadastrado com sucesso!');
-                    return $this->redirect()->toRoute('cadastrarVideo', array('evento' => $evento->id));
+                $dados = $formVideo->getData();
+                $dados['evento'] = $evento->id;
+                $links = preg_split('/\r\n|\r|\n/', trim($dados['link_video']));
+                foreach ($links as $key => $link) {
+                    $key++;
+                    $this->getServiceLocator()->get('EventoVideo')->insert(array(
+                        'evento'        => $evento->id,  
+                        'descricao'     => 'Vídeo '.$key, 
+                        'link_video'    => $link
+                    ));
                 }
+                $this->flashMessenger()->addSuccessMessage('Vídeo(s) cadastrado(s) com sucesso!');
+                return $this->redirect()->toRoute('cadastrarVideo', array('evento' => $evento->id));
             }
         }
 

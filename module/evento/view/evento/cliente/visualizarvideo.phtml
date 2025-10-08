@@ -18,13 +18,36 @@ function getYoutubeId($url) {
   <div class="hide-logo"></div>
 
   <!-- Controles -->
-  <div class="controls btn-group">
-  	<button class="btn btn-primary" onclick="prevVideo()">⏮️ Anterior</button>
-    <button class="btn btn-primary" onclick="nextVideo()">⏭️ Próximo</button>
+  <div class="controls controls--player btn-group">
+    <button class="btn vbtn" onclick="prevVideo()" aria-label="Anterior">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(255,255,255,0.8)">
+        <path d="M11 18V6l-8.5 6L11 18zm1.5-6l8.5 6V6l-8.5 6z"/>
+      </svg>
+    </button>
+    
+    <button class="btn vbtn" onclick="nextVideo()" aria-label="Próximo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="rgba(255,255,255,0.8)">
+        <path d="M13 6v12l8.5-6L13 6zm-1.5 6L3 18V6l8.5 6z"/>
+      </svg>
+    </button>
 
-    <button class="btn btn-success" onclick="player.playVideo()">▶️ Play</button>
-    <button class="btn btn-danger" onclick="player.pauseVideo()">⏸️ Pause</button>
+    <!-- Botão único Play/Pause -->
+    <button class="btn vbtn" id="togglePlayBtn" onclick="togglePlayPause()" aria-label="Play">
+      <!-- Ícone Play padrão -->
+      <svg id="iconPlayPause" width="22" height="22" viewBox="0 0 24 24" fill="rgba(255,255,255,0.8)">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+    </button>
+
+    <button class="btn vbtn vbtn--pill" onclick="seekBy(-10)">−10s</button>
+    <button class="btn vbtn vbtn--pill" onclick="seekBy(10)">+10s</button>
+
+    <select id="rateSelect" class="vselect" aria-label="Velocidade"></select>
   </div>
+
+
+
+
 </div>
 
 <script>
@@ -43,21 +66,102 @@ foreach ($videos as $video) {
 ?>
 var player;
 var videos = <?php echo json_encode($ids); ?>;
-console.log('VIDEOS:', videos)
+
+window.seekBy = function (deltaSeconds) {
+  if (!player || typeof player.getCurrentTime !== 'function') return;
+  var now = player.getCurrentTime();
+  var target = Math.max(0, now + deltaSeconds);
+  // 2º argumento true = fazer seek de forma “aproximada”/rápida
+  player.seekTo(target, true);
+};
+
+function populateRates() {
+  if (!player || typeof player.getAvailablePlaybackRates !== 'function') return;
+  var rates = player.getAvailablePlaybackRates(); // ex: [0.25, 0.5, 1, 1.25, 1.5, 2]
+  var select = document.getElementById('rateSelect');
+  if (!select) return;
+
+  select.innerHTML = '';
+  rates.forEach(function (r) {
+    var opt = document.createElement('option');
+    opt.value = r;
+    opt.textContent = r + 'x';
+    select.appendChild(opt);
+  });
+
+  // seleciona a velocidade atual
+  try {
+    var current = player.getPlaybackRate();
+    if (current) select.value = current;
+  } catch (e) {}
+}
+
+function bindRateChange() {
+  var select = document.getElementById('rateSelect');
+  if (!select) return;
+  select.addEventListener('change', function () {
+    var v = parseFloat(this.value);
+    if (!isNaN(v) && player && typeof player.setPlaybackRate === 'function') {
+      player.setPlaybackRate(v);
+    }
+  });
+}
+
+
+window.togglePlayPause = function () {
+  if (!player) return;
+
+  var state = player.getPlayerState();
+  var btn = document.getElementById("togglePlayBtn");
+  var icon = document.getElementById("iconPlayPause");
+
+  if (state === YT.PlayerState.PLAYING) {
+    player.pauseVideo();
+    // muda para ícone Play
+    icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+    btn.setAttribute("aria-label", "Play");
+  } else {
+    player.playVideo();
+    // muda para ícone Pause
+    icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+    btn.setAttribute("aria-label", "Pause");
+  }
+};
+
+// Atualiza o ícone quando o estado do player mudar
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
-    videoId: videos[0], // inicia no primeiro
+    videoId: videos[0],
     playerVars: {
       controls: 0,
       rel: 0,
       modestbranding: 1,
       disablekb: 1,
-	  showinfo: 0,
       fs: 0,
       origin: window.location.origin
+    },
+    events: {
+      onReady: function () {
+        populateRates();
+        bindRateChange();
+      },
+      onStateChange: function (event) {
+        var btn = document.getElementById("togglePlayBtn");
+        var icon = document.getElementById("iconPlayPause");
+        if (!btn || !icon) return;
+
+        if (event.data === YT.PlayerState.PLAYING) {
+          icon.innerHTML = '<path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>';
+          btn.setAttribute("aria-label", "Pause");
+        } else if (event.data === YT.PlayerState.PAUSED || event.data === YT.PlayerState.ENDED) {
+          icon.innerHTML = '<path d="M8 5v14l11-7z"/>';
+          btn.setAttribute("aria-label", "Play");
+        }
+      }
     }
   });
 }
+
 currentIndex = 0;
 window.loadVideo = function (index) {
   if (!player || !videos[index]) return;
@@ -86,6 +190,19 @@ document.addEventListener("click", function(e){
     } else {
       player.playVideo();
     }
+  }
+});
+
+document.addEventListener('keydown', function (e) {
+  if (!player) return;
+  // seta esquerda/direita: -/+5s
+  if (e.key === 'ArrowLeft')  { seekBy(-5); }
+  if (e.key === 'ArrowRight') { seekBy(5);  }
+  // espaço: play/pause
+  if (e.code === 'Space') {
+    e.preventDefault();
+    var st = player.getPlayerState();
+    if (st === YT.PlayerState.PLAYING) player.pauseVideo(); else player.playVideo();
   }
 });
 </script>
@@ -156,6 +273,78 @@ document.addEventListener("click", function(e){
 }
 #cboxOverlay { background:#000 !important; opacity:1 !important; }
 
+.click-shield { z-index: 2; }
+.controls     { z-index: 4; }
+
+/* BOTÕES DO PLAYER */
+.controls.controls--player {
+  position: absolute;
+  bottom: 18px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: rgba(0,0,0,0.55);
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+  padding: 10px 12px;
+  border-radius: 12px;
+}
+
+.controls .vbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.08);
+  cursor: pointer;
+  transition: background .2s, transform .1s;
+}
+
+.controls .vbtn svg {
+  pointer-events: none;
+  fill: rgba(255,255,255,0.75); /* ícones mais discretos */
+}
+
+.controls .vbtn:hover {
+  background: rgba(255,255,255,0.16);
+}
+.controls .vbtn:active {
+  transform: scale(0.95);
+}
+
+/* Pílulas ±10s */
+.controls .vbtn--pill {
+  min-width: 58px;
+  height: 36px;
+  border-radius: 9999px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.8);
+}
+
+/* Select de velocidade */
+.controls .vselect {
+  appearance: none;
+  height: 36px;
+  padding: 0 28px 0 10px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.85);
+  font-size: 13px;
+  cursor: pointer;
+  background-image:
+    linear-gradient(45deg, rgba(255,255,255,0.7) 50%, transparent 50%),
+    linear-gradient(-45deg, rgba(255,255,255,0.7) 50%, transparent 50%);
+  background-repeat: no-repeat;
+  background-position: right 10px center, right 4px center;
+  background-size: 6px 6px, 6px 6px;
+}
 
 </style>
 <?php endif; ?>

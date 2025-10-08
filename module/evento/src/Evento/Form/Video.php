@@ -17,10 +17,8 @@
     {
 
         parent::__construct($name);      
-        
-        $this->genericTextInput('descricao', '* Descrição:', true);
-        
-        $this->genericTextArea('link_video', '* Link do vídeo: ', true, false, false, 0, 900000);
+                
+        $this->genericTextArea('link_video', '* Links dos vídeos: ', true, false, false, 0, 900000);
 
         $this->setAttributes(array(
             'class'  => 'form-inline'
